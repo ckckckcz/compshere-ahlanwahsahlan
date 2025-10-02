@@ -15,7 +15,7 @@ import layanan1 from "../../../../public/images/layanan/angkutan_penumpang.jpg"
 import layanan2 from "../../../../public/images/layanan/angkutan_barang.jpg"
 import layanan3 from "../../../../public/images/layanan/pengusahaan_aset.jpg"
 
-export default function TravelMain() {
+export default function KAIMain() {
     const [selectedTab, setSelectedTab] = useState("booking")
     
     const [searchForm, setSearchForm] = useState({
@@ -349,7 +349,7 @@ export default function TravelMain() {
                         <div className="space-y-1">
                             <div className="text-[#F15A22] text-lg font-medium">Explore Indonesia With KAI</div>
 
-                            <h2 className="text-4xl font-bold text-gray-900 leading-tight">Discover Your Perfect Travel Spot</h2>
+                            <h2 className="text-4xl font-bold text-gray-900 leading-tight">Discover Your Perfect KAI Spot</h2>
 
                             <p className="text-lg text-gray-600 leading-relaxed">
                                 Whether you&apos;re seeking a tranquil retreat, a cultural adventure, or an exhilarating outdoor experience,
