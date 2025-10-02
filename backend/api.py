@@ -194,31 +194,6 @@ class Api:
             if not data:
                 return jsonify({"error": "User not found"}), 404
             
-            # Transform data to match frontend interface
-            user_data = {
-                "id": data.get("id", ""),
-                "name": data.get("nama_keluarga", "Unknown User"),
-                "email": data.get("email", ""),
-                "phone": data.get("phone", "Not provided"),
-                "position": data.get("position", "Not specified"),
-                "department": data.get("department", "Not specified"),
-                "avatar": data.get("foto"),
-                "personalInfo": {
-                    "gender": data.get("gender", "Not specified"),
-                    "dateOfBirth": data.get("date_of_birth", "Not specified"),
-                    "identifyCode": data.get("identify_code", "Not specified"),
-                    "hometown": data.get("hometown", "Not specified"),
-                    "nationality": data.get("nationality", "Not specified"),
-                    "religion": data.get("religion", "Not specified"),
-                    "languages": data.get("languages", "Not specified"),
-                    "maritalStatus": data.get("marital_status", "Not specified"),
-                    "permanentAddress": data.get("permanent_address", "Not specified"),
-                    "currentAddress": data.get("current_address", "Not specified"),
-                }
-            }
-            
-            return jsonify(user_data), 200
-            
         except Exception as e:
             return jsonify({"error": "Server error occurred"}), 500
 

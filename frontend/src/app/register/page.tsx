@@ -1,4 +1,4 @@
- "use client";
+"use client";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -54,10 +54,25 @@ export default function RegisterPage() {
         status: response.status,
         statusText: response.statusText,
         ok: response.ok,
+        contentType: response.headers.get('content-type'),
       });
 
-      const result = await response.json();
-      console.log("API response body:", result);
+      // Check if response is JSON before trying to parse it
+      const contentType = response.headers.get('content-type');
+      let result;
+      
+      try {
+        // Log the raw text first to debug
+        const responseText = await response.text();
+        console.log("Raw API response:", responseText);
+        
+        // Now try to parse it
+        result = responseText ? JSON.parse(responseText) : {};
+        console.log("API response body:", result);
+      } catch (parseError) {
+        console.error("Failed to parse JSON response:", parseError);
+        throw new Error("Server returned invalid JSON response");
+      }
 
       if (!response.ok) {
         setError(result.error || "Registrasi gagal");
@@ -68,7 +83,7 @@ export default function RegisterPage() {
       localStorage.setItem("temp_user_email", formData.email);
 
       toast.success(result.message);
-      router.push(`/melengkapi-data?user_id=${result.user_id}`);
+      router.push(`/melengkapi-data?user_id=${result.data?.id || ''}`);
     } catch (error) {
       console.error("API request failed:", error);
       setError("Terjadi kesalahan pada server. Silakan coba lagi.");
