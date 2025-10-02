@@ -12,6 +12,8 @@ import io
 
 from controller.user_controller import UserController
 from controller.detection_controller import DetectionController
+from controller.order_controller import OrderController
+# from controller.oauth_google_controller import OAuthGoogleController
 
 class MainController:
     def __init__(self, app_instance):
@@ -42,8 +44,10 @@ class MainController:
 
         self.__database = MainModel()
 
-        self.__user_controller = UserController(self.__database)
+        self.__user_controller = UserController(self.__database, self.__google)
         self.__detection_controller = DetectionController(np, Image, re, io, self.__reader, self.__model_ktp, self.__model_kk)
+        self.__order_controller = OrderController(self.__snap, self.__core_api)
+        # self.__google_controller = OAuthGoogleController(self.__google)
 
     def get_user(self):
         data = self.__user_controller.get_user()
@@ -78,4 +82,24 @@ class MainController:
 
     def store_image(self, filename, file_bytes, file):
         data = self.__user_controller.store_image(filename, file_bytes, file)
+        return data
+    
+    def login_google(self, redirect_uri):
+        data = self.__user_controller.login_google(redirect_uri)
+        return data
+    
+    def authorize(self):
+        data = self.__user_controller.authorize()
+        return data
+    
+    def get_status_payment(self, id_order):
+        data = self.__order_controller.get_status_payment(id_order)
+        return data
+
+    def create_transaction(self, data):
+        data = self.__order_controller.create_transaction(data['order_id'], data['gross_amount'], data['customer_details'])
+        return data
+    
+    def payment_callback(self, midtrans_notification):
+        data = self.__order_controller.payment_callback(midtrans_notification)
         return data
