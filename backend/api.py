@@ -144,7 +144,10 @@ class Api:
     def _create_transaction(self):
         data = request.json
         data = self.__controller.create_transaction(data)
-        return jsonify({"status": "Data received", "data": data}), 200
+        if data['status'] == 'success':
+            return jsonify(data), 200
+        else:
+            return jsonify(data), 400
 
     def _callback_transaction(self):
         midtrans_notification = request.get_json()

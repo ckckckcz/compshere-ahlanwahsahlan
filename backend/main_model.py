@@ -3,6 +3,7 @@ from supabase import create_client, Client
 
 from model.user_model import UserModel
 from model.role_model import RoleModel
+from model.order_model import OrderModel
 
 class MainModel:
     def __init__(self):
@@ -12,6 +13,7 @@ class MainModel:
 
         self.__user_model = UserModel(self.__database)
         self.__role_model = RoleModel(self.__database)
+        self.__order_model = OrderModel(self.__database)
 
     def get_database(self):
         return self.__database
@@ -47,5 +49,13 @@ class MainModel:
 
     def store_image(self, filename, file_bytes, file):
         data = self.__user_model.store_image(filename, file_bytes, file)
+        return data
+    
+    def add_order(self, id_user, gross_amount):
+        data = self.__order_model.add_order(id_user, gross_amount)
+        return data
+    
+    def update_order_by_id(self, id_order, data):
+        data = self.__order_model.update_order_by_id(id_order, data)
         return data
             

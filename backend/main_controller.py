@@ -46,7 +46,7 @@ class MainController:
 
         self.__user_controller = UserController(self.__database, self.__google)
         self.__detection_controller = DetectionController(np, Image, re, io, self.__reader, self.__model_ktp, self.__model_kk)
-        self.__order_controller = OrderController(self.__snap, self.__core_api)
+        self.__order_controller = OrderController(self.__database, self.__snap, self.__core_api)
         # self.__google_controller = OAuthGoogleController(self.__google)
 
     def get_user(self):
@@ -97,7 +97,7 @@ class MainController:
         return data
 
     def create_transaction(self, data):
-        data = self.__order_controller.create_transaction(data['order_id'], data['gross_amount'], data['customer_details'])
+        data = self.__order_controller.create_transaction(data)
         return data
     
     def payment_callback(self, midtrans_notification):
