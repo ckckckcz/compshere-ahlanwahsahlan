@@ -26,7 +26,7 @@ export default function CompleteProfilePage() {
       setFormData((prev) => ({ ...prev, user_id }))
 
       // Fetch email user
-      fetch(`http://localhost:5000/api/user/${user_id}`)
+      fetch(`https://coherent-classic-platypus.ngrok-free.app/api/user/${user_id}`)
         .then((res) => res.json())
         .then((data) => {
           if (data && data.email) {
@@ -87,7 +87,7 @@ export default function CompleteProfilePage() {
         foto: fotoBase64,
       }
 
-      const response = await fetch("http://localhost:5000/api/complete-profile", {
+      const response = await fetch("https://coherent-classic-platypus.ngrok-free.app/api/complete-profile", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

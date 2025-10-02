@@ -33,7 +33,7 @@ export default function Navbar() {
     // Fetch user data from API if not in localStorage
     const fetchUserData = React.useCallback(async () => {
         try {
-            const response = await fetch("http://169.254.167.115:5000/api/user/session", {
+            const response = await fetch("https://coherent-classic-platypus.ngrok-free.app/api/user/session", {
                 method: "GET",
                 credentials: "include",
             });
@@ -95,7 +95,7 @@ export default function Navbar() {
     const handleLogout = async () => {
         setIsLoading(true);
         try {
-            await fetch("http://169.254.167.115:5000/api/logout", {
+            await fetch("https://coherent-classic-platypus.ngrok-free.app/api/logout", {
                 method: "POST",
                 credentials: "include",
             });

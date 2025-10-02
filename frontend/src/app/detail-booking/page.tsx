@@ -187,7 +187,7 @@ export default function ElegantBookingPage() {
       console.log('🚀 Sending transaction data to backend:', transactionData);
 
       // Request payment token from backend
-      const response = await fetch('http://169.254.167.115:5000/create/transaction', {
+      const response = await fetch('https://coherent-classic-platypus.ngrok-free.app/create/transaction', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
