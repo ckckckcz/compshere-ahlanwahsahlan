@@ -16,6 +16,7 @@ type Seat = {
   side: "left" | "right";
   type: SeatType;
   isAvailable: boolean;
+  isSelected: boolean; // Tambahan untuk melacak kursi yang dipilih
 };
 
 type CoachClass = "eksekutif" | "ekonomi";
@@ -71,23 +72,22 @@ function buildCoach(config: CoachConfig): { seats: Seat[]; gridCols: number; let
   for (let row = 1; row <= config.rows; row++) {
     if (is22) {
       seats.push(
-        { id: `${row}A`, row, col: 0, gridCol: 0, letter: "A", side: "left", type: "window", isAvailable: deterministicAvailable(row, 0) },
-        { id: `${row}B`, row, col: 1, gridCol: 1, letter: "B", side: "left", type: "middle", isAvailable: deterministicAvailable(row, 1) },
-        { id: `${row}C`, row, col: 2, gridCol: 3, letter: "C", side: "right", type: "middle", isAvailable: deterministicAvailable(row, 3) },
-        { id: `${row}D`, row, col: 3, gridCol: 4, letter: "D", side: "right", type: "window", isAvailable: deterministicAvailable(row, 4) }
+        { id: `${row}A`, row, col: 0, gridCol: 0, letter: "A", side: "left", type: "window", isAvailable: deterministicAvailable(row, 0), isSelected: false },
+        { id: `${row}B`, row, col: 1, gridCol: 1, letter: "B", side: "left", type: "middle", isAvailable: deterministicAvailable(row, 1), isSelected: false },
+        { id: `${row}C`, row, col: 2, gridCol: 3, letter: "C", side: "right", type: "middle", isAvailable: deterministicAvailable(row, 3), isSelected: false },
+        { id: `${row}D`, row, col: 3, gridCol: 4, letter: "D", side: "right", type: "window", isAvailable: deterministicAvailable(row, 4), isSelected: false }
       );
     } else {
       seats.push(
-        { id: `${row}A`, row, col: 0, gridCol: 0, letter: "A", side: "left", type: "window", isAvailable: deterministicAvailable(row, 0) },
-        { id: `${row}B`, row, col: 1, gridCol: 1, letter: "B", side: "left", type: "middle", isAvailable: deterministicAvailable(row, 1) },
-        { id: `${row}C`, row, col: 2, gridCol: 3, letter: "C", side: "right", type: "window", isAvailable: deterministicAvailable(row, 3) }
+        { id: `${row}A`, row, col: 0, gridCol: 0, letter: "A", side: "left", type: "window", isAvailable: deterministicAvailable(row, 0), isSelected: false },
+        { id: `${row}B`, row, col: 1, gridCol: 1, letter: "B", side: "left", type: "middle", isAvailable: deterministicAvailable(row, 1), isSelected: false },
+        { id: `${row}C`, row, col: 2, gridCol: 3, letter: "C", side: "right", type: "window", isAvailable: deterministicAvailable(row, 3), isSelected: false }
       );
     }
   }
 
   return { seats, gridCols, letters, aisleGridIndex };
 }
-
 
 function scoreSeat(seat: Seat, prefs: Preferences, aisleGridIndex: number, totalRows: number) {
   const { weights } = prefs;
@@ -162,9 +162,11 @@ const Panel: React.FC<{ title: string; children: React.ReactNode; className?: st
   </Card>
 );
 
-function SeatBadge({ seat, highlight = false }: { seat: Seat; highlight?: boolean }) {
+function SeatBadge({ seat, highlight = false, onSelect }: { seat: Seat; highlight?: boolean; onSelect?: (seat: Seat) => void }) {
   const base = seat.isAvailable ? "cursor-pointer" : "opacity-40 cursor-not-allowed";
-  const bg = highlight
+  const bg = seat.isSelected
+    ? "bg-green-600 text-white"
+    : highlight
     ? "bg-indigo-600 text-white"
     : seat.isAvailable
     ? "bg-sky-100 text-sky-900"
@@ -172,7 +174,8 @@ function SeatBadge({ seat, highlight = false }: { seat: Seat; highlight?: boolea
   return (
     <div
       className={cn("flex h-7 w-7 items-center justify-center rounded-md text-[10px] font-medium", bg, base)}
-      title={`${seat.id} • ${seat.type}`}
+      title={`${seat.id} • ${seat.type} ${seat.isSelected ? "(Dipilih)" : ""}`}
+      onClick={() => seat.isAvailable && onSelect && onSelect(seat)}
     />
   );
 }
@@ -229,6 +232,7 @@ export default function Page() {
       rear: 0,
     },
   });
+  const [selectedSeats, setSelectedSeats] = useState<string[]>([]); // Melacak kursi yang dipilih
 
   const { seats, gridCols, aisleGridIndex } = useMemo(() => buildCoach(coach), [coach]);
   const ranked = useMemo(() => rankSeats(seats, prefs, aisleGridIndex, coach.rows), [seats, prefs, aisleGridIndex, coach.rows]);
@@ -246,6 +250,17 @@ export default function Page() {
   }, [seats]);
 
   const capacity = useMemo(() => seats.length, [seats]);
+
+  const handleSeatSelect = (seat: Seat) => {
+    if (selectedSeats.length >= 5) return; // Batas maksimum 5 kursi
+    if (seat.isSelected) {
+      setSelectedSeats(selectedSeats.filter(id => id !== seat.id));
+      seat.isSelected = false;
+    } else {
+      setSelectedSeats([...selectedSeats, seat.id]);
+      seat.isSelected = true;
+    }
+  };
 
   return (
     <div className="mx-auto max-w-6xl p-6">
@@ -355,7 +370,6 @@ export default function Page() {
                 </div>
               </div>
 
-              {/* Preferensi sederhana (checkbox) */}
               <div className="mb-2">
                 <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-zinc-500">Preferensi</div>
                 <label className="flex items-center gap-2 text-sm">
@@ -386,6 +400,7 @@ export default function Page() {
                 <span className="inline-flex items-center gap-1"><span className="h-3 w-3 rounded-sm bg-sky-100"></span> Tersedia</span>
                 <span className="inline-flex items-center gap-1"><span className="h-3 w-3 rounded-sm bg-zinc-300"></span> Terisi</span>
                 <span className="inline-flex items-center gap-1"><span className="h-3 w-3 rounded-sm bg-indigo-600"></span> Rekomendasi top</span>
+                <span className="inline-flex items-center gap-1"><span className="h-3 w-3 rounded-sm bg-green-600"></span> Dipilih</span>
               </div>
               <div>Layout {coach.layout} • Baris: {coach.rows} • Aisle di tengah</div>
             </div>
@@ -416,7 +431,7 @@ export default function Page() {
                         }
                         const seat = rowSeats[i];
                         if (!seat) return <div key={`empty-${rowNum}-${i}`} />;
-                        return <SeatBadge key={seat.id} seat={seat} highlight={topSeatIds.has(seat.id)} />;
+                        return <SeatBadge key={seat.id} seat={{ ...seat, isSelected: selectedSeats.includes(seat.id) }} highlight={topSeatIds.has(seat.id)} onSelect={handleSeatSelect} />;
                       })}
 
                       <div className="flex items-center pl-2 text-xs text-zinc-500">{rev}</div>
@@ -433,7 +448,7 @@ export default function Page() {
             <ol className="space-y-2 text-sm">
               {ranked.slice(0, 5).map(({ seat }) => (
                 <li key={seat.id} className="flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-2"><SeatBadge seat={seat} highlight={topSeatIds.has(seat.id)} /> <span>{seat.id}</span></div>
+                  <div className="flex items-center gap-2"><SeatBadge seat={{ ...seat, isSelected: selectedSeats.includes(seat.id) }} highlight={topSeatIds.has(seat.id)} onSelect={handleSeatSelect} /> <span>{seat.id}</span></div>
                 </li>
               ))}
             </ol>
@@ -446,7 +461,7 @@ export default function Page() {
                   <li key={i} className="flex items-center gap-1">
                     {g.seats.map((s) => (
                       <div key={s.id} className="flex items-center gap-1">
-                        <SeatBadge seat={s} />
+                        <SeatBadge seat={{ ...s, isSelected: selectedSeats.includes(s.id) }} onSelect={handleSeatSelect} />
                         <span className="mr-1">{s.id}</span>
                       </div>
                     ))}
@@ -455,6 +470,19 @@ export default function Page() {
               </ol>
             </Panel>
           )}
+
+          <Panel title="Kursi Dipilih">
+            <ol className="space-y-2 text-sm">
+              {selectedSeats.map((seatId) => {
+                const seat = seats.find(s => s.id === seatId);
+                return seat ? (
+                  <li key={seatId} className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2"><SeatBadge seat={{ ...seat, isSelected: true }} /> <span>{seatId}</span></div>
+                  </li>
+                ) : null;
+              })}
+            </ol>
+          </Panel>
         </div>
       </div>
     </div>
