@@ -28,25 +28,55 @@ class UserController:
         
         return {'status': 'success', 'data': response}
     
+    def update_user(self, id_user, data):
+        data = self.__model.update_user(self, id_user, data)
+        return data
+    
     def register(self, email, password, confirm_password):
         if not all([email, password, confirm_password]):
-            pass
+            return {'status' : 'error', 'message' : 'Invalid data'}
 
         if password != confirm_password:
-            pass
+            return {'status' : 'error', 'message' : 'Password and confirm password not match'}
 
         role = self.__model.get_role_by_role('User')
 
-        print(role)
-
         if role is None:
-            pass
+            return {'status' : 'error', 'message' : 'Role not found'}
 
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
         data = self.__model.add_user(email, hashed_password, role['id'])
 
         return {'status': 'success', 'data': data}
+    
+    def get_session_id(self, session_id):
+        if not session_id or not session_id.startswith("user_"):
+            return {'status': 'error', 'message': 'No valid session'}
+        
+        user_id = session_id.replace("user_", "")
+
+        response = self.__model.get_user_by_id(user_id)
+
+        if hasattr(response, "error") and response.error:
+            return {'status' : 'error', 'message' : response.error.message}
+        if not response.data:
+            return {'status' : 'error', 'message' : 'User not founf'}
+        
+        return {'status': 'success', 'data': {
+            "user_id": response["id"],
+            "email": response["email"],
+            "nama_keluarga": response["nama_keluarga"] or "User"
+        }}
+    
+    def delete_image(self, url):
+        self.__model.delete_image(url)
+
+    def store_image(self, filename, file_bytes, file):
+        data = self.__model.store_image(filename, file_bytes, file)
+        return data
+            
+
 
 
 

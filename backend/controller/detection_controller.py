@@ -48,9 +48,9 @@ class DetectionController:
             ocr_nik = self.__ocr_image_ktp(cropped_area_nik)
             ocr_jenis_kelamin = self.__ocr_image_ktp(cropped_area_jenis_kelamin)
 
-            if self._re.match(('L\w*'), ocr_jenis_kelamin, self.__re.IGNORECASE):
+            if self.__re.match(('L\w*'), ocr_jenis_kelamin, self.__re.IGNORECASE):
                 ocr_jenis_kelamin = 'LAKI-LAKI'
-            elif self._re.match(('P\w*'), ocr_jenis_kelamin, self.__re.IGNORECASE):
+            elif self.__re.match(('P\w*'), ocr_jenis_kelamin, self.__re.IGNORECASE):
                 ocr_jenis_kelamin = 'PEREMPUAN'
             else:
                 ocr_jenis_kelamin = None
