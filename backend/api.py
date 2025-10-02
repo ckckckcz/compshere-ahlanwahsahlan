@@ -1,4 +1,5 @@
 from flask import request, url_for, session, jsonify, make_response
+from flask_cors import CORS
 from dotenv import load_dotenv
 from main_controller import MainController
 import os
@@ -8,6 +9,10 @@ class Api:
         load_dotenv()
         self._app = app_instance
         self.__controller = MainController(app_instance)
+        
+        # Enable CORS for all routes
+        CORS(self._app, origins=["http://localhost:3000", "https://*.ngrok-free.app"], 
+             supports_credentials=True)
 
         self.__setup_routes()
 
@@ -35,8 +40,18 @@ class Api:
         return jsonify({"status": "Data received", "data": data}), 200
     
     def _get_user_by_id(self, id_user):
-        data = self.__controller.get_user_by_id(id_user)
-        return jsonify({"status": "Data received", "data": data}), 200
+        try:
+            print(f"Fetching user with ID: {id_user}")
+            data = self.__controller.get_user_by_id(id_user)
+            print(f"User data retrieved: {data}")
+            
+            if not data:
+                return jsonify({"status": "Error", "error": "User not found"}), 404
+                
+            return jsonify({"status": "Data received", "data": data}), 200
+        except Exception as e:
+            print(f"Error in _get_user_by_id: {str(e)}")
+            return jsonify({"status": "Error", "error": "Internal server error"}), 500
     
     def _login(self):
         email = request.json.get('email')
@@ -147,6 +162,22 @@ class Api:
         data = self.__controller.detect(file.read(), option)
         return jsonify({"status": "Data received", "data": data}), 200
 
+    def _get_user_profile(self):
+        try:
+            # Get session from cookie
+            session_id = request.cookies.get("session_id")
+            if not session_id or not session_id.startswith("user_"):
+                return jsonify({"error": "No valid session"}), 401
+            
+            user_id = session_id.replace("user_", "")
+            
+            # Get user data using existing controller method
+            data = self.__controller.get_user_by_id(user_id)
+            if not data:
+                return jsonify({"error": "User not found"}), 404
+            
+        except Exception as e:
+            return jsonify({"error": "Server error occurred"}), 500
 
     def run(self):
         self.app.run(host='0.0.0.0')

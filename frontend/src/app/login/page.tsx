@@ -46,7 +46,7 @@ export default function LoginPage() {
       });
 
       const result = await response.json();
-      console.log(response)
+      
       if (!response.ok) {
         setError(result.error || "Login failed");
         return;
@@ -61,7 +61,6 @@ export default function LoginPage() {
       toast.success(result.message || "Login successful");
       router.push("/");
     } catch (error) {
-      console.error("Login error:", error);
       setError("Terjadi kesalahan pada server. Silakan coba lagi.");
     } finally {
       setIsLoading(false);

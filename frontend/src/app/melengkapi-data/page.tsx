@@ -13,38 +13,22 @@ export default function CompleteProfilePage() {
   const searchParams = useSearchParams()
   const [formData, setFormData] = useState({
     user_id: "",
-    email: "",
     nama_keluarga: "",
     foto: null as File | null,
   })
   const [isLoading, setIsLoading] = useState(false)
   const [photoPreview, setPhotoPreview] = useState<string | null>(null)
 
+  // Get user_id from URL parameters only
   useEffect(() => {
-    const user_id = searchParams.get("user_id")
-    if (user_id) {
-      setFormData((prev) => ({ ...prev, user_id }))
-
-      // Fetch email user
-      fetch(`https://coherent-classic-platypus.ngrok-free.app/api/user/${user_id}`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data && data.email) {
-            setFormData((prev) => ({ ...prev, email: data.email }))
-          } else {
-            toast.error("User not found")
-            router.push("/register")
-          }
-        })
-        .catch(() => {
-          toast.error("Failed to fetch user email")
-          router.push("/register")
-        })
+    const user_id = searchParams.get("user_id");
+    if (user_id && user_id !== "undefined" && !isNaN(parseInt(user_id))) {
+      setFormData((prev) => ({ ...prev, user_id }));
     } else {
-      toast.error("Invalid user ID")
-      router.push("/register")
+      toast.error("Invalid user ID. Please ensure you have a valid registration link.");
+      // router.push("/register"); // Uncomment if you want to redirect
     }
-  }, [searchParams, router])
+  }, [searchParams, router]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target
@@ -140,7 +124,7 @@ export default function CompleteProfilePage() {
                   ) : (
                     <Camera className="w-8 h-8 text-gray-400 group-hover:text-[#F15A22] transition-colors" />
                   )}
-                  <input
+                  <Input
                     type="file"
                     name="foto"
                     accept="image/*"
@@ -154,20 +138,6 @@ export default function CompleteProfilePage() {
                 <br />
                 (optional)
               </p>
-            </div>
-
-            {/* Email (readonly) */}
-            <div className="space-y-2">
-              <label htmlFor="email" className="text-sm font-medium text-gray-700">
-                Email Address
-              </label>
-              <Input
-                type="email"
-                name="email"
-                value={formData.email}
-                readOnly
-                className="h-12 bg-gray-100 border-gray-200 text-gray-500 cursor-not-allowed"
-              />
             </div>
 
             {/* Family Name */}
@@ -210,3 +180,4 @@ export default function CompleteProfilePage() {
     </div>
   )
 }
+            
