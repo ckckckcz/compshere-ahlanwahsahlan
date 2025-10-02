@@ -11,8 +11,10 @@ export default function AppWrapper({
 }) {
   const pathname = usePathname();
   const hideNavAndFooter =
+    pathname === "/rute" ||
     pathname === "/login" ||
     pathname === "/register";
+    pathname === "/melengkapi-data?user_id=:id";
 
   return (
     <>
