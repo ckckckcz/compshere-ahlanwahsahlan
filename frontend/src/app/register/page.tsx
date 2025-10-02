@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -44,7 +44,7 @@ export default function RegisterPage() {
     try {
       console.log("Sending API request to /api/register with payload:", formData);
 
-      const response = await fetch("http://localhost:5000/api/register", {
+      const response = await fetch("https://coherent-classic-platypus.ngrok-free.app/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
