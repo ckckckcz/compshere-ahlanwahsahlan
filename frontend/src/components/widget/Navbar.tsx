@@ -33,16 +33,34 @@ export default function Navbar() {
     // Fetch user data from API if not in localStorage
     const fetchUserData = React.useCallback(async () => {
         try {
-            const response = await fetch("https://coherent-classic-platypus.ngrok-free.app/api/user/session", {
+            // Get user_id from localStorage session
+            const sessionData = localStorage.getItem('session_id');
+            if (!sessionData) {
+                return;
+            }
+
+            // Extract user ID from session data - format is "user_19"
+            let userId = sessionData.replace('user_', '');
+            
+            if (!userId) {
+                return;
+            }
+
+            const response = await fetch(`https://coherent-classic-platypus.ngrok-free.app/get/user/${userId}`, {
                 method: "GET",
-                credentials: "include",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'ngrok-skip-browser-warning': 'true'
+                },
             });
 
             if (response.ok) {
-                const userData = await response.json();
-                localStorage.setItem("user_email", userData.email);
+                const result = await response.json();
+                const userData = result.data; // Extract data from the response
+                
+                localStorage.setItem("user_email", userData.email || "");
                 localStorage.setItem("user_name", userData.nama_keluarga || "User");
-                setUserEmail(userData.email);
+                setUserEmail(userData.email || "");
                 setUserName(userData.nama_keluarga || "User");
             }
         } catch (error) {
@@ -50,7 +68,6 @@ export default function Navbar() {
         }
     }, []);
 
-    // Check for session on component mount and when storage changes
     React.useEffect(() => {
         const checkSession = async () => {
             const sessionId = document.cookie.split("; ").find(row => row.startsWith("session_id="))?.split("=")[1];
