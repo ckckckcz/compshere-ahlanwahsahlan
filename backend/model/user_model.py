@@ -17,3 +17,8 @@ class UserModel:
     def login(self):
         response = self.__database.table('user').select('*').execute()
         return response.data
+    
+    def add_user(self, email, password, id_role):
+        data = {"email": email, "password": password, "id_role": id_role}
+        response = self.__database.table('user').insert(data).execute()
+        return response.data[0]

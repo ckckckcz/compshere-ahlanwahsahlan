@@ -13,8 +13,8 @@ class Api:
     def __setup_routes(self):
         self._app.add_url_rule('/get/user', view_func=self._get_user, methods=['GET'])
         self._app.add_url_rule('/get/user/<id_user>', view_func=self._get_user_by_id, methods=['GET'])
-        self._app.add_url_rule('/login', view_func=self._login, methods=['POST'])
-        # self._app.add_url_rule('/register', view_func=self._register, methods=['POST'])
+        self._app.add_url_rule('/api/login', view_func=self._login, methods=['POST'])
+        self._app.add_url_rule('/api/register', view_func=self._register, methods=['POST'])
         # self._app.add_url_rule('/update/user/<id_user>', view_func=self._update_user, methods=['PUT'])
         # self._app.add_url_rule('/delete/user/<id_user>', view_func=self._delete_user, methods=['DELETE'])  
         # self._app.add_url_rule('/delete/user/foto/<id_user>', view_func=self._delete_user_foto, methods=['DELETE']) 
@@ -37,22 +37,33 @@ class Api:
         return jsonify({"status": "Data received", "data": data}), 200
     
     def _login(self):
-        email = request.form.get('email')
-        password = request.form.get('password')
+        email = request.json.get('email')
+        password = request.json.get('password')
+        print(email, password)
         data = self.__controller.login(email, password)
-        if data == 'success':
-            resp = make_response(jsonify({'status': 'Login successful', 'data': data.response}), 200)
+        print(data)
+        if data['status'] == 'success':
+            resp = make_response(jsonify({'status': 'Login successful', 'data': data['data']}), 200)
             resp.set_cookie(
-                    'session_id',
-                    value=f'user_{data.response["id"]}',
-                    max_age=3600,
-                    httponly=True,
-                    secure=False,
-                    samesite='Lax'
-                )
+                'session_id',
+                value=f'user_{data["data"]["id"]}',
+                max_age=3600,
+                httponly=True,
+                secure=False,
+                samesite='Lax'
+            )
+
             return resp
         else: 
             return jsonify(data), 400
+        
+    def _register(self):
+        email = request.json.get('email')
+        password = request.json.get('password')
+        confirm_password = request.json.get('confirmPassword')
+        data = self.__controller.register(email, password, confirm_password)
+        return jsonify(data), 200
+
 
     def run(self):
         self.app.run(host='0.0.0.0')

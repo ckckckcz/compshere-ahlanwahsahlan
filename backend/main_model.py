@@ -2,6 +2,7 @@ import os
 from supabase import create_client, Client
 
 from model.user_model import UserModel
+from model.role_model import RoleModel
 
 class MainModel:
     def __init__(self):
@@ -10,9 +11,12 @@ class MainModel:
         self.__database = create_client(self.__url, self.__key)
 
         self.__user_model = UserModel(self.__database)
+        self.__role_model = RoleModel(self.__database)
 
     def get_database(self):
         return self.__database
+
+# User
     
     def get_user(self):
         return self.__user_model.get_user()
@@ -26,4 +30,11 @@ class MainModel:
     def login(self):
         return self.__user_model.login()
     
+    def add_user(self, email, password, id_role):
+        print('test')
+        return self.__user_model.add_user(email, password, id_role)
+
+# Role 
+    def get_role_by_role(self, role_name):
+        return self.__role_model.get_role_by_role(role_name)
             

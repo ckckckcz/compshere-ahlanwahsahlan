@@ -1,14 +1,14 @@
 import bcrypt
 class UserController:
     def __init__(self, database):
-        self.__database = database
+        self.__model = database
 
     def get_user(self):
-        data = self.__database.get_user()
+        data = self.__model.get_user()
         return data
     
     def get_user_by_id(self, id_user):
-        data = self.__database.get_user_by_id(id_user)
+        data = self.__model.get_user_by_id(id_user)
         return data
     
     def __verify_password(self, password, hashed_password):
@@ -18,7 +18,7 @@ class UserController:
         if not all([email, password]):
             return {'status': 'error', 'message': 'Missing email or password'}
         
-        response = self.__database.get_user_by_email(email)
+        response = self.__model.get_user_by_email(email)
 
         if response is None:
             return {'status': 'error', 'message': 'User not found'}
@@ -27,6 +27,28 @@ class UserController:
             return {'status': 'error', 'message': 'Invalid password'}
         
         return {'status': 'success', 'data': response}
+    
+    def register(self, email, password, confirm_password):
+        if not all([email, password, confirm_password]):
+            pass
+
+        if password != confirm_password:
+            pass
+
+        role = self.__model.get_role_by_role('User')
+
+        print(role)
+
+        if role is None:
+            pass
+
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+
+        data = self.__model.add_user(email, hashed_password, role['id'])
+
+        return {'status': 'success', 'data': data}
+
+
 
         
         

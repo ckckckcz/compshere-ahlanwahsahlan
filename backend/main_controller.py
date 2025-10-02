@@ -54,3 +54,7 @@ class MainController:
     def login(self, email, password):
         data = self.__user_controller.login(email, password)
         return data
+    
+    def register(self, email, password, confirm_password):
+        data = self.__user_controller.register(email, password, confirm_password)
+        return data
