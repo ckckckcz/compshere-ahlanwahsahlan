@@ -46,6 +46,7 @@ export default function LoginPage() {
       });
 
       const result = await response.json();
+      console.log(response)
       if (!response.ok) {
         setError(result.error || "Login failed");
         return;
@@ -55,7 +56,7 @@ export default function LoginPage() {
       localStorage.setItem("session_id", `user_${result.user_id}`);
       localStorage.setItem("user_id", result.user_id.toString());
       localStorage.setItem("user_email", result.email);
-      localStorage.setItem("user_name", result.nama_keluarga || "User");
+      // localStorage.setItem("user_name", result.nama_keluarga || "User");
 
       toast.success(result.message || "Login successful");
       router.push("/");

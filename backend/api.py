@@ -1,6 +1,7 @@
 from flask import request, url_for, session, jsonify, make_response
 from dotenv import load_dotenv
 from main_controller import MainController
+import os
 
 class Api:
     def __init__(self, app_instance):
@@ -15,11 +16,13 @@ class Api:
         self._app.add_url_rule('/get/user/<id_user>', view_func=self._get_user_by_id, methods=['GET'])
         self._app.add_url_rule('/api/login', view_func=self._login, methods=['POST'])
         self._app.add_url_rule('/api/register', view_func=self._register, methods=['POST'])
+        # self._app.add_url_rule('/api/user/session', view_func=self._get_user_session, methods=['GET'])
         # self._app.add_url_rule('/update/user/<id_user>', view_func=self._update_user, methods=['PUT'])
+        self._app.add_url_rule('/api/complete-profile', view_func=self._update_user, methods=['POST'])
         # self._app.add_url_rule('/delete/user/<id_user>', view_func=self._delete_user, methods=['DELETE'])  
         # self._app.add_url_rule('/delete/user/foto/<id_user>', view_func=self._delete_user_foto, methods=['DELETE']) 
 
-        # self._app.add_url_rule('/send/<option>', view_func=self._send_identity, methods=['POST'])
+        self._app.add_url_rule('/send/<option>', view_func=self._send_identity, methods=['POST'])
         
         # self._app.add_url_rule('/get/status/payment', view_func=self._get_status_payment, methods=['GET'])
         # self._app.add_url_rule('/create/transaction', view_func=self._create_transaction, methods=['POST'])
@@ -41,9 +44,13 @@ class Api:
         password = request.json.get('password')
         print(email, password)
         data = self.__controller.login(email, password)
-        print(data)
         if data['status'] == 'success':
-            resp = make_response(jsonify({'status': 'Login successful', 'data': data['data']}), 200)
+            resp = make_response(jsonify({
+                    "message": "Login successful", 
+                    "user_id": data['data']["id"],
+                    "email": data['data']["email"],
+                    "nama_keluarga": data['data']["nama_keluarga"] or "User"
+                }), 200)
             resp.set_cookie(
                 'session_id',
                 value=f'user_{data["data"]["id"]}',
@@ -63,6 +70,73 @@ class Api:
         confirm_password = request.json.get('confirmPassword')
         data = self.__controller.register(email, password, confirm_password)
         return jsonify(data), 200
+    
+    # def _get_user_session(self):
+    #     try:
+    #         # Get session from cookie or headers if needed
+    #         session_id = request.cookies.get("session_id")
+    #         if not session_id or not session_id.startswith("user_"):
+    #             return jsonify({"error": "No valid session"}), 401
+            
+    #         user_id = session_id.replace("user_", "")
+            
+    #         response = supabase.table("user").select("id", "email", "nama_keluarga").eq("id", user_id).execute()
+    #         if hasattr(response, "error") and response.error:
+    #             return jsonify({"error": response.error.message}), 400
+    #         if not response.data:
+    #             return jsonify({"error": "User not found"}), 404
+            
+    #         user = response.data[0]
+    #         return jsonify({
+    #             "user_id": user["id"],
+    #             "email": user["email"],
+    #             "nama_keluarga": user["nama_keluarga"] or "User"
+    #         }), 200
+            
+    #     except Exception as e:
+    #         return jsonify({"error": "Terjadi kesalahan server"}), 500
+
+    def _update_user(self):
+        data = request.form.to_dict()
+
+        if data['password'] == '':
+            data.pop('password')
+        else:
+            data['password'] = self.__auth_controller.hash_password(data['password'])
+
+        foto = None
+        if 'file' in request.files:
+            file = request.files['file']
+
+            if file.filename != '':
+                user = self.__main_model.get_user_by_id(data['user_id'])
+
+                if user is None:
+                    return jsonify({'error': 'User not found'}), 404
+                
+                if user['foto'] is not None:
+                    self.__main_model.delete_image(user['foto'])
+
+                filename = f'{os.urandom(16).hex()}_{file.filename}'
+
+                file_bytes = file.read()
+
+                foto = self.__main_model.store_image(filename, file_bytes, file)
+
+        data['foto'] = foto
+
+        data = self.__main_model.update_user(id_user, data)
+
+        return jsonify({'status': 'User updated successfully', 'data': data}), 200
+    
+    def _send_identity(self, option):
+        if 'file' not in request.files:
+            return jsonify({"error": "No file uploaded"}), 400
+
+        file = request.files['file']
+
+        data = self.__controller.detect(file.read(), option)
+        return jsonify({"status": "Data received", "data": data}), 200
 
 
     def run(self):
