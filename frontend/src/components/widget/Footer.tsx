@@ -39,7 +39,7 @@ export default function Footer() {
               </li>
               <li>
                 <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
-                  Travel Articles
+                  KAI Articles
                 </a>
               </li>
             </ul>
@@ -107,7 +107,7 @@ export default function Footer() {
 
         {/* Bottom Section */}
         <div className="border-t border-slate-700 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-400 text-sm">©2024 Horizone, All rights reserved.</p>
+          <p className="text-gray-400 text-sm">©2024 KAI, All rights reserved.</p>
           <div className="flex gap-6">
             <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">
               Privacy Policy
