@@ -13,7 +13,7 @@ class Api:
 
     def __setup_routes(self):
         self._app.add_url_rule('/get/user', view_func=self._get_user, methods=['GET'])
-        self._app.add_url_rule('/api/user/<id_user>', view_func=self._get_user_by_id, methods=['GET'])
+        self._app.add_url_rule('/get/user/<id_user>', view_func=self._get_user_by_id, methods=['GET'])
         self._app.add_url_rule('/api/login', view_func=self._login, methods=['POST'])
         self._app.add_url_rule('/api/register', view_func=self._register, methods=['POST'])
         self._app.add_url_rule('/api/user/session', view_func=self._get_user_session, methods=['GET'])
@@ -23,12 +23,12 @@ class Api:
 
         self._app.add_url_rule('/api/send/<option>', view_func=self._send_identity, methods=['POST'])
         
-        # self._app.add_url_rule('/get/status/payment', view_func=self._get_status_payment, methods=['GET'])
-        # self._app.add_url_rule('/create/transaction', view_func=self._create_transaction, methods=['POST'])
-        # self._app.add_url_rule('/callback/transaction', view_func=self._callback_transaction, methods=['POST'])
+        self._app.add_url_rule('/api/get/status/payment/<id_order>', view_func=self._get_status_payment_by_id, methods=['GET'])
+        self._app.add_url_rule('/api/create/transaction', view_func=self._create_transaction, methods=['POST'])
+        self._app.add_url_rule('/api/callback/transaction', view_func=self._callback_transaction, methods=['POST'])
 
-        # self._app.add_url_rule('/login/google', view_func=self._login_google, methods=['GET'])   
-        # self._app.add_url_rule('/authorize', view_func=self._authorize, methods=['GET'], endpoint='authorize')
+        self._app.add_url_rule('/api/login/google', view_func=self._login_google, methods=['GET'])   
+        self._app.add_url_rule('/api/authorize', view_func=self._authorize, methods=['GET'], endpoint='authorize')
 
     def _get_user(self):
         data = self.__controller.get_user()
@@ -68,6 +68,7 @@ class Api:
         password = request.json.get('password')
         confirm_password = request.json.get('confirmPassword')
         data = self.__controller.register(email, password, confirm_password)
+        print(data)
         if data['status'] == 'success':
             return jsonify(data), 200
         else: 
@@ -83,9 +84,11 @@ class Api:
             return jsonify(data), 400
         
     def _update_user(self):
-        nama_keluarga = request.json.get('nama_keluarga')
-        id_user = request.json.get('user_id')
-
+        nama_keluarga = request.form.get('nama_keluarga')
+        id_user = request.form.get('user_id')
+        nomor_telepon = request.form.get('nomor_telepon')
+        data = {}
+        foto = None
         if 'foto' in request.files:
             file = request.files['foto']
             if file.filename != '':
@@ -103,58 +106,37 @@ class Api:
 
                 foto = self.__controller.store_image(filename, file_bytes, file)
 
+                print(foto)
+
         data['foto'] = foto
         data['nama_keluarga'] = nama_keluarga
 
         data = self.__controller.update_user(id_user, data)
 
         return jsonify({'status': 'User updated successfully', 'data': data}), 200
+    
+    def _login_google(self):
+        redirect_uri = url_for('authorize', _external=True)
+        return self.__controller.login_google(redirect_uri)
+    
+    def _authorize(self):
+        return self.__controller.authorize()
+    
+    def _get_status_payment_by_id(self, id_order):
+        data = self.__controller.get_status_payment(id_order)
+        return jsonify({"status": "Data received", "data": data}), 200
 
+    def _create_transaction(self):
+        data = request.json
+        data = self.__controller.create_transaction(data)
+        return jsonify({"status": "Data received", "data": data}), 200
 
+    def _callback_transaction(self):
+        midtrans_notification = request.get_json()
+        response =self.__controller.payment_callback(midtrans_notification)
+        print(response)
+        return jsonify({"status": "Payment data received", "data": response}), 200
 
-
-        
-
-        # data = self.__controller.update_user(data)
-        # if data['status'] == 'success':
-        #     return jsonify(data), 200
-        # else: 
-        #     return jsonify(data), 400
-
-
-
-    # def _update_user(self):
-    #     data = request.form.to_dict()
-
-    #     if data['password'] == '':
-    #         data.pop('password')
-    #     else:
-    #         data['password'] = self.__auth_controller.hash_password(data['password'])
-
-    #     foto = None
-    #     if 'file' in request.files:
-    #         file = request.files['file']
-
-    #         if file.filename != '':
-    #             user = self.__main_model.get_user_by_id(data['user_id'])
-
-    #             if user is None:
-    #                 return jsonify({'error': 'User not found'}), 404
-                
-    #             if user['foto'] is not None:
-    #                 self.__main_model.delete_image(user['foto'])
-
-    #             filename = f'{os.urandom(16).hex()}_{file.filename}'
-
-    #             file_bytes = file.read()
-
-    #             foto = self.__main_model.store_image(filename, file_bytes, file)
-
-    #     data['foto'] = foto
-
-    #     data = self.__main_model.update_user(id_user, data)
-
-    #     return jsonify({'status': 'User updated successfully', 'data': data}), 200
     
     def _send_identity(self, option):
         if 'file' not in request.files:

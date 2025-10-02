@@ -4,6 +4,8 @@ from urllib.parse import urlparse
 class UserModel:
     def __init__(self, database):
         self.__database = database
+        self.__bucket = 'KAI-bucket'
+        self.__folder = 'Users'
 
     def get_user(self):
         response = self.__database.table('user').select('*').execute()
@@ -11,6 +13,7 @@ class UserModel:
     
     def get_user_by_id(self, id_user):
         response = self.__database.table('user').select('*').eq('id', id_user).execute()
+        print(response)
         return response.data[0] if response.data else None
     
     def get_user_by_email(self, email):
@@ -18,8 +21,8 @@ class UserModel:
         return response.data[0] if response.data else None
     
     def update_user(self, id_user, data):
-        response = self.__table.update(data).eq('id', id_user).execute()
-        return response.data[0]
+        response = self.__database.table('user').update(data).eq('id', id_user).execute()
+        return response.data
     
     def login(self):
         response = self.__database.table('user').select('*').execute()
@@ -38,13 +41,15 @@ class UserModel:
     
 
     def store_image(self, filename, file_bytes, file):
+        path = f"{self.__folder}/{filename}"
+
         self.__database.storage.from_(self.__bucket).upload(
-            path=self.__folder + '/' + filename,
+            path=path,
             file=file_bytes,
             file_options={"content-type": file.mimetype or 'application/octet-stream'},
         )
 
-        url = self.__database.storage.from_(self.__bucket).get_public_url(filename)
+        url = self.__database.storage.from_(self.__bucket).get_public_url(path)
         return url
     
     def delete_image(self, url):

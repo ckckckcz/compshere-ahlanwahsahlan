@@ -1,7 +1,15 @@
 import bcrypt
 class UserController:
-    def __init__(self, database):
+    def __init__(self, database, google):
         self.__model = database
+        self.__google = google
+
+    def login_google(self, redirect_uri):
+        return self.__google.authorize_redirect(redirect_uri)
+    
+    def authorize(self):
+        token = self.__google.authorize_access_token()
+        return token
 
     def get_user(self):
         data = self.__model.get_user()
@@ -29,7 +37,7 @@ class UserController:
         return {'status': 'success', 'data': response}
     
     def update_user(self, id_user, data):
-        data = self.__model.update_user(self, id_user, data)
+        data = self.__model.update_user(id_user, data)
         return data
     
     def register(self, email, password, confirm_password):
