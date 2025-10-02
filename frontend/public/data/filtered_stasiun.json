@@ -1,0 +1,4655 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "properties": {
+        "name": "Terminal wosi",
+        "railway:ref": "TER"
+      }
+    },
+    {
+      "properties": {
+        "name": "Stasiun Mobil Lombe",
+        "railway:ref": "STA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Purworejo",
+        "railway:ref": "PUR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Stasiun Rantau Prapat",
+        "railway:ref": "STA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Stasiun Sumberkolak",
+        "railway:ref": "STA"
+      }
+    },
+    {
+      "properties": {
+        "name": "kantor",
+        "railway:ref": "KAN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Terminal 3",
+        "railway:ref": "TER"
+      }
+    },
+    {
+      "properties": {
+        "name": "Terminal 2",
+        "railway:ref": "TER"
+      }
+    },
+    {
+      "properties": {
+        "name": "Lubuklinggau",
+        "railway:ref": "LUB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Terminal 1",
+        "railway:ref": "TER"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bungamas",
+        "railway:ref": "BUN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Indramayu",
+        "railway:ref": "IND"
+      }
+    },
+    {
+      "properties": {
+        "name": "Stasiun Baso (Eks)",
+        "railway:ref": "STA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Depok Baru",
+        "railway:ref": "DPB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ketapang",
+        "railway:ref": "KTG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kotok",
+        "railway:ref": "KTK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Arjasa",
+        "railway:ref": "AJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tanggul",
+        "railway:ref": "TGL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Randuagung",
+        "railway:ref": "RDA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Leces",
+        "railway:ref": "LEC"
+      }
+    },
+    {
+      "properties": {
+        "name": "Delanggu",
+        "railway:ref": "DL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ceper",
+        "railway:ref": "CE"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tandes",
+        "railway:ref": "TES"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tanah Tinggi",
+        "railway:ref": "TTI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tangerang",
+        "railway:ref": "TNG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kranji",
+        "railway:ref": "KRI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cibitung",
+        "railway:ref": "CIT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sudimara",
+        "railway:ref": "SDM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pondok Ranji",
+        "railway:ref": "PDJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Jurangmangu",
+        "railway:ref": "JMU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Duren Kalibata",
+        "railway:ref": "DRN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Citayam",
+        "railway:ref": "CIT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tebing Tinggi",
+        "railway:ref": "TBI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Batang Kuis",
+        "railway:ref": "BTK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bangil",
+        "railway:ref": "BG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Waru",
+        "railway:ref": "WR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Nagreg",
+        "railway:ref": "NG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Lebakjero",
+        "railway:ref": "LBJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kertapati",
+        "railway:ref": "KPT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Simpang",
+        "railway:ref": "SIG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kedunggedeh",
+        "railway:ref": "KDH"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kepanjen",
+        "railway:ref": "KPN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kesamben",
+        "railway:ref": "KSB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Wlingi",
+        "railway:ref": "WG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ngadiluwih",
+        "railway:ref": "NDL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kertosono",
+        "railway:ref": "KTS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Brambanan",
+        "railway:ref": "BBN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kedungjati",
+        "railway:ref": "KEJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Maos",
+        "railway:ref": "MA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cigading",
+        "railway:ref": "CGD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cilegon",
+        "railway:ref": "CLG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Karangantu",
+        "railway:ref": "KRA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Rangkasbitung",
+        "railway:ref": "RK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tigaraksa",
+        "railway:ref": "TGS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tenjo",
+        "railway:ref": "TEJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Parungpanjang",
+        "railway:ref": "PRP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Daru",
+        "railway:ref": "DAR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cicayur",
+        "railway:ref": "CC"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cilejit",
+        "railway:ref": "CJT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Karangtengah",
+        "railway:ref": "KE"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cibadak",
+        "railway:ref": "CBD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cireungas",
+        "railway:ref": "CRG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ciranjang",
+        "railway:ref": "CRJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cibeber",
+        "railway:ref": "CBB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Lampegan",
+        "railway:ref": "LP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Maswati",
+        "railway:ref": "MSI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Rendeh",
+        "railway:ref": "RH"
+      }
+    },
+    {
+      "properties": {
+        "name": "Plered",
+        "railway:ref": "PLD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cikadongdong",
+        "railway:ref": "CD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sukatani",
+        "railway:ref": "SUT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Nambo",
+        "railway:ref": "NMO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pondok Rajeg",
+        "railway:ref": "PDRG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cibinong",
+        "railway:ref": "CBN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Dawuan",
+        "railway:ref": "DWN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Karawang",
+        "railway:ref": "KW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Jatibarang",
+        "railway:ref": "JTB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Haurgeulis",
+        "railway:ref": "HGL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kertasemaya",
+        "railway:ref": "KTM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cilegeh",
+        "railway:ref": "CLH"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kadokangabus",
+        "railway:ref": "KAB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Terisi",
+        "railway:ref": "TIS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Telagasari",
+        "railway:ref": "TLS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bangoduwa",
+        "railway:ref": "BDW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cangkring",
+        "railway:ref": "CNK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cimekar",
+        "railway:ref": "CMK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Gedebage",
+        "railway:ref": "GDB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Haurpugur",
+        "railway:ref": "HRP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cibatu",
+        "railway:ref": "CB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cipeundeuy",
+        "railway:ref": "CPD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cirahayu",
+        "railway:ref": "CAA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ciawi",
+        "railway:ref": "CAW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bumiwaluya",
+        "railway:ref": "BMW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Warungbandrek",
+        "railway:ref": "WB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Indihiang",
+        "railway:ref": "IH"
+      }
+    },
+    {
+      "properties": {
+        "name": "Rajapolah",
+        "railway:ref": "RJP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Manonjaya",
+        "railway:ref": "MNJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tasikmalaya",
+        "railway:ref": "TSM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ciamis",
+        "railway:ref": "CI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Gandrungmangun",
+        "railway:ref": "GDM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sidareja",
+        "railway:ref": "SDR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Jeruklegi",
+        "railway:ref": "JRL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kawunganten",
+        "railway:ref": "KWG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kasugihan",
+        "railway:ref": "KH"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cilacap",
+        "railway:ref": "CP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cilebut",
+        "railway:ref": "CIL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Maseng",
+        "railway:ref": "MSG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cigombong",
+        "railway:ref": "CGB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cisaat",
+        "railway:ref": "CSA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Gandasoli",
+        "railway:ref": "GDS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Luwung",
+        "railway:ref": "LWG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ciledug",
+        "railway:ref": "CLD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Losari",
+        "railway:ref": "LOS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tegal",
+        "railway:ref": "TG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tanjung",
+        "railway:ref": "TGN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cirebon Prujakan",
+        "railway:ref": "CNP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Waruduwur",
+        "railway:ref": "WDW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Slawi",
+        "railway:ref": "SLW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Linggapura",
+        "railway:ref": "LG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Karangsari",
+        "railway:ref": "KRR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Patuguran",
+        "railway:ref": "PAT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kroya",
+        "railway:ref": "KYA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Randegan",
+        "railway:ref": "RDN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Karanggandul",
+        "railway:ref": "KGD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kebasen",
+        "railway:ref": "KBS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Notog",
+        "railway:ref": "NTG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Larangan",
+        "railway:ref": "LR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Petarukan",
+        "railway:ref": "PTA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pemalang",
+        "railway:ref": "PML"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pekalongan",
+        "railway:ref": "PK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sragi",
+        "railway:ref": "SRI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Surodadi",
+        "railway:ref": "SD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Comal",
+        "railway:ref": "CO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Weleri",
+        "railway:ref": "WLR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kaliwungu",
+        "railway:ref": "KLN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ujungnegoro",
+        "railway:ref": "UJN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kalibodri",
+        "railway:ref": "KBD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Plabuan",
+        "railway:ref": "PLB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kuripan",
+        "railway:ref": "KRP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Jerakah",
+        "railway:ref": "JRK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Brumbung",
+        "railway:ref": "BBG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tanggung",
+        "railway:ref": "TGG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ijo",
+        "railway:ref": "IJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kemranjen",
+        "railway:ref": "KJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tambak",
+        "railway:ref": "TBK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kutoarjo",
+        "railway:ref": "KTA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Butuh",
+        "railway:ref": "BTH"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sruweng",
+        "railway:ref": "SRW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Prembun",
+        "railway:ref": "PRB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kutowinangun",
+        "railway:ref": "KWN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Wonosari",
+        "railway:ref": "WNS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kebumen",
+        "railway:ref": "KM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Karanganyar",
+        "railway:ref": "KA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Jenar",
+        "railway:ref": "JN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Patukan",
+        "railway:ref": "PTN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Wojo",
+        "railway:ref": "WJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Rewulu",
+        "railway:ref": "RWL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sentolo",
+        "railway:ref": "STL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ngrombo",
+        "railway:ref": "NBO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Karangtalun",
+        "railway:ref": "KRL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Gawok",
+        "railway:ref": "GW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pasarnguter",
+        "railway:ref": "PNT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Wonogiri",
+        "railway:ref": "WNG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Gundih",
+        "railway:ref": "GD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kalioso",
+        "railway:ref": "KO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Salem",
+        "railway:ref": "SLM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sumberlawang",
+        "railway:ref": "SUM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kebonromo",
+        "railway:ref": "KRO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kedungbanteng",
+        "railway:ref": "KDB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kemiri",
+        "railway:ref": "KEM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Masaran",
+        "railway:ref": "MAS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Palur",
+        "railway:ref": "PL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sragen",
+        "railway:ref": "SR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Walikukun",
+        "railway:ref": "WK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Magetan",
+        "railway:ref": "MAG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Geneng",
+        "railway:ref": "GG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kedunggalar",
+        "railway:ref": "KG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ngawi",
+        "railway:ref": "NGW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Babadan",
+        "railway:ref": "BBD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Caruban",
+        "railway:ref": "CRB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Saradan",
+        "railway:ref": "SRD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bagor",
+        "railway:ref": "BGR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Baron",
+        "railway:ref": "BRN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Nganjuk",
+        "railway:ref": "NJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sukomoro",
+        "railway:ref": "SKM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Minggiran",
+        "railway:ref": "MGN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Papar",
+        "railway:ref": "PPR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Purwoasri",
+        "railway:ref": "PWA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Susuhan",
+        "railway:ref": "SS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kras",
+        "railway:ref": "KRS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ngujang",
+        "railway:ref": "NJG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ngunut",
+        "railway:ref": "NT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tulungagung",
+        "railway:ref": "TA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Talun",
+        "railway:ref": "TAL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ngebruk",
+        "railway:ref": "NB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pasuruan",
+        "railway:ref": "PS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Gedangan",
+        "railway:ref": "GDG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sidotopo",
+        "railway:ref": "SDT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Grati",
+        "railway:ref": "GI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bayeman",
+        "railway:ref": "BYM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Rejoso",
+        "railway:ref": "RO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Klakah",
+        "railway:ref": "KK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Malasan",
+        "railway:ref": "MLS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Probolinggo",
+        "railway:ref": "PB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ranuyoso",
+        "railway:ref": "RN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bangsalsari",
+        "railway:ref": "BSS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Jember",
+        "railway:ref": "JR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kalisat",
+        "railway:ref": "KLT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Mangli",
+        "railway:ref": "MI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Rambipuji",
+        "railway:ref": "RBP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bondowoso",
+        "railway:ref": "BON"
+      }
+    },
+    {
+      "properties": {
+        "name": "Situbondo",
+        "railway:ref": "SIT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tribungan",
+        "railway:ref": "TRI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Wonosari",
+        "railway:ref": "WON"
+      }
+    },
+    {
+      "properties": {
+        "name": "Boharan",
+        "railway:ref": "BH"
+      }
+    },
+    {
+      "properties": {
+        "name": "Curahmalang",
+        "railway:ref": "CRM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kedinding",
+        "railway:ref": "KDN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Krian",
+        "railway:ref": "KRN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Peterongan",
+        "railway:ref": "PTR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sembung",
+        "railway:ref": "SMB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tulangan",
+        "railway:ref": "TLN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Jambon",
+        "railway:ref": "JBN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Panunggalan",
+        "railway:ref": "PNL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cepu",
+        "railway:ref": "CU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Doplang",
+        "railway:ref": "DPL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Randublatung",
+        "railway:ref": "RBG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Wadu",
+        "railway:ref": "WDU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kapuan",
+        "railway:ref": "KPA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tuntang",
+        "railway:ref": "TUN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Blora",
+        "railway:ref": "BLO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tobo",
+        "railway:ref": "TBO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kalitidu",
+        "railway:ref": "KIT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Babat",
+        "railway:ref": "BBT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bowerno",
+        "railway:ref": "BWO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Duduk",
+        "railway:ref": "DD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kapas",
+        "railway:ref": "KPS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Lamongan",
+        "railway:ref": "LMG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pucuk",
+        "railway:ref": "PC"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sumberrejo",
+        "railway:ref": "SRJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Jatirogo",
+        "railway:ref": "JAT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Duku",
+        "railway:ref": "DUK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Depok",
+        "railway:ref": "DEP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sumbergempol",
+        "railway:ref": "SBL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Rejotangan",
+        "railway:ref": "REJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Argopuro",
+        "railway:ref": "AGO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Banyuwangi Kota",
+        "railway:ref": "BWI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Singojuruh",
+        "railway:ref": "SGJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Temuguruh",
+        "railway:ref": "TGR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Glenmore",
+        "railway:ref": "GLM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Araskabu",
+        "railway:ref": "ARB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kalibaru",
+        "railway:ref": "KBR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Batutulis",
+        "railway:ref": "BTT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Padang Panjang (Eks)",
+        "railway:ref": "PAD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cawang",
+        "railway:ref": "CW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Purwosari",
+        "railway:ref": "PWS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Universitas Indonesia",
+        "railway:ref": "UI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kedundang",
+        "railway:ref": "KDG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kualanamu",
+        "railway:ref": "KNM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ciomas",
+        "railway:ref": "CS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Terminal Bus",
+        "railway:ref": "TER"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tebet",
+        "railway:ref": "TEB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Belimbing Airkaka",
+        "railway:ref": "BIK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Belatung",
+        "railway:ref": "BLT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Gumilir",
+        "railway:ref": "GM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Parungkuda",
+        "railway:ref": "PRK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Gogodalem",
+        "railway:ref": "GOG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tempuran",
+        "railway:ref": "TEM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cimahi",
+        "railway:ref": "CMI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bekasi",
+        "railway:ref": "BKS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Solo Jebres",
+        "railway:ref": "SK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Blitar",
+        "railway:ref": "BL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sidoarjo",
+        "railway:ref": "SDA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Jombang",
+        "railway:ref": "JG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Gambringan",
+        "railway:ref": "GBN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Padas",
+        "railway:ref": "PDS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Telawa",
+        "railway:ref": "TW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Buaran",
+        "railway:ref": "BUA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cakung",
+        "railway:ref": "CUK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Citeras",
+        "railway:ref": "CTR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kramat",
+        "railway:ref": "KMT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pesing",
+        "railway:ref": "PSG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pondok Cina",
+        "railway:ref": "PCN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Poris",
+        "railway:ref": "PI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Serpong",
+        "railway:ref": "SRP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Surabaya Pasarturi",
+        "railway:ref": "SBI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Malang",
+        "railway:ref": "ML"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kisaran",
+        "railway:ref": "KIS"
+      }
+    },
+    {
+      "properties": {
+        "name": "ASEAN",
+        "railway:ref": "ASE"
+      }
+    },
+    {
+      "properties": {
+        "name": "Depo Pertamina",
+        "railway:ref": "DEP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Benowo",
+        "railway:ref": "BNW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Surabaya Kota",
+        "railway:ref": "SB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kandangan",
+        "railway:ref": "KDA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kalimas",
+        "railway:ref": "KAL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Wonokromo",
+        "railway:ref": "WO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Jatinegara",
+        "railway:ref": "JNG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Gondangdia",
+        "railway:ref": "GDD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pondok Jati",
+        "railway:ref": "POK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Manggarai",
+        "railway:ref": "MRI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cikini",
+        "railway:ref": "CKI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tanah Abang",
+        "railway:ref": "THB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pasar Senen",
+        "railway:ref": "PSE"
+      }
+    },
+    {
+      "properties": {
+        "name": "Karet",
+        "railway:ref": "KAT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Palmerah",
+        "railway:ref": "PLM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pasar Minggu Baru",
+        "railway:ref": "PSMB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Juanda",
+        "railway:ref": "JUA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Gambir",
+        "railway:ref": "GMR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kemayoran",
+        "railway:ref": "KMO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Klender",
+        "railway:ref": "KLD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Klender Baru",
+        "railway:ref": "KLDB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kalideres",
+        "railway:ref": "KDS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Taman Mini",
+        "railway:ref": "TAM"
+      }
+    },
+    {
+      "properties": {
+        "name": "BNI City",
+        "railway:ref": "SUDB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Universitas Pancasila",
+        "railway:ref": "UP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Gang Sentiong",
+        "railway:ref": "GST"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sawah Besar",
+        "railway:ref": "SW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sudirman",
+        "railway:ref": "SUD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tanjung Barat",
+        "railway:ref": "TNT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Angke",
+        "railway:ref": "AK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Rajawali",
+        "railway:ref": "RJW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Duri",
+        "railway:ref": "DU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Mangga Besar",
+        "railway:ref": "MGB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pasar Minggu",
+        "railway:ref": "PSM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Jayakarta",
+        "railway:ref": "JAY"
+      }
+    },
+    {
+      "properties": {
+        "name": "Benteng",
+        "railway:ref": "SBE"
+      }
+    },
+    {
+      "properties": {
+        "name": "Krueng Geukueh",
+        "railway:ref": "KRG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bungkaih",
+        "railway:ref": "BKH"
+      }
+    },
+    {
+      "properties": {
+        "name": "Krueng Mane",
+        "railway:ref": "KRM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Lenteng Agung",
+        "railway:ref": "LNA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pangkalan Brandan",
+        "railway:ref": "PBN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tanjung Gading",
+        "railway:ref": "TGD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tanjung Priuk",
+        "railway:ref": "TPK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Rawa Buaya",
+        "railway:ref": "RW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Jakarta Kota",
+        "railway:ref": "JAKK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Grogol",
+        "railway:ref": "GRG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kebayoran",
+        "railway:ref": "KBY"
+      }
+    },
+    {
+      "properties": {
+        "name": "Taman Kota",
+        "railway:ref": "TKO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ancol",
+        "railway:ref": "AC"
+      }
+    },
+    {
+      "properties": {
+        "name": "Jakarta Gudang",
+        "railway:ref": "JAKG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bekasi Timur",
+        "railway:ref": "BKST"
+      }
+    },
+    {
+      "properties": {
+        "name": "Lubuk Buaya",
+        "railway:ref": "LBY"
+      }
+    },
+    {
+      "properties": {
+        "name": "Karangsari",
+        "railway:ref": "KRAI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kiaracondong",
+        "railway:ref": "KAC"
+      }
+    },
+    {
+      "properties": {
+        "name": "Andir",
+        "railway:ref": "AND"
+      }
+    },
+    {
+      "properties": {
+        "name": "Blimbing",
+        "railway:ref": "BMG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Lawang",
+        "railway:ref": "LW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Wonokerto",
+        "railway:ref": "WN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sukorejo",
+        "railway:ref": "SKJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sengon",
+        "railway:ref": "SN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Singosari",
+        "railway:ref": "SGS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cikoya",
+        "railway:ref": "CKY"
+      }
+    },
+    {
+      "properties": {
+        "name": "Catang",
+        "railway:ref": "CT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Jambu Baru",
+        "railway:ref": "JBU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Metland Telagamurni",
+        "railway:ref": "TLM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Taman Anggrek",
+        "railway:ref": "TAM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Taman Budaya",
+        "railway:ref": "TAM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Taman Bunga",
+        "railway:ref": "TAM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Taman Burung",
+        "railway:ref": "TAM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Taman Nusa",
+        "railway:ref": "TAM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Taman Wisata",
+        "railway:ref": "TAM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Gombong",
+        "railway:ref": "GB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Solo Kota",
+        "railway:ref": "STA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Batang",
+        "railway:ref": "BTG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sulur",
+        "railway:ref": "SL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Mesigit",
+        "railway:ref": "MST"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bojonegoro",
+        "railway:ref": "BJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Gembong",
+        "railway:ref": "GEB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Dusun",
+        "railway:ref": "DSU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sei Bejangkar",
+        "railway:ref": "SBJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Dolok Merangir",
+        "railway:ref": "DMR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Mojokerto",
+        "railway:ref": "MR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Lubuk Pakam",
+        "railway:ref": "LBP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Perbaungan",
+        "railway:ref": "PBA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Lidah Tanah",
+        "railway:ref": "LDT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bamban",
+        "railway:ref": "BMB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Laut Tador",
+        "railway:ref": "LTD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Teluk Mengkudu",
+        "railway:ref": "TKE"
+      }
+    },
+    {
+      "properties": {
+        "name": "Rampah",
+        "railway:ref": "RPH"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bajalinggei",
+        "railway:ref": "BJL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bahlias",
+        "railway:ref": "BLI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Perlanaan",
+        "railway:ref": "PRA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Lima Puluh",
+        "railway:ref": "LMP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cerme",
+        "railway:ref": "CME"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bandar Tinggi",
+        "railway:ref": "BDT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bunut",
+        "railway:ref": "BUU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Aek Loba",
+        "railway:ref": "AKB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Mambang Muda",
+        "railway:ref": "MBM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tanjungbalai",
+        "railway:ref": "TNB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Situngir",
+        "railway:ref": "SIU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Marbau",
+        "railway:ref": "MBU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Hengelo",
+        "railway:ref": "HL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Teluk Dalam",
+        "railway:ref": "TUK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Padang Halaban",
+        "railway:ref": "PHA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pulu Raja",
+        "railway:ref": "PUR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sempolan",
+        "railway:ref": "SPL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ledokombo",
+        "railway:ref": "LDO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sulusuban",
+        "railway:ref": "SLS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tanjungrajo",
+        "railway:ref": "TAN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Lubuk Batang",
+        "railway:ref": "LBT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kepayang",
+        "railway:ref": "KPY"
+      }
+    },
+    {
+      "properties": {
+        "name": "Lubuk Rukam",
+        "railway:ref": "LRM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Peninjawan",
+        "railway:ref": "PNW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Talang Baru",
+        "railway:ref": "TLB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Metur",
+        "railway:ref": "MET"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tanjung Rambang",
+        "railway:ref": "TJR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Belawan",
+        "railway:ref": "BLW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Labuan",
+        "railway:ref": "LBU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pulu Brayan",
+        "railway:ref": "PUB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Binjai",
+        "railway:ref": "BIJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bandar Khalipah",
+        "railway:ref": "BAP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Indarung",
+        "railway:ref": "IDA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pauh Lima",
+        "railway:ref": "IMA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Alai",
+        "railway:ref": "AI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tabing",
+        "railway:ref": "TAB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Singkarak",
+        "railway:ref": "SIN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Solok (Eks)",
+        "railway:ref": "SOL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Indralaya",
+        "railway:ref": "IDR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Lahat",
+        "railway:ref": "LAH"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tebing Tinggi",
+        "railway:ref": "TI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kurai Taji",
+        "railway:ref": "KI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pauh Kambar",
+        "railway:ref": "PAK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Muara Gula",
+        "railway:ref": "MRL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Belimbing Pendopo",
+        "railway:ref": "BIB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kota Padang",
+        "railway:ref": "KOP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Gunung Megang",
+        "railway:ref": "GNM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Rawa Buntu",
+        "railway:ref": "RU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cirebon",
+        "railway:ref": "CN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bojonggede",
+        "railway:ref": "BOJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kampung Bandan",
+        "railway:ref": "KPB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Mangkang",
+        "railway:ref": "MKG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Alastua",
+        "railway:ref": "ATA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pasar Usang",
+        "railway:ref": "PRU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Lubuk Alung",
+        "railway:ref": "LA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sicincin",
+        "railway:ref": "SCN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kayu Tanam",
+        "railway:ref": "KTN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kubukrambil",
+        "railway:ref": "KUB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Batu Tabal",
+        "railway:ref": "BAT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kacang (Eks)",
+        "railway:ref": "KAC"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sawahlunto",
+        "railway:ref": "SWL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kutablang",
+        "railway:ref": "KBL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tegalluar Summarecon",
+        "railway:ref": "TEG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Karawang",
+        "railway:ref": "KAR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Halim",
+        "railway:ref": "HLM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Boulevard Utara",
+        "railway:ref": "BOU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Boulevard Selatan",
+        "railway:ref": "BOU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pulomas",
+        "railway:ref": "PUL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Equestrian",
+        "railway:ref": "EQU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Velodrome",
+        "railway:ref": "VEL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pegangsaan Dua",
+        "railway:ref": "PEG"
+      }
+    },
+    {
+      "properties": {
+        "name": "DJKA",
+        "railway:ref": "DJK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Jakabaring",
+        "railway:ref": "JAK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Polresta",
+        "railway:ref": "POL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ampera",
+        "railway:ref": "AMP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cinde",
+        "railway:ref": "CIN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Dishub",
+        "railway:ref": "DIS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bumi Sriwijaya",
+        "railway:ref": "BUM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Demang",
+        "railway:ref": "DEM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Garuda Dempo",
+        "railway:ref": "GAR"
+      }
+    },
+    {
+      "properties": {
+        "name": "RSUD",
+        "railway:ref": "RSU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Punti Kayu",
+        "railway:ref": "PUN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Asrama Haji",
+        "railway:ref": "ASH"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bandara Sultan Mahmud Badaruddin II",
+        "railway:ref": "BDR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Naras",
+        "railway:ref": "NRS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pariaman",
+        "railway:ref": "PMN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Krengseng",
+        "railway:ref": "KNS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Garum",
+        "railway:ref": "GRM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bundaran HI Bank Jakarta",
+        "railway:ref": "BUN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Dukuh Atas BNI",
+        "railway:ref": "DUK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Setiabudi ASTRA",
+        "railway:ref": "SET"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bendungan Hilir",
+        "railway:ref": "BEN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Istora Mandiri",
+        "railway:ref": "IST"
+      }
+    },
+    {
+      "properties": {
+        "name": "Senayan Mastercard",
+        "railway:ref": "SEN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Blok M BCA",
+        "railway:ref": "BLO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Blok A",
+        "railway:ref": "BLO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Haji Nawi",
+        "railway:ref": "HAJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cipete Raya Tuku",
+        "railway:ref": "CIP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Muarakalaban",
+        "railway:ref": "MKB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Stabat",
+        "railway:ref": "SBT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tanjung Selamat",
+        "railway:ref": "TAS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Gebang",
+        "railway:ref": "GBG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Stasiun Grujugan",
+        "railway:ref": "STA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Stasiun Kanigoro",
+        "railway:ref": "STA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kediri",
+        "railway:ref": "KD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cibungur",
+        "railway:ref": "CBR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Purwakarta",
+        "railway:ref": "PWK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Panarukan",
+        "railway:ref": "PAN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Fatmawati Indomaret",
+        "railway:ref": "FAT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Lebak Bulus",
+        "railway:ref": "LEB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cikoko",
+        "railway:ref": "CIK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pancoran Bank BJB",
+        "railway:ref": "PAN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Setiabudi",
+        "railway:ref": "SET"
+      }
+    },
+    {
+      "properties": {
+        "name": "Rasuna Said",
+        "railway:ref": "RAS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kampung Rambutan",
+        "railway:ref": "KAM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Harjamukti",
+        "railway:ref": "HAR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kramasan",
+        "railway:ref": "KAS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Garut",
+        "railway:ref": "GRT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Wanaraja",
+        "railway:ref": "WNR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pasirjengkol",
+        "railway:ref": "PAS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pulau Aie",
+        "railway:ref": "PLA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kadipiro",
+        "railway:ref": "KAD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Adi Soemarmo",
+        "railway:ref": "SMO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cisauk",
+        "railway:ref": "CSK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Langen",
+        "railway:ref": "LN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Surabayan",
+        "railway:ref": "SBN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pamingke",
+        "railway:ref": "PME"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sei Mangkei",
+        "railway:ref": "SKI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Jatimulya",
+        "railway:ref": "JAT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Plumpang",
+        "railway:ref": "PLU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Air Tawar",
+        "railway:ref": "ATR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tanjung Enim Baru",
+        "railway:ref": "TMB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bandara Internasional Minangkabau",
+        "railway:ref": "BIM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Banjarsari",
+        "railway:ref": "BJI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Muara Enim",
+        "railway:ref": "ME"
+      }
+    },
+    {
+      "properties": {
+        "name": "Lahat",
+        "railway:ref": "LT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ujan Mas",
+        "railway:ref": "UJM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tanjungkarang",
+        "railway:ref": "TNK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Matraman",
+        "railway:ref": "MTR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pagergunung",
+        "railway:ref": "PGG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sungai Lagoa",
+        "railway:ref": "SAO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Penanggiran",
+        "railway:ref": "PNG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Prabumulih Baru X5",
+        "railway:ref": "PBR X5"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pasoso",
+        "railway:ref": "POO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Prabumulih Baru X6",
+        "railway:ref": "PBR X6"
+      }
+    },
+    {
+      "properties": {
+        "name": "Payakabung",
+        "railway:ref": "PYK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Durian",
+        "railway:ref": "DAN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cilame",
+        "railway:ref": "CLE"
+      }
+    },
+    {
+      "properties": {
+        "name": "Larangan",
+        "railway:ref": "LRA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Songgom",
+        "railway:ref": "SGG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Lemahabang",
+        "railway:ref": "LMB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kosambi",
+        "railway:ref": "KOS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ciganea",
+        "railway:ref": "CA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Karangpucung",
+        "railway:ref": "KNP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cikampek",
+        "railway:ref": "CKP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cipeuyeum",
+        "railway:ref": "CPY"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cipatat",
+        "railway:ref": "CPT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sasaksaat",
+        "railway:ref": "SKT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Awipari",
+        "railway:ref": "AW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bojong",
+        "railway:ref": "BJG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sikampuh",
+        "railway:ref": "SKP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pringkasap",
+        "railway:ref": "PRI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pegaden Baru",
+        "railway:ref": "PGB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Lebeng",
+        "railway:ref": "LBG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sumpiuh",
+        "railway:ref": "SPH"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sindanglaut",
+        "railway:ref": "SDU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Prupuk",
+        "railway:ref": "PPK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bumiayu",
+        "railway:ref": "BMA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cipari",
+        "railway:ref": "CPI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Karangkandri",
+        "railway:ref": "KKD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Brebes",
+        "railway:ref": "BB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bogor",
+        "railway:ref": "BOO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Karangjati",
+        "railway:ref": "KGT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sedadi",
+        "railway:ref": "SDI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tegowanu",
+        "railway:ref": "TGW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kradenan",
+        "railway:ref": "KNN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kuala Bingai",
+        "railway:ref": "KBG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Medan",
+        "railway:ref": "MDN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kuala Tanjung",
+        "railway:ref": "KTJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Geurugok",
+        "railway:ref": "GRK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tarandam",
+        "railway:ref": "TDA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Suka Cinta",
+        "railway:ref": "SCT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Solo Balapan",
+        "railway:ref": "SLO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Srowot",
+        "railway:ref": "SWT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Klaten",
+        "railway:ref": "KT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Madiun",
+        "railway:ref": "MN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Meluwung",
+        "railway:ref": "MLW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sumobito",
+        "railway:ref": "SBO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Indro",
+        "railway:ref": "IDO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Surabaya Gubeng",
+        "railway:ref": "SGU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cicalengka",
+        "railway:ref": "CCL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tarik",
+        "railway:ref": "TRK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Rogojampi",
+        "railway:ref": "RGP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Malang Kotalama",
+        "railway:ref": "MLK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Garahan",
+        "railway:ref": "GRN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Jatiroto",
+        "railway:ref": "JTR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Mrawan",
+        "railway:ref": "MRW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pakisaji",
+        "railway:ref": "PSI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Prabumulih",
+        "railway:ref": "PBM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bekasi Barat",
+        "railway:ref": "BEK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cikunir 2",
+        "railway:ref": "CIK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cikunir 1",
+        "railway:ref": "CIK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Jatibening Baru",
+        "railway:ref": "JAT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kuningan",
+        "railway:ref": "KUN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ciracas",
+        "railway:ref": "CIR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Dukuh Atas BNI",
+        "railway:ref": "DUK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sumberwadung",
+        "railway:ref": "SWD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Eks Stasiun Benculuk",
+        "railway:ref": "EKS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Eks Stasiun Srono",
+        "railway:ref": "EKS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ciliwung",
+        "railway:ref": "CIL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sungai Liput",
+        "railway:ref": "SUN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bukit Selamat",
+        "railway:ref": "BUK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Barru",
+        "railway:ref": "BAR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tanete Rilau",
+        "railway:ref": "TAN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tonjong Baru",
+        "railway:ref": "TOJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Yogyakarta International Airport",
+        "railway:ref": "YIA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cipunegara",
+        "railway:ref": "CRA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tanjungrasa",
+        "railway:ref": "TJS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pabuaran",
+        "railway:ref": "PAB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pasirbungur",
+        "railway:ref": "PAS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cikaum",
+        "railway:ref": "CKM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Krenceng",
+        "railway:ref": "KEN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tambun",
+        "railway:ref": "TB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Batu Ceper",
+        "railway:ref": "BAT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sukaraja",
+        "railway:ref": "SUA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Saungnaga",
+        "railway:ref": "SNA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Muara Saling",
+        "railway:ref": "MSL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Halim",
+        "railway:ref": "HAL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bogor Paledang",
+        "railway:ref": "BOP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kalisetail",
+        "railway:ref": "KSL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tuban",
+        "railway:ref": "TUB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Maros",
+        "railway:ref": "MRS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pangkajene",
+        "railway:ref": "PKJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Palanro",
+        "railway:ref": "PAL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ma'rang",
+        "railway:ref": "MRG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Mangkoso",
+        "railway:ref": "MAN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Labakkang",
+        "railway:ref": "LKK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Mandai",
+        "railway:ref": "MDI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Garongkong",
+        "railway:ref": "GAR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Rammang-Rammang",
+        "railway:ref": "RMG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Mandalle",
+        "railway:ref": "MDL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Mangilu",
+        "railway:ref": "MGU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Takkalasi",
+        "railway:ref": "TAK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Leles",
+        "railway:ref": "LL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Walantaka",
+        "railway:ref": "WLT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Serang",
+        "railway:ref": "SG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Padalarang",
+        "railway:ref": "PDL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Gadobangkong",
+        "railway:ref": "GK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cimindi",
+        "railway:ref": "CMD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ciroyom",
+        "railway:ref": "CIR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bandung",
+        "railway:ref": "BD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cikudapateuh",
+        "railway:ref": "CTH"
+      }
+    },
+    {
+      "properties": {
+        "name": "Rancaekek",
+        "railway:ref": "RCK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Lalang",
+        "railway:ref": "LAG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Martapura",
+        "railway:ref": "MP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bangilan",
+        "railway:ref": "BAN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Manggarai",
+        "railway:ref": "MAN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Matraman",
+        "railway:ref": "MAT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pasar Pramuka",
+        "railway:ref": "PAS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pramuka BPKP",
+        "railway:ref": "PRA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Rawamangun",
+        "railway:ref": "RAW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cikarang",
+        "railway:ref": "CKR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Piladang (Eks)",
+        "railway:ref": "PIL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Padang Tarab (Eks)",
+        "railway:ref": "PAD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bojong Indah",
+        "railway:ref": "BOJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Banjar",
+        "railway:ref": "BJR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pasar Seni",
+        "railway:ref": "PAS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bende",
+        "railway:ref": "BEN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Beach Pool",
+        "railway:ref": "BEA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Gerbang Timur",
+        "railway:ref": "GER"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sea World",
+        "railway:ref": "SEA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Dunia Fantasi",
+        "railway:ref": "DUN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Marina",
+        "railway:ref": "MAR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Eks Stasiun Bayah",
+        "railway:ref": "EKS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Baso (Eks)",
+        "railway:ref": "BAS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tanjung Alam (Eks)",
+        "railway:ref": "TAN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bukittingi (Eks)",
+        "railway:ref": "BUK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pasar Rebo (Eks)",
+        "railway:ref": "PAS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Koto Baru (Eks)",
+        "railway:ref": "KOT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kampung Tangah (Eks)",
+        "railway:ref": "KAM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kandang Ampat (Eks)",
+        "railway:ref": "KAN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Padang Luar (Eks)",
+        "railway:ref": "PAD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Simalanggang (Eks)",
+        "railway:ref": "SIM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Dangung Dangung (Eks)",
+        "railway:ref": "DAN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Limbanang (Eks)",
+        "railway:ref": "LIM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Silungkang (Eks)",
+        "railway:ref": "SIL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sungai Lassi (Eks)",
+        "railway:ref": "SUN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Batu Limbak (Eks)",
+        "railway:ref": "BAT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sumpur (Eks)",
+        "railway:ref": "SUM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Biaro (Eks)",
+        "railway:ref": "BIA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Simpang (Eks)",
+        "railway:ref": "SIM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pakan Sinayan (Eks)",
+        "railway:ref": "PAK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Simpang Padang Tarab (Eks)",
+        "railway:ref": "SIM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ujung Guguk (Eks)",
+        "railway:ref": "UJU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Harmoni",
+        "railway:ref": "HAR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sawah Besar",
+        "railway:ref": "SAW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Mangga Besar",
+        "railway:ref": "MAN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Glodok",
+        "railway:ref": "GLO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Klari",
+        "railway:ref": "KLI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pogajih",
+        "railway:ref": "PGJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sumberpucung",
+        "railway:ref": "SBP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sepanjang",
+        "railway:ref": "SPJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Muara Satu",
+        "railway:ref": "MUS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sukoharjo",
+        "railway:ref": "SKH"
+      }
+    },
+    {
+      "properties": {
+        "name": "Maguwo",
+        "railway:ref": "MGW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Merakurak",
+        "railway:ref": "MER"
+      }
+    },
+    {
+      "properties": {
+        "name": "Arjawinangun",
+        "railway:ref": "AWN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Babakan",
+        "railway:ref": "BBK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cianjur",
+        "railway:ref": "CJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sukabumi",
+        "railway:ref": "SI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cicurug",
+        "railway:ref": "CCR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Lempuyangan",
+        "railway:ref": "LPN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Yogyakarta",
+        "railway:ref": "YK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cikeusal",
+        "railway:ref": "CKL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Maja",
+        "railway:ref": "MJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bandara Soekarno-Hatta",
+        "railway:ref": "BAN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Padang",
+        "railway:ref": "PD"
+      }
+    },
+    {
+      "properties": {
+        "name": "Purwokerto",
+        "railway:ref": "PWT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kretek",
+        "railway:ref": "KRT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ketanggungan",
+        "railway:ref": "KGG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Serdang",
+        "railway:ref": "SDN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bukit Putus",
+        "railway:ref": "BKP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Besitang",
+        "railway:ref": "BSG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ambarawa",
+        "railway:ref": "AMB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Semarang Poncol",
+        "railway:ref": "SMC"
+      }
+    },
+    {
+      "properties": {
+        "name": "Karangsono",
+        "railway:ref": "KSO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sepancar",
+        "railway:ref": "SPC"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kemelak",
+        "railway:ref": "KMK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Baturaja",
+        "railway:ref": "BTA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kotabaru",
+        "railway:ref": "KBU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Air Asam",
+        "railway:ref": "ASM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sukamerindu",
+        "railway:ref": "SKU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tigagajah",
+        "railway:ref": "TJH"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tarahan",
+        "railway:ref": "THN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sukamenanti",
+        "railway:ref": "SKN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Garuntang",
+        "railway:ref": "GR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Merak",
+        "railway:ref": "MER"
+      }
+    },
+    {
+      "properties": {
+        "name": "Labuhanratu",
+        "railway:ref": "LAR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Gedungratu",
+        "railway:ref": "GDR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Rejosari",
+        "railway:ref": "RJS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Wates",
+        "railway:ref": "WT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Branti",
+        "railway:ref": "BTI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tegineneng",
+        "railway:ref": "TGI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Rengas",
+        "railway:ref": "RGS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bekri",
+        "railway:ref": "BKI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Haji Pemanggilan",
+        "railway:ref": "HJP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Blambangan Pagar",
+        "railway:ref": "BBA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kalibalangan",
+        "railway:ref": "KAG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Candimas",
+        "railway:ref": "CMS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kotabumi",
+        "railway:ref": "KB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cempaka",
+        "railway:ref": "CEP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Ketapang",
+        "railway:ref": "KTP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Negara Ratu",
+        "railway:ref": "NRR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tulungbuyut",
+        "railway:ref": "TLY"
+      }
+    },
+    {
+      "properties": {
+        "name": "Negeri Agung",
+        "railway:ref": "NGN"
+      }
+    },
+    {
+      "properties": {
+        "name": "Semarang Tawang Bank Jateng",
+        "railway:ref": "SMT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Goprak",
+        "railway:ref": "GPK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Gubug",
+        "railway:ref": "GUB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Blambangan Umpu",
+        "railway:ref": "BBU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Giham",
+        "railway:ref": "GHM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Way Pisang",
+        "railway:ref": "WAP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Waytuba",
+        "railway:ref": "WAY"
+      }
+    },
+    {
+      "properties": {
+        "name": "Sungai Tuha",
+        "railway:ref": "SGT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Gilas",
+        "railway:ref": "GLS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cawang",
+        "railway:ref": "CAW"
+      }
+    },
+    {
+      "properties": {
+        "name": "Tanggulangin",
+        "railway:ref": "TGA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Porong",
+        "railway:ref": "PR"
+      }
+    },
+    {
+      "properties": {
+        "name": "Eks Stasiun Candi Umbul",
+        "railway:ref": "EKS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Eks Stasiun Merbabu Grabag",
+        "railway:ref": "EKS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Eks Stasiun Gemawang",
+        "railway:ref": "EKS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Eks Stasiun Kalitelon",
+        "railway:ref": "EKS"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bedono",
+        "railway:ref": "BED"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kelurahan",
+        "railway:ref": "KEL"
+      }
+    },
+    {
+      "properties": {
+        "name": "Jambu",
+        "railway:ref": "JAM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Kampung Jua",
+        "railway:ref": "KAJ"
+      }
+    },
+    {
+      "properties": {
+        "name": "Cimparuh",
+        "railway:ref": "CPH"
+      }
+    },
+    {
+      "properties": {
+        "name": "Lubuklinggau",
+        "railway:ref": "LLG"
+      }
+    },
+    {
+      "properties": {
+        "name": "Bungamas",
+        "railway:ref": "BGM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Merapi",
+        "railway:ref": "MRP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Muara Lawai",
+        "railway:ref": "MLI"
+      }
+    },
+    {
+      "properties": {
+        "name": "Niru",
+        "railway:ref": "NRU"
+      }
+    },
+    {
+      "properties": {
+        "name": "Penimur",
+        "railway:ref": "PNM"
+      }
+    },
+    {
+      "properties": {
+        "name": "Lembak",
+        "railway:ref": "LEB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Karangenda",
+        "railway:ref": "KED"
+      }
+    },
+    {
+      "properties": {
+        "name": "Glumbang",
+        "railway:ref": "GLB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Siantar",
+        "railway:ref": "SIR"
+      }
+    },
+    {
+      "properties": {
+        "name": "PP. Teluk Bayur (Clinker)",
+        "railway:ref": "PP."
+      }
+    },
+    {
+      "properties": {
+        "name": "PP. Teluk Bayur (Cement)",
+        "railway:ref": "PP."
+      }
+    },
+    {
+      "properties": {
+        "name": "Thamrin",
+        "railway:ref": "THA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Latsari",
+        "railway:ref": "LAT"
+      }
+    },
+    {
+      "properties": {
+        "name": "Mondokan",
+        "railway:ref": "MON"
+      }
+    },
+    {
+      "properties": {
+        "name": "Trosobo",
+        "railway:ref": "TRO"
+      }
+    },
+    {
+      "properties": {
+        "name": "Pabrik Kapur Tuban",
+        "railway:ref": "PAB"
+      }
+    },
+    {
+      "properties": {
+        "name": "Monas",
+        "railway:ref": "MON"
+      }
+    },
+    {
+      "properties": {
+        "name": "Jakarta Kota",
+        "railway:ref": "JAK"
+      }
+    },
+    {
+      "properties": {
+        "name": "Stasiun tram Gamplong Studio",
+        "railway:ref": "STA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Stasiun Parungkuda",
+        "railway:ref": "STA"
+      }
+    },
+    {
+      "properties": {
+        "name": "Rantau Prapat",
+        "railway:ref": "RAP"
+      }
+    },
+    {
+      "properties": {
+        "name": "Stasiun Labubanratu (LAR)",
+        "railway:ref": "STA"
+      }
+    }
+  ]
+}
