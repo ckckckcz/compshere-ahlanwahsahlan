@@ -14,8 +14,9 @@ class OrderController:
         id_user = data['id_user']
         gross_amount = data['gross_amount']
         id_family = data['id_family']
-        
-        order = self.__model.add_order(id_user, gross_amount)
+        id_dummy = data['id']
+
+        order = self.__model.add_order(id_user, gross_amount, id_dummy)
 
         order_id = order['id']
 

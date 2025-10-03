@@ -55,8 +55,8 @@ class MainModel:
         data = self.__user_model.store_image(filename, file_bytes, file)
         return data
     
-    def add_order(self, id_user, gross_amount):
-        data = self.__order_model.add_order(id_user, gross_amount)
+    def add_order(self, id_user, gross_amount, id_dummy):
+        data = self.__order_model.add_order(id_user, gross_amount, id_dummy)
         return data
     
     def update_order_by_id(self, id_order, data):
