@@ -10,7 +10,7 @@ class OrderController:
     def create_transaction(self, data):
         id_user = data['id_user']
         gross_amount = data['gross_amount']
-
+        print(data)
         order = self.__model.add_order(id_user, gross_amount)
 
         user = self.__model.get_user_by_id(id_user)

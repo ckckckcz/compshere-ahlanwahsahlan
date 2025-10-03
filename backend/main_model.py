@@ -4,6 +4,7 @@ from supabase import create_client, Client
 from model.user_model import UserModel
 from model.role_model import RoleModel
 from model.order_model import OrderModel
+from model.family_model import FamilyModel
 
 class MainModel:
     def __init__(self):
@@ -14,6 +15,7 @@ class MainModel:
         self.__user_model = UserModel(self.__database)
         self.__role_model = RoleModel(self.__database)
         self.__order_model = OrderModel(self.__database)
+        self.__family_model = FamilyModel(self.__database)
 
     def get_database(self):
         return self.__database
@@ -59,3 +61,14 @@ class MainModel:
         data = self.__order_model.update_order_by_id(id_order, data)
         return data
             
+    def get_family_by_id_user(self, id_user):
+        data = self.__family_model.get_family_by_id_user(id_user)
+        return data
+    
+    def get_family_by_id_user_and_name(self, id_user, name):
+        data = self.__family_model.get_family_by_id_user_and_name(id_user, name)
+        return data
+    
+    def add_family(self, data):
+        data = self.__family_model.add_family(data)
+        return data

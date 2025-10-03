@@ -35,6 +35,10 @@ class Api:
         self._app.add_url_rule('/api/login/google', view_func=self._login_google, methods=['GET'])   
         self._app.add_url_rule('/api/authorize', view_func=self._authorize, methods=['GET'], endpoint='authorize')
 
+        self._app.add_url_rule('/api/get/family/<id_user>', view_func=self._get_family_by_id_user, methods=['GET'])
+        self._app.add_url_rule('/api/get/family/<id_user>/<name>', view_func=self._get_family_by_id_user_and_name, methods=['GET'])
+        self._app.add_url_rule('/api/add/family/<id_user>', view_func=self._add_family, methods=['POST'])
+
     def _get_user(self):
         data = self.__controller.get_user()
         return jsonify({"status": "Data received", "data": data}), 200
@@ -165,6 +169,7 @@ class Api:
         file = request.files['file']
 
         data = self.__controller.detect(file.read(), option)
+        print(data)
         return jsonify({"status": "Data received", "data": data}), 200
 
     def _get_user_profile(self):
@@ -181,6 +186,19 @@ class Api:
             
         # except Exception as e:
             return jsonify({"error": "Server error occurred"}), 500
+    
+    def _get_family_by_id_user(self, id_user):
+        data = self.__controller.get_family_by_id_user(id_user)
+        return jsonify({"status": "Data received", "data": data}), 200
+    
+    def _get_family_by_id_user_and_name(self, id_user, name):
+        data = self.__controller.get_family_by_id_user_and_name(id_user, name)
+        return jsonify({"status": "Data received", "data": data}), 200
+    
+    def _add_family(self, id_user):
+        data = request.json
+        data = self.__controller.add_family(id_user, data)
+        return jsonify({"status": "Data received", "data": data}), 200
 
     def run(self):
         self.app.run(host='0.0.0.0')
