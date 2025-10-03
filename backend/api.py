@@ -151,6 +151,7 @@ class Api:
 
     def _create_transaction(self):
         data = request.json
+        print(data)
         data = self.__controller.create_transaction(data)
         if data['status'] == 'success':
             return jsonify(data), 200

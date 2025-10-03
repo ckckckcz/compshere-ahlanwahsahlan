@@ -79,6 +79,10 @@ class MainModel:
         data = self.__seat_model.get_seat_by_id_order(id_order)
         return data
     
-    def add_seat(self, data):
-        data = self.__seat_model.add_seat(data)
+    def add_seat(self, id_family, id_order):
+        data = self.__seat_model.add_seat( id_family, id_order)
+        return data
+    
+    def store_qrcode(self, filename, file_bytes, mimetype):
+        data = self.__order_model.store_qrcode(filename, file_bytes, mimetype)
         return data

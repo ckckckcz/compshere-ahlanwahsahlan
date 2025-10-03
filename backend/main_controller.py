@@ -129,6 +129,7 @@ class MainController:
     def add_seat(self, data):
         data = self.__seat_controller.add_seat(data)
         return data
+    
 
     # def get_seat_by_id_order(self, id_order):
     #     response = self.__database.table("seat").select("*").eq("id_order", id_order).execute()
