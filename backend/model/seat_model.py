@@ -10,6 +10,14 @@ class SeatModel:
     #     response = self.__database.table("seat").select("*").eq("id_schedule", id_schedule).execute()
     #     return response
     
-    def add_seat(self, data):
+    def add_seat(self, id_family, id_order):
+        data = []
+
+        for member in id_family:
+            data.append({
+                "id_family": member,
+                "id_order": id_order
+            })
+    
         response = self.__database.table("seat").insert(data).execute()
         return response.data
