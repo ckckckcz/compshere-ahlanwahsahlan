@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import { TrainFront, MapPin } from "lucide-react"
 import { TrainTicket } from "@/data/dataBooking"
 import { useRouter } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 
 interface CardProps {
   tickets: TrainTicket[]
@@ -10,6 +11,8 @@ interface CardProps {
 
 export default function FlightTicketCard({ tickets, searchRoute }: CardProps) {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const userId = searchParams.get("user_id")
 
   // Sort tickets: available first, then unavailable
   const sortedTickets = [...tickets].sort((a, b) => {
@@ -38,6 +41,10 @@ export default function FlightTicketCard({ tickets, searchRoute }: CardProps) {
       passengers: "1", // default to 1 passenger
     })
 
+    if (userId) {
+      bookingParams.append("user_id", userId)
+    }
+
     router.push(`/detail-booking?${bookingParams.toString()}`)
   }
 
@@ -54,6 +61,10 @@ export default function FlightTicketCard({ tickets, searchRoute }: CardProps) {
       trainNumber: ticket.trainNumber,
       autoSearch: "true",
     })
+
+    if (userId) {
+      routeParams.append("user_id", userId)
+    }
 
     router.push(`/rute?${routeParams.toString()}`)
   }

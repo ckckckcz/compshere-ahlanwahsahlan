@@ -36,6 +36,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${bricolage.variable} antialiased`}
       >
         <AppWrapper>{children}</AppWrapper>
+        <script src="https://app.sandbox.midtrans.com/snap/snap.js"></script>
       </body>
     </html>
   );

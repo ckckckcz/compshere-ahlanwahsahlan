@@ -37,6 +37,11 @@ export default function KAIMain() {
     nik: "",
   });
 
+  // Check if user is logged in based on session_id and get user_id
+  const sessionId = typeof window !== "undefined" ? localStorage.getItem("session_id") : null;
+  const userId = typeof window !== "undefined" ? localStorage.getItem("user_id") : null;
+  const isLoggedIn = !!sessionId;
+
   const handleBookingInputChange = (field: string, value: string) => {
     setBookingForm((prev) => ({
       ...prev,
@@ -45,7 +50,10 @@ export default function KAIMain() {
   };
 
   const handleCheckBooking = () => {
-    // Add your booking check logic here
+    if (!isLoggedIn) {
+      setErrors(["Silakan login terlebih dahulu untuk memeriksa kode booking"]);
+      return;
+    }
     if (!bookingForm.bookingCode || !bookingForm.nik) {
       setErrors(["Mohon masukkan kode booking dan NIK"]);
       return;
@@ -114,6 +122,17 @@ export default function KAIMain() {
       children: searchForm.children || "0",
     });
 
+    if (!isLoggedIn) {
+      setErrors(["Silakan login terlebih dahulu untuk mencari tiket"]);
+      return;
+    }
+
+    if (!userId) {
+      setErrors(["User ID tidak ada"]);
+      return;
+    }
+
+    searchParams.append("user_id", userId);
     window.location.href = `/booking?${searchParams.toString()}`;
   };
 
@@ -170,7 +189,11 @@ export default function KAIMain() {
                     <span className="hidden sm:inline">Pemesanan Tiket</span>
                     <span className="sm:hidden">Pesan</span>
                   </TabsTrigger>
-                  <TabsTrigger value="check" className="flex items-center gap-2 text-xs sm:text-sm">
+                  <TabsTrigger
+                    value="check"
+                    className="flex items-center gap-2 text-xs sm:text-sm"
+                    disabled={!isLoggedIn}
+                  >
                     <Search className="w-4 h-4" />
                     <span className="hidden sm:inline">Cek Kode Booking</span>
                     <span className="sm:hidden">Cek</span>
@@ -368,6 +391,14 @@ export default function KAIMain() {
                       <CardDescription className="text-base">Masukkan kode booking dan NIK untuk memeriksa status pemesanan Anda</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
+                      {!isLoggedIn && (
+                        <Alert variant="warning" className="bg-yellow-50 border-yellow-200">
+                          <CircleAlert className="h-4 w-4 text-yellow-600" />
+                          <AlertDescription>
+                            Anda harus login untuk memeriksa kode booking. <a href="/login" className="underline text-blue-600">Login di sini</a>.
+                          </AlertDescription>
+                        </Alert>
+                      )}
                       {errors.length > 0 && (
                         <Alert variant="destructive" className="bg-red-50 border-red-200">
                           <CircleAlert className="h-4 w-4" />
@@ -388,7 +419,13 @@ export default function KAIMain() {
                             <Ticket className="w-4 h-4 mr-2" />
                             Kode Booking
                           </Label>
-                          <Input placeholder="Masukkan kode booking" className="border-gray-200" value={bookingForm.bookingCode} onChange={(e) => handleBookingInputChange("bookingCode", e.target.value)} />
+                          <Input
+                            placeholder="Masukkan kode booking"
+                            className="border-gray-200"
+                            value={bookingForm.bookingCode}
+                            onChange={(e) => handleBookingInputChange("bookingCode", e.target.value)}
+                            disabled={!isLoggedIn}
+                          />
                         </div>
 
                         {/* NIK */}
@@ -397,13 +434,23 @@ export default function KAIMain() {
                             <Users className="w-4 h-4 mr-2" />
                             NIK
                           </Label>
-                          <Input placeholder="Masukkan NIK" className="border-gray-200" value={bookingForm.nik} onChange={(e) => handleBookingInputChange("nik", e.target.value)} />
+                          <Input
+                            placeholder="Masukkan NIK"
+                            className="border-gray-200"
+                            value={bookingForm.nik}
+                            onChange={(e) => handleBookingInputChange("nik", e.target.value)}
+                            disabled={!isLoggedIn}
+                          />
                         </div>
                       </div>
 
                       {/* Check Button */}
                       <div className="flex justify-center pt-2">
-                        <Button onClick={handleCheckBooking} className="w-full h-10 bg-[#003D79] hover:bg-[#0050A0] text-white px-8">
+                        <Button
+                          onClick={handleCheckBooking}
+                          className="w-full h-10 bg-[#003D79] hover:bg-[#0050A0] text-white px-8"
+                          disabled={!isLoggedIn}
+                        >
                           <Search className="w-4 h-4 mr-2" />
                           Cek Booking
                         </Button>
