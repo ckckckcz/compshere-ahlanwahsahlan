@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Train, ChevronRight, Clock, MapPin, Armchair } from "lucide-react";
 import { toast } from "react-hot-toast";
 import PemilihanKursi from "@/components/widget/Booking/PemilihanKursi";
+import { trainTickets, TrainTicket } from "@/data/dataBooking";
 
 interface PassengerData {
   title: string;
@@ -52,7 +53,6 @@ export default function BookingStepper() {
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [addToPassengerList, setAddToPassengerList] = useState(false);
   const [snapToken, setSnapToken] = useState<string | null>(null);
-
   const [bookingData, setBookingData] = useState<BookingData>({
     ticketId: "",
     trainName: "",
@@ -102,8 +102,8 @@ export default function BookingStepper() {
       const trainName = searchParams.get("trainName");
       const trainNumber = searchParams.get("trainNumber");
       const ticketClass = searchParams.get("class");
-      const origin = searchParams.get("origin");
-      const destination = searchParams.get("destination");
+      const origin = searchParams.get("destination");
+      const destination = searchParams.get("origin");
       const departureTime = searchParams.get("departureTime");
       const arrivalTime = searchParams.get("arrivalTime");
       const departureDate = searchParams.get("departureDate");
@@ -177,46 +177,48 @@ export default function BookingStepper() {
   };
 
   const fetchSnapToken = async () => {
-  if (!bookingData.id_user) {
-    toast.error("User ID tidak tersedia");
-    return;
-  }
-  if (!isStep2Valid()) {
-    toast.error("Pilih kursi terlebih dahulu");
-    return;
-  }
-
-  try {
-    const passengersCount = addToPassengerList ? bookingData.passengers : bookingData.selectedSeats.length;
-    const transactionData = {
-      id_user: bookingData.id_user,
-      gross_amount: bookingData.price * passengersCount + 5000,
-    };
-
-    const response = await fetch("https://coherent-classic-platypus.ngrok-free.app/api/create/transaction", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(transactionData),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Failed to fetch Snap token: ${response.status}`);
+    if (!bookingData.id_user) {
+      toast.error("User ID tidak tersedia");
+      return;
+    }
+    if (!isStep2Valid()) {
+      toast.error("Pilih kursi terlebih dahulu");
+      return;
     }
 
-    const result = await response.json();
-    if (result.status === "success" && result.data) {
-      setSnapToken(result.data); // Ambil token langsung dari 'data'
-      setBookingData((prev) => ({ ...prev, snapToken: result.data }));
-      toast.success("Snap token berhasil digenerate!");
-    } else {
-      throw new Error("Gagal mendapatkan Snap token dari backend");
+    try {
+      const passengersCount = addToPassengerList ? bookingData.passengers : bookingData.selectedSeats.length;
+      const transactionData = {
+        id_user: bookingData.id_user,
+        gross_amount: bookingData.price * passengersCount + 5000,
+        id: bookingData.ticketId,
+        id_family: [18, 19, 20],
+      };
+
+      const response = await fetch("https://coherent-classic-platypus.ngrok-free.app/api/create/transaction", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(transactionData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch Snap token: ${response.status}`);
+      }
+
+      const result = await response.json();
+      if (result.status === "success" && result.data) {
+        setSnapToken(result.data); // Ambil token langsung dari 'data'
+        setBookingData((prev) => ({ ...prev, snapToken: result.data }));
+        toast.success("Snap token berhasil digenerate!");
+      } else {
+        throw new Error("Gagal mendapatkan Snap token dari backend");
+      }
+    } catch (error) {
+      toast.error("Gagal mendapatkan Snap token, silakan coba lagi");
     }
-  } catch (error) {
-    toast.error("Gagal mendapatkan Snap token, silakan coba lagi");
-  }
-};
+  };
 
   const handlePayment = () => {
     if (!snapToken) {
