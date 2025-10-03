@@ -40,7 +40,7 @@ const NfcResultPage = () => {
     }
   }, [tagId, ndefText, tagType, nik, nama, tempatLahir, tanggalLahir, jenisKelamin, alamat, rt, rw, kelurahan, kecamatan, agama, statusPerkawinan, pekerjaan, kewarganegaraan, berlakuHingga, source]);
 
-  const expoGoLink = 'exp://192.168.3.204:8081';
+  const expoGoLink = 'exp://192.168.212.201:8081';
   const handleScanAgain = () => window.location.href = expoGoLink;
   const copyExpoLink = () => navigator.clipboard.writeText(expoGoLink).then(() => alert('Link Expo Go berhasil dicopy!'));
 

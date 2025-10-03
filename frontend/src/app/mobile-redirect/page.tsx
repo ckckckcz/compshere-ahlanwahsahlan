@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 export default function MobileRedirect() {
   useEffect(() => {
     // Coba buka aplikasi mobile via Expo Go (ke halaman utama/scan)
-    window.location.href = 'exp://192.168.3.204:8081';
+    window.location.href = 'exp://192.168.212.201:8081';
     
     // Fallback ke nfc-result setelah 3 detik
     setTimeout(() => {
@@ -19,7 +19,7 @@ export default function MobileRedirect() {
       <p>Jika aplikasi tidak terbuka dalam 3 detik, Anda akan diarahkan kembali ke halaman hasil.</p>
       <div style={{ marginTop: '20px' }}>
         <a 
-          href="exp://192.168.3.204:8081"
+          href="exp://192.168.212.201:8081"
           style={{
             backgroundColor: '#4CAF50',
             color: 'white',

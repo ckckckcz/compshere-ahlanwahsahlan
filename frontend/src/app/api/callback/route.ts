@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
     source: 'nfc-scan'
   }).toString();
   
-  const redirectUrl = `https://a181b33da136.ngrok-free.app/nfc-result?${queryParams}`;
+  const redirectUrl = `https://cb2b76262763.ngrok-free.app/nfc-result?${queryParams}`;
   
   // Return JavaScript redirect yang langsung execute
   const jsRedirectHtml = `
