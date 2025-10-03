@@ -3,6 +3,7 @@ from flask_cors import CORS
 # from dotenv import load_dotenv
 from main_controller import MainController
 import os
+import base64
 
 class Api:
     def __init__(self, app_instance):
@@ -106,36 +107,34 @@ class Api:
             return jsonify(data), 400
         
     def _update_user(self):
-        nama_keluarga = request.form.get('nama_keluarga')
-        id_user = request.form.get('user_id')
-        nomor_telepon = request.form.get('nomor_telepon')
-        data = {}
-        foto = None
-        if 'foto' in request.files:
-            file = request.files['foto']
-            if file.filename != '':
-                user = self.__controller.get_user_by_id(id_user)
+        data = request.get_json()
+        nama_keluarga = data.get('nama_keluarga')
+        id_user = data.get('user_id')
+        foto_base64 = data.get('foto')
 
-                if user is None:
-                    return jsonify({'error': 'User not found'}), 404
-                
-                if user['foto'] is not None:
-                    self.__controller.delete_image(user['foto'])
+        foto_base64 = data.get('foto')
 
-                filename = f'{os.urandom(16).hex()}_{file.filename}'
+        if foto_base64:
+            if ',' in foto_base64:
+                header, foto_base64 = foto_base64.split(',', 1)
+            
+            mimetype = header.split(';')[0].replace('data:', 'image/') if 'data:' in header else 'image/png'
+            
+            foto_bytes = base64.b64decode(foto_base64)
+            filename = f"{os.urandom(16).hex()}.png"
 
-                file_bytes = file.read()
+            foto_path = self.__controller.store_image(filename, foto_bytes, mimetype)
+        else:
+            foto_path = None
 
-                foto = self.__controller.store_image(filename, file_bytes, file)
+        update_data = {
+            "nama_keluarga": nama_keluarga,
+            "foto": foto_path
+        }
 
-                print(foto)
-
-        data['foto'] = foto
-        data['nama_keluarga'] = nama_keluarga
-
-        data = self.__controller.update_user(id_user, data)
-
+        data = self.__controller.update_user(id_user, update_data)
         return jsonify({'status': 'User updated successfully', 'data': data}), 200
+
     
     def _login_google(self):
         # redirect_uri = url_for('authorize', _external=True)
