@@ -4,8 +4,8 @@ class OrderModel:
         self.__bucket = 'KAI-bucket'
         self.__folder = 'QRCode'
 
-    def add_order(self, id_user, gross_amount):
-        data = {"id_user" : id_user, "gross_amount" : gross_amount, "status" : "pending"}
+    def add_order(self, id_user, gross_amount, id_dummy):
+        data = {"id_user" : id_user, "gross_amount" : gross_amount, "id_dummy" : id_dummy, "status" : "pending"}
         response = self.__database.table('order').insert(data).execute()
         return response.data[0]
     
