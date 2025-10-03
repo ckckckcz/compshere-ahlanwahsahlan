@@ -5,3 +5,5 @@ __pycache__/
 
 .env
 myenv
+venv311
+venv

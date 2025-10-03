@@ -2,11 +2,10 @@
 
 import type React from "react"
 import { useState, useRef, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import {
   Send,
   Mic,
-  ChevronDown,
   ThumbsUp,
   ThumbsDown,
   Copy,
@@ -22,11 +21,17 @@ import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
+interface KaiSource {
+  source: string
+  snippet: string
+}
+
 interface Message {
   id: string
   content: string
   isUser: boolean
   timestamp: Date
+  sources?: KaiSource[]
 }
 
 interface AgentRecommendation {
@@ -42,12 +47,73 @@ interface AIModel {
   provider: string
 }
 
-// 🔹 Updated AI Models dengan ID yang valid
-const aiModels: AIModel[] = [
-  { id: "google/gemma-3n-e2b-it:free", name: "Gemma 3n E2B IT", provider: "Google" },
-  { id: "x-ai/grok-4-fast:free", name: "Grok 4 Fast", provider: "xAI" },
-  { id: "openai/gpt-oss-120b:free", name: "GPT-OSS-120B", provider: "OpenAI" },
-]
+interface ModelResolution {
+  requested?: string | null
+  resolved?: string
+  fallback?: boolean
+  reason?: string
+}
+
+// 🔹 Model utama yang diminta oleh UI
+const REQUESTED_MODEL: AIModel = {
+  id: "x-ai/grok-4-fast:free",
+  name: "Grok 4 Fast",
+  provider: "xAI",
+}
+
+const serverModelInfo: Record<string, AIModel> = {
+  "meta-llama/llama-3.1-8b-instruct": {
+    id: "meta-llama/llama-3.1-8b-instruct",
+    name: "LLaMA 3.1 8B Instruct",
+    provider: "Meta",
+  },
+  "google/gemma-2-9b-it": {
+    id: "google/gemma-2-9b-it",
+    name: "Gemma 2 9B IT",
+    provider: "Google",
+  },
+  "qwen/qwen2.5-7b-instruct": {
+    id: "qwen/qwen2.5-7b-instruct",
+    name: "Qwen 2.5 7B Instruct",
+    provider: "Alibaba",
+  },
+  "rag-only": {
+    id: "rag-only",
+    name: "RAG Internal",
+    provider: "Knowledge Base",
+  },
+}
+
+const getModelInfo = (modelId: string | undefined | null): AIModel => {
+  if (!modelId) {
+    return REQUESTED_MODEL
+  }
+
+  if (modelId === REQUESTED_MODEL.id) {
+    return REQUESTED_MODEL
+  }
+
+  if (serverModelInfo[modelId]) {
+    return serverModelInfo[modelId]
+  }
+
+  return { id: modelId, name: modelId, provider: "OpenRouter" }
+}
+
+const normalizeFallbackReason = (reason?: string): string | undefined => {
+  if (!reason) return undefined
+  const lower = reason.toLowerCase()
+  if (lower.includes("user not found")) {
+    return "Perlu API key OpenRouter yang aktif"
+  }
+  if (lower.includes("api key") || lower.includes("invalid key")) {
+    return "API key OpenRouter tidak valid"
+  }
+  if (lower.includes("http")) {
+    return reason
+  }
+  return reason.charAt(0).toUpperCase() + reason.slice(1)
+}
 
 // 🔹 Disesuaikan untuk KAI
 const agentRecommendations: AgentRecommendation[] = [
@@ -93,13 +159,12 @@ function TypingText({ text, onComplete }: { text: string; onComplete?: () => voi
 export function AIChatAgent() {
   const [messages, setMessages] = useState<Message[]>([])
   const [inputValue, setInputValue] = useState("")
-  const [selectedModel, setSelectedModel] = useState<AIModel>(aiModels[0])
   const [isRecording, setIsRecording] = useState(false)
-  const [showModelDropdown, setShowModelDropdown] = useState(false)
   const [isInitialState, setIsInitialState] = useState(true)
   const [isTyping, setIsTyping] = useState(false)
   const [isThinking, setIsThinking] = useState(false)
   const [typingMessageId, setTypingMessageId] = useState<string | null>(null)
+  const [modelResolution, setModelResolution] = useState<ModelResolution | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -119,6 +184,32 @@ export function AIChatAgent() {
     }
   }, [inputValue])
 
+  useEffect(() => {
+    let isCancelled = false
+
+    const loadConfig = async () => {
+      try {
+        const response = await fetch("/api/chat", { cache: "no-store" })
+        if (!response.ok) return
+
+        const data = await response.json()
+        if (isCancelled) return
+
+        if (data?.model_resolution) {
+          setModelResolution(data.model_resolution as ModelResolution)
+        }
+      } catch (error) {
+        console.error("Gagal memuat konfigurasi chat:", error)
+      }
+    }
+
+    loadConfig()
+
+    return () => {
+      isCancelled = true
+    }
+  }, [])
+
   const handleSend = async () => {
     if (!inputValue.trim()) return
 
@@ -136,14 +227,8 @@ export function AIChatAgent() {
     setIsThinking(true)
 
     try {
-      // Get API key from environment variable with proper prefix
-      const apiKey = process.env.NEXT_PUBLIC_OPEN_ROUTER_API || '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'
-      
-      console.log('API Key exists:', !!apiKey) // Debug log
-      console.log('Selected model:', selectedModel.id) // Debug log
-
       const requestBody = {
-        model: selectedModel.id,
+        model: REQUESTED_MODEL.id,
         messages: [
           { 
             role: "system", 
@@ -156,90 +241,73 @@ export function AIChatAgent() {
         stream: false, // Explicitly disable streaming
       }
 
-      console.log('Request body:', requestBody) // Debug log
-
-      const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      const response = await fetch("/api/chat", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${apiKey}`,
           "Content-Type": "application/json",
-          "HTTP-Referer": typeof window !== 'undefined' ? window.location.origin : 'https://localhost:3000',
-          "X-Title": "KAI Virtual Assistant",
         },
         body: JSON.stringify(requestBody),
       })
 
-      console.log('Response status:', response.status) // Debug log
+      const text = await response.text()
 
-      if (!response.ok) {
-        const errorText = await response.text()
-        console.error('API Error Response:', errorText)
-        
-        // Try fallback model jika model utama gagal
-        if (selectedModel.id !== aiModels[0].id) {
-          console.log('Trying fallback model...')
-          const fallbackRequestBody = {
-            ...requestBody,
-            model: aiModels[0].id, // Use first model as fallback
-          }
-          
-          const fallbackResponse = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${apiKey}`,
-              "Content-Type": "application/json",
-              "HTTP-Referer": typeof window !== 'undefined' ? window.location.origin : 'https://localhost:3000',
-              "X-Title": "KAI Virtual Assistant",
-            },
-            body: JSON.stringify(fallbackRequestBody),
-          })
-          
-          if (fallbackResponse.ok) {
-            const fallbackData = await fallbackResponse.json()
-            if (fallbackData.choices && fallbackData.choices.length > 0 && fallbackData.choices[0]?.message?.content) {
-              const aiResponse: Message = {
-                id: (Date.now() + 1).toString(),
-                content: `[Using fallback model: ${aiModels[0].name}]\n\n${fallbackData.choices[0].message.content}`,
-                isUser: false,
-                timestamp: new Date(),
-              }
-
-              setIsThinking(false)
-              setIsTyping(true)
-              setTypingMessageId(aiResponse.id)
-              setMessages((prev) => [...prev, aiResponse])
-              return
-            }
-          }
+      let data: any = null
+      if (text) {
+        try {
+          data = JSON.parse(text)
+        } catch (parseError) {
+          throw new Error("Respon dari server tidak valid. Silakan coba lagi.")
         }
-        
-        throw new Error(`HTTP ${response.status}: Model "${selectedModel.id}" tidak tersedia atau tidak valid`)
       }
 
-      const data = await response.json()
-      console.log('API Response:', data) // Debug log
+      const resolution = (data?.model_resolution ?? null) as ModelResolution | null
 
-      if (data.choices && data.choices.length > 0 && data.choices[0]?.message?.content) {
+      if (!response.ok) {
+        if (resolution) {
+          setModelResolution(resolution)
+        }
+        const message =
+          (data && (data.error?.message || data.error)) ||
+          `HTTP ${response.status}: Permintaan ke server gagal`
+        throw new Error(message)
+      }
+
+      if (data?.error) {
+        if (resolution) {
+          setModelResolution(resolution)
+        }
+        const message = typeof data.error === "string" ? data.error : data.error.message
+        throw new Error(message || "Server mengembalikan kesalahan")
+      }
+
+      const content = data?.choices?.[0]?.message?.content
+
+      if (content) {
+        if (resolution) {
+          setModelResolution(resolution)
+        }
+        const sources = Array.isArray(data?.kai_sources)
+          ? (data.kai_sources as KaiSource[])
+              .filter((item) => item?.source && item?.snippet)
+              .map((item) => ({ source: item.source, snippet: item.snippet }))
+          : undefined
+
         const aiResponse: Message = {
           id: (Date.now() + 1).toString(),
-          content: data.choices[0].message.content,
+          content,
           isUser: false,
           timestamp: new Date(),
+          sources,
         }
 
         setIsThinking(false)
         setIsTyping(true)
         setTypingMessageId(aiResponse.id)
         setMessages((prev) => [...prev, aiResponse])
-      } else if (data.error) {
-        console.error('API Error:', data.error)
-        throw new Error(data.error.message || 'API Error occurred')
       } else {
-        console.error('Unexpected API response structure:', data)
         throw new Error("Struktur response API tidak sesuai yang diharapkan")
       }
     } catch (error) {
-      console.error("Error fetching from OpenRouter:", error)
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         content: error instanceof Error 
@@ -286,6 +354,13 @@ export function AIChatAgent() {
     navigator.clipboard.writeText(content)
   }
 
+  const activeModelInfo = getModelInfo(modelResolution?.resolved ?? REQUESTED_MODEL.id)
+  const requestedModelInfo = getModelInfo(modelResolution?.requested ?? REQUESTED_MODEL.id)
+  const usingFallback = Boolean(
+    modelResolution?.fallback && modelResolution?.resolved && activeModelInfo.id !== requestedModelInfo.id,
+  )
+  const fallbackReason = usingFallback ? normalizeFallbackReason(modelResolution?.reason) : undefined
+
   return (
     <TooltipProvider>
       <div className="w-full h-[600px] flex flex-col bg-background rounded-lg border border-border overflow-hidden relative z-10">
@@ -297,7 +372,11 @@ export function AIChatAgent() {
             </div>
             <div>
               <h3 className="font-medium text-foreground">KAI Virtual Assistant</h3>
-              <p className="text-xs text-muted-foreground">Didukung oleh {selectedModel.name}</p>
+              <p className="text-xs text-muted-foreground">
+                {`Didukung oleh ${activeModelInfo.name} (${activeModelInfo.provider})`}
+                {usingFallback && ` · Fallback dari ${requestedModelInfo?.name ?? modelResolution?.requested}`}
+                {fallbackReason ? ` · ${fallbackReason}` : ""}
+              </p>
             </div>
           </div>
         </div>
@@ -464,44 +543,6 @@ export function AIChatAgent() {
 
         {/* Footer */}
         <div className="p-4 border-t border-border bg-card flex-shrink-0">
-          <div className="flex items-center gap-2 mb-3">
-            <div className="relative">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowModelDropdown(!showModelDropdown)}
-                className="h-8 text-xs"
-              >
-                <span>{selectedModel.name}</span>
-                <ChevronDown className="w-3 h-3 ml-1" />
-              </Button>
-              <AnimatePresence>
-                {showModelDropdown && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="absolute bottom-full mb-2 left-0 bg-popover border border-border rounded-md shadow-lg py-1 min-w-[200px] z-20"
-                  >
-                    {aiModels.map((model) => (
-                      <button
-                        key={model.id}
-                        onClick={() => {
-                          setSelectedModel(model)
-                          setShowModelDropdown(false)
-                        }}
-                        className="w-full px-3 py-2 text-left hover:bg-accent transition-colors duration-200 text-sm"
-                      >
-                        <div className="font-medium text-foreground">{model.name}</div>
-                        <div className="text-xs text-muted-foreground">{model.provider}</div>
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </div>
-
           <div className="flex items-end gap-2">
             <div className="flex-1 relative">
               <Textarea
