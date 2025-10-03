@@ -93,9 +93,12 @@ export default function ProfilePage({ title = "Personal Information", items = []
   const [editedKtpData, setEditedKtpData] = useState<any>(null);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [dataConfirmed, setDataConfirmed] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [filePreviewUrl, setFilePreviewUrl] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const resetOCR = () => {
     setSelectedOCR(null);
     setKtpData(null);
@@ -480,6 +483,84 @@ export default function ProfilePage({ title = "Personal Information", items = []
     alert("Tambah anggota keluarga akan diimplementasikan");
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Check if file is jpg or png
+    if (!['image/jpeg', 'image/png'].includes(file.type)) {
+      alert("Mohon unggah file JPG atau PNG saja");
+      return;
+    }
+
+    setSelectedFile(file);
+    
+    // Create a preview URL
+    const previewUrl = URL.createObjectURL(file);
+    setFilePreviewUrl(previewUrl);
+  };
+
+  const handleFileUpload = async () => {
+    if (!selectedFile || !selectedOCR) return;
+    
+    setIsProcessing(true);
+    
+    try {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+
+      const res = await fetch(`https://coherent-classic-platypus.ngrok-free.app/api/send/${selectedOCR}`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) throw new Error("Upload gagal");
+
+      const responseJson = await res.json();
+      console.log("API OCR Response:", responseJson);
+
+      const data = responseJson.data || responseJson;
+
+      // Save OCR results to state
+      if (selectedOCR === "ktp") {
+        const simplifiedData = {
+          nama: data.name || data.nama || "Nama tidak tersedia",
+          nik: data.nik || data.NIK || "NIK tidak tersedia",
+          jenisKelamin: data.gender || data.jenisKelamin || "Jenis kelamin tidak tersedia"
+        };
+        console.log("Processed KTP data:", simplifiedData);
+        setKtpData(simplifiedData);
+      } else {
+        setKkData(data);
+      }
+    } catch (err) {
+      console.error("Error processing document:", err);
+      alert("Gagal memproses dokumen");
+    } finally {
+      setIsProcessing(false);
+      // Clear the file selection
+      setSelectedFile(null);
+      if (filePreviewUrl) {
+        URL.revokeObjectURL(filePreviewUrl);
+        setFilePreviewUrl(null);
+      }
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    }
+  };
+
+  const clearFileSelection = () => {
+    if (filePreviewUrl) {
+      URL.revokeObjectURL(filePreviewUrl);
+    }
+    setSelectedFile(null);
+    setFilePreviewUrl(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
   if (loading) {
     return (
       <main className="mx-auto max-w-6xl p-4 md:p-6 space-y-4 md:space-y-6">
@@ -497,7 +578,7 @@ export default function ProfilePage({ title = "Personal Information", items = []
   }
 
   return (
-    <main className="mx-auto min-h-screen max-w-6xl p-4 md:p-6 space-y-4 md:space-y-6">
+    <main className="mx-auto min-h-screen max-w-7xl p-4 md:p-6 space-y-4 md:space-y-6">
       <img src="/images/user-profile-reference.png" alt="Reference design for staff profile" className="sr-only" />
 
       <Tabs defaultValue="profile" className="w-full">
@@ -643,6 +724,68 @@ export default function ProfilePage({ title = "Personal Information", items = []
                       </div>
 
                       <p className="text-sm text-muted-foreground mt-2 text-center">{isCameraActive ? "Posisikan dokumen dengan jelas dalam bingkai kamera" : "Izinkan akses kamera untuk memindai dokumen"}</p>
+                    </div>
+
+                    {/* Add file upload option */}
+                    <Separator className="my-4" />
+                    
+                    <div className="w-full max-w-md">
+                      <h3 className="text-lg font-medium mb-2">Atau unggah gambar</h3>
+                      
+                      <div className="space-y-4">
+                        <div className="grid w-full items-center gap-1.5">
+                          <Label htmlFor="document-upload">Pilih File (JPG atau PNG)</Label>
+                          <Input 
+                            ref={fileInputRef}
+                            id="document-upload" 
+                            type="file" 
+                            accept="image/jpeg,image/png"
+                            onChange={handleFileChange}
+                            className="cursor-pointer"
+                          />
+                          <p className="text-sm text-muted-foreground">Maksimal ukuran file 5MB</p>
+                        </div>
+                        
+                        {filePreviewUrl && (
+                          <div className="relative">
+                            <div className="relative w-full max-w-md aspect-[4/3] border rounded-lg overflow-hidden">
+                              <img 
+                                src={filePreviewUrl} 
+                                alt="Preview" 
+                                className="w-full h-full object-contain"
+                              />
+                            </div>
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              className="absolute top-2 right-2"
+                              onClick={clearFileSelection}
+                            >
+                              <CameraOff className="h-4 w-4 mr-1" /> Hapus
+                            </Button>
+                          </div>
+                        )}
+                        
+                        <div className="flex justify-start">
+                          <Button 
+                            disabled={!selectedFile || isProcessing} 
+                            onClick={handleFileUpload}
+                            className="gap-2 w-full md:w-auto"
+                          >
+                            {isProcessing ? (
+                              <>
+                                <RefreshCw className="h-4 w-4 animate-spin" />
+                                Memproses...
+                              </>
+                            ) : (
+                              <>
+                                <Upload className="h-4 w-4" />
+                                Unggah & Proses Dokumen
+                              </>
+                            )}
+                          </Button>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 )}
