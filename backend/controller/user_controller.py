@@ -82,11 +82,4 @@ class UserController:
 
     def store_image(self, filename, file_bytes, file):
         data = self.__model.store_image(filename, file_bytes, file)
-        return data
-            
-
-
-
-
-        
-        
+        return data     
