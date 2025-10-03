@@ -11,11 +11,12 @@ import { Camera, User } from "lucide-react"
 export default function CompleteProfilePage() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const [formData, setFormData] = useState({
-    user_id: "",
-    nama_keluarga: "",
-    foto: null as File | null,
-  })
+const [formData, setFormData] = useState({
+  user_id: "",
+  nama_keluarga: "",
+  nomor_telepon: "",   // ← baru
+  foto: null as File | null,
+})
   const [isLoading, setIsLoading] = useState(false)
   const [photoPreview, setPhotoPreview] = useState<string | null>(null)
 
@@ -65,11 +66,13 @@ export default function CompleteProfilePage() {
         })
       }
 
-      const payload = {
-        user_id: formData.user_id,
-        nama_keluarga: formData.nama_keluarga || null,
-        foto: fotoBase64,
-      }
+const payload = {
+  user_id: formData.user_id,
+  nama_keluarga: formData.nama_keluarga || null,
+  nomor_telepon: formData.nomor_telepon || null,
+  foto: fotoBase64,
+}
+
 
       const response = await fetch("https://coherent-classic-platypus.ngrok-free.app/api/complete-profile", {
         method: "POST",
@@ -154,6 +157,21 @@ export default function CompleteProfilePage() {
                 className="h-12 bg-gray-50 border-gray-200 focus:border-[#F15A22] focus:ring-[#F15A22] rounded-lg"
               />
             </div>
+            {/* Nomor Telepon */}
+<div className="space-y-2">
+  <label htmlFor="nomor_telepon" className="text-sm font-medium text-gray-700">
+    Phone Number
+  </label>
+  <Input
+    type="text"
+    name="nomor_telepon"
+    placeholder="Enter your phone number (optional)"
+    value={formData.nomor_telepon}
+    onChange={handleInputChange}
+    className="h-12 bg-gray-50 border-gray-200 focus:border-[#F15A22] focus:ring-[#F15A22] rounded-lg"
+  />
+</div>
+
 
             {/* Submit */}
             <Button

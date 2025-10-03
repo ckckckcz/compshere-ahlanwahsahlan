@@ -110,6 +110,7 @@ class Api:
         data = request.get_json()
         nama_keluarga = data.get('nama_keluarga')
         id_user = data.get('user_id')
+        nomor_telefon = data.get('nomor_telepon')
         foto_base64 = data.get('foto')
 
         foto_base64 = data.get('foto')
@@ -129,7 +130,8 @@ class Api:
 
         update_data = {
             "nama_keluarga": nama_keluarga,
-            "foto": foto_path
+            "foto": foto_path,
+            "nomor_telefon" : nomor_telefon
         }
 
         data = self.__controller.update_user(id_user, update_data)

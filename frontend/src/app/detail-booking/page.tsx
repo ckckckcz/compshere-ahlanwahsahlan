@@ -364,7 +364,7 @@ export default function BookingStepper() {
         id_user: bookingData.id_user,
         gross_amount: bookingData.price * passengersCount + 5000,
         id: bookingData.ticketId,
-        id_family: [18, 19, 20],
+        id_family: selectedFamilyMembers,
       };
 
       console.log("Sending transaction data:", transactionData);

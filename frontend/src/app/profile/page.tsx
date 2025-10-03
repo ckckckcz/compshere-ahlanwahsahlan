@@ -548,9 +548,6 @@ export default function ProfilePage({ title = "Personal Information", items = []
       if (!res.ok) throw new Error("Gagal menambahkan data KK");
 
       const data = await res.json();
-      console.log("Response add KK:", data);
-
-      alert("Data KK berhasil ditambahkan");
       setFamilyData((prev) => [...prev, ...(kkData.anggotaKeluarga || [])]);
       window.location.reload();
     } catch (err) {
