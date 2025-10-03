@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>NFC Tools Demo</title>
+  </head>
+  <body>
+    <h1>Demo NFC Tools</h1>
+    <a id="scan" href="#">Scan NFC</a>
+
+    <script>
+      const callbackUrl = encodeURIComponent(
+        "http://10.10.79.60:3000/nfc-callback?tagid={TAG-ID}&text={NDEF-TEXT}"
+      );
+      const nfcLink = `nfc://scan/?callback=${callbackUrl}`;
+      document.getElementById("scan").href = nfcLink;
+    </script>
+  </body>
+</html>

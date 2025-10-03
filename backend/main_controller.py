@@ -15,8 +15,6 @@ from controller.detection_controller import DetectionController
 from controller.order_controller import OrderController
 from controller.family_controller import FamilyController
 from controller.seat_controller import SeatController
-# from controller.detection_controller_direct import DetectionControllerDirect
-# from controller.oauth_google_controller import OAuthGoogleController
 
 class MainController:
     def __init__(self, app_instance):
@@ -52,8 +50,6 @@ class MainController:
         self.__order_controller = OrderController(self.__database, self.__snap, self.__core_api)
         self.__family_controller = FamilyController(self.__database)
         self.__seat_controller = SeatController(self.__database)
-        # self.__detection_controller_direct = DetectionControllerDirect()
-        # self.__google_controller = OAuthGoogleController(self.__google)
 
     def get_user(self):
         data = self.__user_controller.get_user()
@@ -118,6 +114,14 @@ class MainController:
         data = self.__family_controller.get_family_by_id_user_and_name(id_user, name)
         return data
     
+    def get_order_by_id_user(self, id_user):
+        data = self.__order_controller.get_order_by_id_user(id_user)
+        return data
+    
+    def get_order_by_code_and_nik(self, order_code, nik):
+        data = self.__order_controller.get_order_by_code_and_nik(order_code, nik)
+        return data
+    
     def add_family(self, id_user, data):
         data = self.__family_controller.add_family(id_user, data)
         return data
@@ -130,7 +134,3 @@ class MainController:
         data = self.__seat_controller.add_seat(data)
         return data
     
-
-    # def get_seat_by_id_order(self, id_order):
-    #     response = self.__database.table("seat").select("*").eq("id_order", id_order).execute()
-    #     return response.data

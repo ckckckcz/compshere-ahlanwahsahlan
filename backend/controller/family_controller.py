@@ -11,16 +11,20 @@ class FamilyController:
         return data
     
     def add_family(self, id_user, data):
+        if isinstance(data, dict):
+            data = [data]
+
         family_members = []
         id_user = int(id_user)
 
         for member in data:
-            family_members.append({
-                "id_user": 61,
-                "name": member['name'],
-                "nik": member['nik'],
-                "gender": member['gender']
-            })
+            if isinstance(member, dict):
+                family_members.append({
+                    "id_user": id_user,
+                    "name": member.get('name'),
+                    "nik": member.get('nik'),
+                    "gender": member.get('gender')
+                })
             
         if family_members:
             data = self.__model.add_family(family_members)

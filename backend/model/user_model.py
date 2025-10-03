@@ -1,5 +1,5 @@
 from urllib.parse import urlparse
-
+from io import BytesIO
 
 class UserModel:
     def __init__(self, database):
@@ -40,17 +40,18 @@ class UserModel:
         return relative_path
     
 
-    def store_image(self, filename, file_bytes, file):
+    def store_image(self, filename, file_bytes, mimetype):
         path = f"{self.__folder}/{filename}"
 
         self.__database.storage.from_(self.__bucket).upload(
             path=path,
             file=file_bytes,
-            file_options={"content-type": file.mimetype or 'application/octet-stream'},
+            file_options={"content-type": mimetype},
         )
 
         url = self.__database.storage.from_(self.__bucket).get_public_url(path)
         return url
+
     
     def delete_image(self, url):
         path = self.__get_path_from_url(url)
