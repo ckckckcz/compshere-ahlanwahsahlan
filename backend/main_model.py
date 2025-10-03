@@ -5,6 +5,7 @@ from model.user_model import UserModel
 from model.role_model import RoleModel
 from model.order_model import OrderModel
 from model.family_model import FamilyModel
+from model.seat_model import SeatModel
 
 class MainModel:
     def __init__(self):
@@ -16,6 +17,7 @@ class MainModel:
         self.__role_model = RoleModel(self.__database)
         self.__order_model = OrderModel(self.__database)
         self.__family_model = FamilyModel(self.__database)
+        self.__seat_model = SeatModel(self.__database)
 
     def get_database(self):
         return self.__database
@@ -71,4 +73,12 @@ class MainModel:
     
     def add_family(self, data):
         data = self.__family_model.add_family(data)
+        return data
+    
+    def get_seat_by_id_order(self, id_order):
+        data = self.__seat_model.get_seat_by_id_order(id_order)
+        return data
+    
+    def add_seat(self, data):
+        data = self.__seat_model.add_seat(data)
         return data

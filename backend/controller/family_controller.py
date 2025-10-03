@@ -16,16 +16,14 @@ class FamilyController:
 
         for member in data:
             family_members.append({
-                "id_user": id_user,
+                "id_user": 61,
                 "name": member['name'],
                 "nik": member['nik'],
                 "gender": member['gender']
             })
-
-        print(family_members)
-
+            
         if family_members:
-            data = self.__model.add_family(data)
+            data = self.__model.add_family(family_members)
             return data
         
         return None

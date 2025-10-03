@@ -14,11 +14,13 @@ from controller.user_controller import UserController
 from controller.detection_controller import DetectionController
 from controller.order_controller import OrderController
 from controller.family_controller import FamilyController
+from controller.seat_controller import SeatController
+# from controller.detection_controller_direct import DetectionControllerDirect
 # from controller.oauth_google_controller import OAuthGoogleController
 
 class MainController:
     def __init__(self, app_instance):
-        self.__model_ktp = YOLO("model_detection\\best.pt")
+        self.__model_ktp = YOLO("model_detection\\model_ktp.pt")
         self.__model_kk = YOLO("model_detection\\model_kk.pt")
         self.__reader = easyocr.Reader(['id'], gpu=False)
 
@@ -49,6 +51,8 @@ class MainController:
         self.__detection_controller = DetectionController(np, Image, re, io, self.__reader, self.__model_ktp, self.__model_kk)
         self.__order_controller = OrderController(self.__database, self.__snap, self.__core_api)
         self.__family_controller = FamilyController(self.__database)
+        self.__seat_controller = SeatController(self.__database)
+        # self.__detection_controller_direct = DetectionControllerDirect()
         # self.__google_controller = OAuthGoogleController(self.__google)
 
     def get_user(self):
@@ -117,16 +121,15 @@ class MainController:
     def add_family(self, id_user, data):
         data = self.__family_controller.add_family(id_user, data)
         return data
+    
+    def get_seat_by_id_order(self, id_order):
+        data = self.__seat_controller.get_seat_by_id_order(id_order)
+        return data
+    
+    def add_seat(self, data):
+        data = self.__seat_controller.add_seat(data)
+        return data
 
-    # def _get_family_by_id_user(self, id_user):
-    #     data = self.__controller.get_family_by_id_user(id_user)
-    #     return jsonify({"status": "Data received", "data": data}), 200
-    
-    # def _get_family_by_id_user_and_name(self, id_user, name):
-    #     data = self.__controller.get_family_by_id_user_and_name(id_user, name)
-    #     return jsonify({"status": "Data received", "data": data}), 200
-    
-    # def _add_family(self, id_user):
-    #     data = request.json
-    #     data = self.__controller.add_family(id_user, data)
-    #     return jsonify({"status": "Data received", "data": data}), 200
+    # def get_seat_by_id_order(self, id_order):
+    #     response = self.__database.table("seat").select("*").eq("id_order", id_order).execute()
+    #     return response.data

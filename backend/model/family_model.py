@@ -12,6 +12,7 @@ class FamilyModel:
        
     
     def add_family(self, data):
+        print("Data before insert:", data)
         response = self.__database.table("family").insert(data).execute()
-        return response
+        return response.data
        
