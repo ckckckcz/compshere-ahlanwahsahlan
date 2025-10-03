@@ -1,5 +1,7 @@
 import io
 import qrcode
+import random
+import string
 
 class OrderController:
     def __init__(self, database, snap, core_api):
@@ -10,9 +12,18 @@ class OrderController:
     def get_order_by_id_user(self, id_user):
         data = self.__model.get_order_by_id_user(id_user)
         return data
-
+    
+    def get_order_by_code_and_nik(self, order_code, nik):
+        data = self.__model.get_order_by_code_and_nik(order_code, nik)
+        return data
+    
     def get_status_payment(self, id_order):
         return self.__core_api.transactions.status(id_order)
+    
+    def __generate_order_code(self, length):
+        characters = string.ascii_uppercase + string.digits 
+        order_code = ''.join(random.choices(characters, k=length))
+        return order_code
     
     def create_transaction(self, data):
         id_user = data['id_user']
@@ -20,7 +31,9 @@ class OrderController:
         id_family = data['id_family']
         id_dummy = data['id']
 
-        order = self.__model.add_order(id_user, gross_amount, id_dummy)
+        order_code = self.__generate_order_code(6)
+
+        order = self.__model.add_order(id_user, gross_amount, id_dummy, order_code)
 
         order_id = order['id']
 

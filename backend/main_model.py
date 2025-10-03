@@ -59,8 +59,12 @@ class MainModel:
         data = self.__order_model.get_order_by_id_user(id_user)
         return data
     
-    def add_order(self, id_user, gross_amount, id_dummy):
-        data = self.__order_model.add_order(id_user, gross_amount, id_dummy)
+    def get_order_by_code_and_nik(self, order_code, nik):
+        data = self.__order_model.get_order_by_code_and_nik(order_code, nik)
+        return data
+    
+    def add_order(self, id_user, gross_amount, id_dummy, order_code):
+        data = self.__order_model.add_order(id_user, gross_amount, id_dummy, order_code)
         return data
     
     def update_order_by_id(self, id_order, data):

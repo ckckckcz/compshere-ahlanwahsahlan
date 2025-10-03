@@ -8,8 +8,23 @@ class OrderModel:
         response = self.__database.table('order').select('*').eq('id_user', id_user).eq('status', 'success').execute()
         return response.data
     
-    def add_order(self, id_user, gross_amount, id_dummy):
-        data = {"id_user" : id_user, "gross_amount" : gross_amount, "id_dummy" : id_dummy, "status" : "pending"}
+    def get_order_by_code_and_nik(self, order_code, nik):
+
+        response = (
+            self.__database
+            .table('order')
+            .select("*, seat(family(nik))")  
+            .eq('order_code', order_code)
+            .eq('seat.family.nik', nik)  
+            .execute()
+        )
+        
+        orders = [{k: v for k, v in item.items() if k != 'seat'} for item in response.data]
+        
+        return orders
+        
+    def add_order(self, id_user, gross_amount, id_dummy, order_code):
+        data = {"id_user" : id_user, "gross_amount" : gross_amount, "id_dummy" : id_dummy, "order_code" : order_code, "status" : "pending"}
         response = self.__database.table('order').insert(data).execute()
         return response.data[0]
     

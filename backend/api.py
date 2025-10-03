@@ -23,8 +23,6 @@ class Api:
         self._app.add_url_rule('/api/register', view_func=self._register, methods=['POST'])
         self._app.add_url_rule('/api/user/session', view_func=self._get_user_session, methods=['GET'])
         self._app.add_url_rule('/api/complete-profile', view_func=self._update_user, methods=['POST'])
-        # self._app.add_url_rule('/delete/user/<id_user>', view_func=self._delete_user, methods=['DELETE'])  
-        # self._app.add_url_rule('/delete/user/foto/<id_user>', view_func=self._delete_user_foto, methods=['DELETE']) 
 
         self._app.add_url_rule('/api/send/<option>', view_func=self._send_identity, methods=['POST'])
         
@@ -42,6 +40,7 @@ class Api:
         self._app.add_url_rule('/api/get/seat/<id_order>', view_func=self._get_seat_by_id_order, methods=['GET'])
 
         self._app.add_url_rule('/api/get/order/<id_user>', view_func=self._get_order_by_id_user, methods=['GET'])
+        self._app.add_url_rule('/api/get/order/code/nik/<order_code>/<nik>', view_func=self._get_order_by_code_and_nik, methods=['GET'])
 
     def _get_user(self):
         data = self.__controller.get_user()
@@ -212,6 +211,11 @@ class Api:
     
     def _get_order_by_id_user(self, id_user):
         data = self.__controller.get_order_by_id_user(id_user)
+        return jsonify({"status": "Data received", "data": data}), 200
+    
+    def _get_order_by_code_and_nik(self, order_code, nik):
+        print(order_code, nik)
+        data = self.__controller.get_order_by_code_and_nik(order_code, nik)
         return jsonify({"status": "Data received", "data": data}), 200
 
 
