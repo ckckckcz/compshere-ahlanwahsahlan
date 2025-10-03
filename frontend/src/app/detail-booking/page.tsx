@@ -15,9 +15,20 @@ interface PassengerData {
   title: string;
   name: string;
   identityType: string;
-  identityNumber: string;
   email: string;
-  address: string;
+  nomor_telefon: string;
+  nik?: string;
+  id?: number;
+  gender?: string;
+}
+
+interface FamilyMember {
+  id: number;
+  name: string;
+  nik: string;
+  id_user: number;
+  gender: string;
+  created_at: string;
 }
 
 interface BookingData {
@@ -50,6 +61,8 @@ export default function BookingStepper() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoadingUserData, setIsLoadingUserData] = useState(false);
+  const [isLoadingFamily, setIsLoadingFamily] = useState(false);
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [addToPassengerList, setAddToPassengerList] = useState(false);
   const [snapToken, setSnapToken] = useState<string | null>(null);
@@ -76,25 +89,176 @@ export default function BookingStepper() {
     title: "",
     name: "",
     identityType: "",
-    identityNumber: "",
     email: "",
-    address: "",
+    nomor_telefon: "",
   });
 
   const [passenger1, setPassenger1] = useState<PassengerData>({
     title: "",
     name: "",
     identityType: "",
-    identityNumber: "",
     email: "",
-    address: "",
+    nomor_telefon: "",
   });
 
+  const [selectedFamilyMembers, setSelectedFamilyMembers] = useState<number[]>([]);
+  const [familyMembers, setFamilyMembers] = useState<FamilyMember[]>([]);
+
   const steps = [
-    { id: 1, name: "Data Pemesan" },
+    { id: 1, name: "Data Pemesan & Penumpang" },
     { id: 2, name: "Pemilihan Kursi" },
     { id: 3, name: "Pembayaran" },
   ];
+
+  const fetchUserData = async (userId: number) => {
+    if (!userId) return;
+
+    setIsLoadingUserData(true);
+    try {
+      console.log("Fetching user data for ID:", userId);
+      const response = await fetch(`https://coherent-classic-platypus.ngrok-free.app/get/user/${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "ngrok-skip-browser-warning": "true",
+        },
+      });
+
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch user data: ${response.status} ${response.statusText}`);
+      }
+
+      const text = await response.text(); 
+      console.log("Response text:", text.substring(0, 100)); 
+      if (!text || text.trim() === "") {
+        console.error("Empty response received from server");
+        toast.error("Server mengembalikan data kosong");
+        return;
+      }
+      const defaultUserData = {
+        title: "",
+        nama_keluarga: "User Name",
+        identity_type: "",
+        identity_number: "",
+        email: "",
+        nomor_telefon: "",
+        telephone: "",
+      };
+
+      let userData;
+      try {
+        
+        if (text.trim().startsWith("<")) {
+          console.error("Received HTML instead of JSON");
+          toast.error("Server mengembalikan HTML bukan JSON");
+
+          setMainPassenger({
+            title: defaultUserData.title,
+            name: defaultUserData.nama_keluarga,
+            identityType: defaultUserData.identity_type,
+            email: defaultUserData.email,
+            nomor_telefon: defaultUserData.telephone || defaultUserData.nomor_telefon,
+          });
+        } else {
+          userData = JSON.parse(text);
+
+          if (userData && userData.data) {
+            const user = userData.data;
+            console.log("Successfully parsed user data:", user);
+
+            setMainPassenger({
+              title: user.title || "",
+              name: user.nama_keluarga || "",
+              identityType: user.identity_type || "",
+              email: user.email || "",
+              nomor_telefon: user.telephone || user.nomor_telefon || "",
+            });
+
+            toast.success("Data pengguna berhasil dimuat");
+          } else {
+            console.error("Invalid response structure:", userData);
+            toast.error("Struktur data tidak valid");
+
+
+            setMainPassenger({
+              title: defaultUserData.title,
+              name: defaultUserData.nama_keluarga,
+              identityType: defaultUserData.identity_type,
+              email: defaultUserData.email,
+              nomor_telefon: defaultUserData.telephone || defaultUserData.nomor_telefon,
+            });
+          }
+        }
+      } catch (parseError) {
+        console.error("Failed to parse JSON:", parseError, "Response was:", text);
+        toast.error("Format data tidak valid");
+        setMainPassenger({
+          title: defaultUserData.title,
+          name: defaultUserData.nama_keluarga,
+          identityType: defaultUserData.identity_type,
+          email: defaultUserData.email,
+          nomor_telefon: defaultUserData.telephone || defaultUserData.nomor_telefon,
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      toast.error(`Gagal memuat data pengguna: ${error instanceof Error ? error.message : "Unknown error"}`);
+
+      // Don't block the booking process - continue with empty fields
+    } finally {
+      setIsLoadingUserData(false);
+    }
+  };
+
+  const fetchFamilyMembers = async (userId: number) => {
+    if (!userId) return;
+
+    setIsLoadingFamily(true);
+    try {
+      const response = await fetch(`https://coherent-classic-platypus.ngrok-free.app/api/get/family/${userId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          "ngrok-skip-browser-warning": "true",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch family members: ${response.status} ${response.statusText}`);
+      }
+
+      const text = await response.text();
+      
+    
+      if (!text || text.trim() === "" || text.trim().startsWith("<")) {
+        console.error("Invalid response format when fetching family members");
+        toast.error("Format data keluarga tidak valid");
+        return;
+      }
+
+      try {
+        const result = JSON.parse(text);
+        if (result && result.data && Array.isArray(result.data)) {
+          setFamilyMembers(result.data);
+          console.log("Family members loaded:", result.data);
+        } else {
+          console.error("Invalid family data structure:", result);
+          toast.error("Struktur data keluarga tidak valid");
+        }
+      } catch (parseError) {
+        console.error("Failed to parse family JSON:", parseError);
+        toast.error("Format data keluarga tidak valid");
+      }
+    } catch (error) {
+      console.error("Error fetching family members:", error);
+      toast.error(`Gagal memuat data keluarga: ${error instanceof Error ? error.message : "Unknown error"}`);
+    } finally {
+      setIsLoadingFamily(false);
+    }
+  };
 
   useEffect(() => {
     if (searchParams) {
@@ -113,6 +277,11 @@ export default function BookingStepper() {
       const passengers = searchParams.get("passengers");
       const id_user = searchParams.get("user_id");
 
+      // Use actual passenger count from URL parameters instead of hardcoded value
+      const passengerCount = Number.parseInt(passengers || "1");
+      
+      console.log(`Setting passenger count to: ${passengerCount}`);
+
       if (ticketId && trainName && trainNumber && ticketClass && origin && destination) {
         setBookingData((prev) => ({
           ...prev,
@@ -120,7 +289,7 @@ export default function BookingStepper() {
           trainName: trainName,
           trainNumber: trainNumber,
           class: ticketClass,
-          passengers: Number.parseInt(passengers || "1"),
+          passengers: passengerCount,
           departureStation: origin.toUpperCase(),
           arrivalStation: destination.toUpperCase(),
           departureTime: departureTime || "",
@@ -131,6 +300,11 @@ export default function BookingStepper() {
           duration: duration || "",
           id_user: id_user ? Number.parseInt(id_user) : undefined,
         }));
+
+        if (id_user) {
+          fetchUserData(Number.parseInt(id_user));
+          fetchFamilyMembers(Number.parseInt(id_user));
+        }
       }
       setIsLoading(false);
     }
@@ -165,15 +339,13 @@ export default function BookingStepper() {
   }, []);
 
   const isStep1Valid = () => {
-    const mainPassengerValid = mainPassenger.title && mainPassenger.name && mainPassenger.identityType && mainPassenger.identityNumber && mainPassenger.email;
-    if (!addToPassengerList && bookingData.passengers === 1) {
-      return mainPassengerValid;
-    }
-    return mainPassengerValid && passenger1.title && passenger1.name && passenger1.identityType && passenger1.identityNumber;
+    return mainPassenger.name && mainPassenger.email && mainPassenger.nomor_telefon;
   };
 
   const isStep2Valid = () => {
-    return bookingData.selectedSeats.length > 0 && bookingData.selectedSeats.length <= bookingData.passengers;
+    // For seats, make sure we have exactly the number of seats as passengers (including the main passenger)
+    const requiredSeats = bookingData.passengers;
+    return bookingData.selectedSeats.length === requiredSeats;
   };
 
   const fetchSnapToken = async () => {
@@ -195,28 +367,59 @@ export default function BookingStepper() {
         id_family: [18, 19, 20],
       };
 
+      console.log("Sending transaction data:", transactionData);
+
       const response = await fetch("https://coherent-classic-platypus.ngrok-free.app/api/create/transaction", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Accept: "application/json",
+          "ngrok-skip-browser-warning": "true",
         },
         body: JSON.stringify(transactionData),
       });
 
+      console.log("Transaction response status:", response.status);
+
       if (!response.ok) {
-        throw new Error(`Failed to fetch Snap token: ${response.status}`);
+        throw new Error(`Failed to fetch Snap token: ${response.status} ${response.statusText}`);
       }
 
-      const result = await response.json();
+      const text = await response.text();
+      console.log("Transaction response text:", text.substring(0, 100));
+      if (!text || text.trim() === "") {
+        console.error("Empty response received from server");
+        toast.error("Server mengembalikan data kosong");
+        return;
+      }
+
+      if (text.trim().startsWith("<")) {
+        console.error("Received HTML instead of JSON for transaction");
+        toast.error("Server mengembalikan HTML bukan JSON");
+        return;
+      }
+
+      let result;
+      try {
+        result = JSON.parse(text);
+      } catch (parseError) {
+        console.error("Failed to parse JSON:", parseError, "Response was:", text);
+        toast.error("Format data pembayaran tidak valid");
+        return;
+      }
+
       if (result.status === "success" && result.data) {
-        setSnapToken(result.data); // Ambil token langsung dari 'data'
+        console.log("Successfully received snap token");
+        setSnapToken(result.data);
         setBookingData((prev) => ({ ...prev, snapToken: result.data }));
         toast.success("Snap token berhasil digenerate!");
       } else {
+        console.error("Invalid transaction response structure:", result);
         throw new Error("Gagal mendapatkan Snap token dari backend");
       }
     } catch (error) {
-      toast.error("Gagal mendapatkan Snap token, silakan coba lagi");
+      console.error("Error fetching snap token:", error);
+      toast.error(`Gagal mendapatkan Snap token: ${error instanceof Error ? error.message : "Unknown error"}`);
     }
   };
 
@@ -303,6 +506,30 @@ export default function BookingStepper() {
     }
   }, [currentStep, snapToken]);
 
+  const handleFamilyMemberSelect = (memberId: number) => {
+    console.log(`Toggling family member ${memberId}`);
+    setSelectedFamilyMembers(prev => {
+      if (prev.includes(memberId)) {
+        console.log(`Removing member ${memberId}`);
+        return prev.filter(id => id !== memberId);
+      } else {
+        console.log(`Adding member ${memberId}`);
+        return [...prev, memberId];
+      }
+    });
+  };
+
+  // Update this function to ensure it sets the right number of passengers
+  useEffect(() => {
+    // Update the passenger count based on selected family members + main passenger
+    const totalPassengers = 1 + selectedFamilyMembers.length; // 1 for main passenger
+    
+    setBookingData(prev => ({
+      ...prev,
+      passengers: totalPassengers
+    }));
+  }, [selectedFamilyMembers]);
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -335,13 +562,7 @@ export default function BookingStepper() {
             {steps.map((step, index) => (
               <div key={step.id} className="flex items-center">
                 <div className="flex items-center gap-2">
-                  <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
-                      currentStep >= step.id ? "bg-gray-900 text-white" : "bg-white border-2 border-gray-300 text-gray-500"
-                    }`}
-                  >
-                    {step.id}
-                  </div>
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${currentStep >= step.id ? "bg-gray-900 text-white" : "bg-white border-2 border-gray-300 text-gray-500"}`}>{step.id}</div>
                   <span className={`text-sm font-medium ${currentStep >= step.id ? "text-gray-900" : "text-gray-500"}`}>{step.name}</span>
                 </div>
                 {index < steps.length - 1 && <ChevronRight className="w-5 h-5 text-gray-400 mx-2" />}
@@ -361,197 +582,152 @@ export default function BookingStepper() {
                   <div className="flex items-center gap-2 mb-6">
                     <div className="w-6 h-6 rounded bg-gray-100 flex items-center justify-center">
                       <svg className="w-4 h-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                        />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                       </svg>
                     </div>
                     <h2 className="text-lg font-semibold text-gray-900">Data Pemesan</h2>
+                    {isLoadingUserData && (
+                      <span className="ml-2 text-xs text-gray-500 italic flex items-center">
+                        <div className="w-3 h-3 border-t-2 border-blue-500 border-r-2 rounded-full animate-spin mr-1"></div>
+                        Memuat data...
+                      </span>
+                    )}
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
-                      <Select value={mainPassenger.title} onValueChange={(value) => handleInputChange("title", value)}>
-                        <SelectTrigger className="w-full bg-gray-50 border-gray-300">
-                          <SelectValue placeholder="Pilih title" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Tuan">Tuan</SelectItem>
-                          <SelectItem value="Nyonya">Nyonya</SelectItem>
-                          <SelectItem value="Nona">Nona</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Nama Keluarga</label>
+                      <Input type="text" value={mainPassenger.name} onChange={(e) => handleInputChange("name", e.target.value)} className="bg-gray-50 border-gray-300" disabled={isLoadingUserData} />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Nama</label>
-                      <Input
-                        type="text"
-                        value={mainPassenger.name}
-                        onChange={(e) => handleInputChange("name", e.target.value)}
-                        placeholder="Nama sesuai NIK / Passport"
-                        className="bg-gray-50 border-gray-300"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Tipe Identitas</label>
-                      <Select value={mainPassenger.identityType} onValueChange={(value) => handleInputChange("identityType", value)}>
-                        <SelectTrigger className="w-full bg-gray-50 border-gray-300">
-                          <SelectValue placeholder="Pilih tipe Identitas" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="KTP">KTP</SelectItem>
-                          <SelectItem value="SIM">SIM</SelectItem>
-                          <SelectItem value="Paspor">Paspor</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Nomor Identitas</label>
-                      <Input
-                        type="text"
-                        value={mainPassenger.identityNumber}
-                        onChange={(e) => handleInputChange("identityNumber", e.target.value)}
-                        placeholder="Nomor identitas sesuai NIK / Passport"
-                        className="bg-gray-50 border-gray-300"
-                      />
-                    </div>
-
-                    <div className="md:col-span-2">
                       <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                      <Input
-                        type="email"
-                        value={mainPassenger.email}
-                        onChange={(e) => handleInputChange("email", e.target.value)}
-                        placeholder="me@contoh.co.id"
-                        className="bg-gray-50 border-gray-300"
-                      />
+                      <Input type="email" value={mainPassenger.email} onChange={(e) => handleInputChange("email", e.target.value)} placeholder="Masukkan email" className="bg-gray-50 border-gray-300" disabled={isLoadingUserData} />
                     </div>
-
-                    <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Alamat</label>
+                  </div>
+                  <div className="gap-4 mt-3">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">Nomor Telephone</label>
                       <Input
-                        type="text"
-                        value={mainPassenger.address}
-                        onChange={(e) => handleInputChange("address", e.target.value)}
-                        placeholder="Nama Daerah"
+                        type="tel"
+                        value={mainPassenger.nomor_telefon}
+                        onChange={(e) => handleInputChange("nomor_telefon", e.target.value)}
+                        placeholder="Nomor telepon"
                         className="bg-gray-50 border-gray-300"
+                        disabled={isLoadingUserData}
                       />
-                    </div>
-
-                    <div className="md:col-span-2">
-                      <div className="flex items-center space-x-2">
-                        <Checkbox
-                          id="addToList"
-                          checked={addToPassengerList}
-                          onCheckedChange={(checked) => setAddToPassengerList(checked === true)}
-                        />
-                        <label htmlFor="addToList" className="text-sm text-gray-700 cursor-pointer">
-                          Tambahkan ke daftar penumpang
-                        </label>
-                      </div>
                     </div>
                   </div>
                 </div>
 
-                {/* Data Penumpang 1 Section */}
+                {/* Data Penumpang Section */}
                 <div className="bg-white rounded-lg border border-gray-200 p-6">
                   <div className="flex items-center gap-2 mb-6">
                     <div className="w-6 h-6 rounded bg-gray-100 flex items-center justify-center">
                       <svg className="w-4 h-4 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                        />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                       </svg>
                     </div>
-                    <h2 className="text-lg font-semibold text-gray-900">Data Penumpang 1</h2>
+                    <h2 className="text-lg font-semibold text-gray-900">Data Penumpang</h2>
+                    {isLoadingFamily && (
+                      <span className="ml-2 text-xs text-gray-500 italic flex items-center">
+                        <div className="w-3 h-3 border-t-2 border-blue-500 border-r-2 rounded-full animate-spin mr-1"></div>
+                        Memuat data keluarga...
+                      </span>
+                    )}
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
-                      <Select
-                        value={passenger1.title}
-                        onValueChange={(value) => handlePassenger1Change("title", value)}
-                      >
-                        <SelectTrigger className="w-full bg-gray-50 border-gray-300">
-                          <SelectValue placeholder="Pilih title" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="Tuan">Tuan</SelectItem>
-                          <SelectItem value="Nyonya">Nyonya</SelectItem>
-                          <SelectItem value="Nona">Nona</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Nama</label>
-                      <Input
-                        type="text"
-                        value={passenger1.name}
-                        onChange={(e) => handlePassenger1Change("name", e.target.value)}
-                        placeholder="Nama sesuai NIK / Passport"
-                        className="bg-gray-50 border-gray-300"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Tipe Identitas</label>
-                      <Select
-                        value={passenger1.identityType}
-                        onValueChange={(value) => handlePassenger1Change("identityType", value)}
-                      >
-                        <SelectTrigger className="w-full bg-gray-50 border-gray-300">
-                          <SelectValue placeholder="Pilih tipe Identitas" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="KTP">KTP</SelectItem>
-                          <SelectItem value="SIM">SIM</SelectItem>
-                          <SelectItem value="Paspor">Paspor</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Nomor Identitas</label>
-                      <Input
-                        type="text"
-                        value={passenger1.identityNumber}
-                        onChange={(e) => handlePassenger1Change("identityNumber", e.target.value)}
-                        placeholder="Nomor identitas sesuai NIK / Passport"
-                        className="bg-gray-50 border-gray-300"
-                      />
-                    </div>
+                  <div className="mb-6">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Pilih Anggota Keluarga</label>
+                    {familyMembers.length > 0 ? (
+                      <div className="border border-gray-300 rounded-md p-3 bg-gray-50">
+                        <p className="text-sm text-gray-600 mb-3">
+                          {selectedFamilyMembers.length} dari {Math.min(bookingData.passengers - 1, familyMembers.length)} anggota keluarga terpilih
+                        </p>
+                        
+                        <div className="space-y-2">
+                          {familyMembers.map(member => (
+                            <div key={member.id} className="flex items-center p-2 hover:bg-gray-100 rounded cursor-pointer"
+                                 onClick={() => handleFamilyMemberSelect(member.id)}>
+                              <div className={`w-4 h-4 border ${selectedFamilyMembers.includes(member.id) 
+                                ? 'bg-blue-600 border-blue-600' 
+                                : 'border-gray-300'} rounded flex items-center justify-center mr-2`}>
+                                {selectedFamilyMembers.includes(member.id) && (
+                                  <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                  </svg>
+                                )}
+                              </div>
+                              <label className="text-sm font-medium text-gray-700 cursor-pointer flex-1">
+                                {member.name} ({member.gender})
+                              </label>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="text-sm text-gray-500 italic p-3 bg-gray-50 border border-gray-200 rounded-md">
+                        {isLoadingFamily ? (
+                          "Sedang memuat data anggota keluarga..."
+                        ) : (
+                          "Tidak ada anggota keluarga yang terdaftar. Silakan tambahkan anggota keluarga di profil Anda."
+                        )}
+                      </div>
+                    )}
                   </div>
+
+                  {selectedFamilyMembers.length > 0 && (
+                    <div className="space-y-4 mt-6">
+                      <h3 className="text-md font-medium text-gray-800">Detail Penumpang Terpilih</h3>
+                      
+                      {selectedFamilyMembers.map(memberId => {
+                        const member = familyMembers.find(m => m.id === memberId);
+                        if (!member) return null;
+                        
+                        return (
+                          <div key={member.id} className="border border-gray-200 rounded-md p-4 bg-blue-50">
+                            <div className="flex justify-between items-start">
+                              <div>
+                                <h4 className="font-medium text-gray-900">{member.name}</h4>
+                                <p className="text-sm text-gray-600 mt-1">NIK: {member.nik}</p>
+                                <p className="text-sm text-gray-600">Jenis Kelamin: {member.gender}</p>
+                              </div>
+                              <Button 
+                                variant="ghost" 
+                                size="sm"
+                                onClick={() => handleFamilyMemberSelect(member.id)}
+                                className="text-gray-500 hover:text-red-600"
+                              >
+                                Hapus
+                              </Button>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                  
+                  {/* Remove the message about remaining seats if any */}
                 </div>
 
                 {/* Terms Checkbox */}
                 <div className="bg-white rounded-lg border border-gray-200 p-4">
                   <div className="flex items-start space-x-3">
-                    <Checkbox
-                      id="terms"
-                      checked={agreeToTerms}
-                      onCheckedChange={(checked) => setAgreeToTerms(checked === true)}
-                      className="mt-1"
+                    <Checkbox 
+                      id="terms" 
+                      checked={agreeToTerms} 
+                      onCheckedChange={(checked) => {
+                        if (checked === true || checked === false) {
+                          setAgreeToTerms(checked);
+                        }
+                      }} 
+                      className="mt-1" 
                     />
                     <div>
                       <label htmlFor="terms" className="text-sm font-medium text-gray-900 cursor-pointer block">
                         Saya menyetujui syarat dan ketentuan
                       </label>
-                      <p className="text-xs text-gray-600 mt-1">
-                        Dengan mencentang kotak ini, Anda menyetujui syarat dan ketentuan yang berlaku untuk pemesanan
-                        tiket kereta api.
-                      </p>
+                      <p className="text-xs text-gray-600 mt-1">Dengan mencentang kotak ini, Anda menyetujui syarat dan ketentuan yang berlaku untuk pemesanan tiket kereta api.</p>
                     </div>
                   </div>
                 </div>
@@ -566,11 +742,17 @@ export default function BookingStepper() {
                   </div>
                   <h2 className="text-lg font-semibold text-gray-900">Pemilihan Kursi</h2>
                 </div>
-                <PemilihanKursi onSeatsSelected={handleSeatsSelected} />
+                <div className="text-sm text-gray-600 mb-4">
+                  Silakan pilih {bookingData.passengers} kursi sesuai dengan jumlah penumpang yang akan bepergian.
+                </div>
+                <PemilihanKursi 
+                  onSeatsSelected={handleSeatsSelected}
+                  maxSeats={bookingData.passengers} // Pass the actual passenger count
+                />
                 {bookingData.selectedSeats.length > 0 && (
                   <div className="bg-green-50 border border-green-200 rounded-lg p-4 mt-4">
                     <p className="text-sm text-green-800">
-                      <strong>Kursi terpilih:</strong> {bookingData.selectedSeats.join(", ")} ({bookingData.selectedSeats.length} kursi)
+                      <strong>Kursi terpilih:</strong> {bookingData.selectedSeats.join(", ")} ({bookingData.selectedSeats.length} dari {bookingData.passengers} kursi)
                     </p>
                   </div>
                 )}
@@ -614,9 +796,7 @@ export default function BookingStepper() {
                   </div>
                   <div className="text-gray-600">{bookingData.class}</div>
                   <div className="text-gray-600">{bookingData.passengers} Dewasa</div>
-                  {bookingData.selectedSeats.length > 0 && (
-                    <div className="text-gray-600">Kursi: {bookingData.selectedSeats.join(", ")}</div>
-                  )}
+                  {bookingData.selectedSeats.length > 0 && <div className="text-gray-600">Kursi: {bookingData.selectedSeats.join(", ")}</div>}
                 </div>
               </div>
 
@@ -644,29 +824,29 @@ export default function BookingStepper() {
               </div>
 
               {currentStep === 1 ? (
-                <Button
-                  onClick={handleNext}
-                  disabled={!isStep1Valid() || !agreeToTerms}
-                  className="w-full bg-gray-400 hover:bg-gray-500 text-white disabled:opacity-50 disabled:cursor-not-allowed mt-4"
+                <Button 
+                  onClick={handleNext} 
+                  disabled={!isStep1Valid() || !agreeToTerms} 
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50 disabled:cursor-not-allowed mt-4"
                 >
                   Lanjut ke Pemilihan Kursi
                 </Button>
               ) : currentStep === 2 ? (
-                <Button
-                  onClick={handleNext}
-                  disabled={!isStep2Valid()}
-                  className="w-full bg-gray-400 hover:bg-gray-500 text-white disabled:opacity-50 disabled:cursor-not-allowed mt-4"
+                <Button 
+                  onClick={handleNext} 
+                  disabled={!isStep2Valid()} 
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white disabled:opacity-50 disabled:cursor-not-allowed mt-4"
                 >
-                  Lanjut Pembayaran
+                  {bookingData.selectedSeats.length === bookingData.passengers 
+                    ? "Lanjut ke Pembayaran" 
+                    : `Pilih ${bookingData.passengers - bookingData.selectedSeats.length} kursi lagi`}
                 </Button>
-              ) : currentStep === 3 && (
-                <Button
-                  onClick={handleBack}
-                  variant="outline"
-                  className="w-full border-gray-300 text-gray-700 hover:bg-gray-100 mt-4"
-                >
-                  Kembali
-                </Button>
+              ) : (
+                currentStep === 3 && (
+                  <Button onClick={handleBack} variant="outline" className="w-full border-gray-300 text-gray-700 hover:bg-gray-100 mt-4">
+                    Kembali
+                  </Button>
+                )
               )}
             </div>
           </div>

@@ -51,6 +51,7 @@ type Preferences = {
 
 interface PemilihanKursiProps {
   onSeatsSelected?: (seats: string[]) => void;
+  maxSeats?: number; // New prop for maximum number of seats that can be selected
 }
 
 const LETTERS_22 = ["A", "B", "C", "D"] as const; 
@@ -223,7 +224,7 @@ const Dropdown: React.FC<{ label: React.ReactNode; align?: "left" | "right"; chi
   );
 };
 
-export default function PemilihanKursi({ onSeatsSelected }: PemilihanKursiProps) {
+export default function PemilihanKursi({ onSeatsSelected, maxSeats = 5 }: PemilihanKursiProps) {
   const [coach, setCoach] = useState<CoachConfig>({ coachClass: "eksekutif", layout: "2-2", rows: 13 });
   const [prefs, setPrefs] = useState<Preferences>({
     groupSize: 1, 
@@ -263,8 +264,9 @@ export default function PemilihanKursi({ onSeatsSelected }: PemilihanKursiProps)
   }, [selectedSeats, onSeatsSelected]);
 
   const handleSeatSelect = (seat: Seat) => {
-    if (selectedSeats.length >= 5 && !selectedSeats.includes(seat.id)) {
-      alert("Maksimal pemilihan kursi adalah 5 kursi");
+    // Update seat selection limit to use the maxSeats prop instead of hardcoded 5
+    if (selectedSeats.length >= maxSeats && !selectedSeats.includes(seat.id)) {
+      alert(`Maksimal pemilihan kursi adalah ${maxSeats} kursi`);
       return;
     }
     
@@ -489,7 +491,7 @@ export default function PemilihanKursi({ onSeatsSelected }: PemilihanKursiProps)
             </Panel>
           )}
 
-          <Panel title={`Kursi Dipilih (${selectedSeats.length}/5)`}>
+          <Panel title={`Kursi Dipilih (${selectedSeats.length}/${maxSeats})`}>
             {selectedSeats.length > 0 ? (
               <ol className="space-y-2 text-sm">
                 {selectedSeats.map((seatId) => {
