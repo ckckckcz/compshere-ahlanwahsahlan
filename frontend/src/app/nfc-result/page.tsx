@@ -264,7 +264,7 @@ const NfcResultPage = () => {
   const addressLine = nfcData ? buildAddressLine(nfcData) : undefined;
 
   return (
-    <div className="relative min-h-screen bg-slate-50">
+    <div className="relative min-h-screen bg-white">
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute -top-24 -left-24 h-80 w-80 rounded-full bg-[#003D79]/15 blur-3xl" />
         <div className="absolute top-1/3 right-[-10%] h-96 w-96 rounded-full bg-[#F15A22]/10 blur-3xl" />

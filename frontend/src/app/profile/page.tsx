@@ -8,10 +8,14 @@ import { InfoCard } from "@/components/widget/Profile/info-card";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Upload, FileText, Users, Scan, CheckCircle2, Camera, CameraOff, RefreshCw } from "lucide-react";
+import { Upload, FileText, Users, User, Scan, CheckCircle2, Camera, CameraOff, RefreshCw, Pencil, Save, Plus } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { cn } from "@/lib/utils";
 
 interface UserData {
   id: string;
@@ -38,16 +42,12 @@ interface KtpData {
 }
 
 interface FamilyMember {
+  id: number;
+  name: string;
   nik: string;
-  nama: string;
-  statusHubungan: string;
-  jenisKelamin: string;
-  tempatLahir: string;
-  tanggalLahir: string;
-  agama: string;
-  pendidikan: string;
-  pekerjaan: string;
-  statusPerkawinan: string;
+  id_user: number;
+  created_at: string;
+  gender: string;
 }
 
 interface KkData {
@@ -62,9 +62,22 @@ interface KkData {
   anggotaKeluarga: FamilyMember[];
 }
 
+interface InfoItem {
+  label: string;
+  value: string;
+  icon?: React.ReactNode;
+}
+
+interface InfoCardProps {
+  title: string;
+  items: InfoItem[];
+  className?: string;
+  icon?: React.ReactNode;
+}
+
 type OCRType = "ktp" | "kk";
 
-export default function ProfilePage() {
+export default function ProfilePage({ title = "Personal Information", items = [] }: { title?: string; items?: { label: string; value: string }[] }) {
   const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -74,8 +87,12 @@ export default function ProfilePage() {
   const [kkData, setKkData] = useState<any>(null);
   const [isCameraActive, setIsCameraActive] = useState(false);
   const [cameraError, setCameraError] = useState<string | null>(null);
-  const [facingMode, setFacingMode] = useState<'user' | 'environment'>('environment'); // Default to rear camera
-
+  const [facingMode, setFacingMode] = useState<"user" | "environment">("environment"); // Default to rear camera
+  const [familyData, setFamilyData] = useState<any[]>([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedKtpData, setEditedKtpData] = useState<any>(null);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [dataConfirmed, setDataConfirmed] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -83,6 +100,38 @@ export default function ProfilePage() {
     setSelectedOCR(null);
     setKtpData(null);
     setKkData(null);
+  };
+
+  const fetchFamily = async () => {
+    if (!userData?.id) return;
+
+    try {
+      // Use correct endpoint with appropriate headers
+      const res = await fetch(`https://coherent-classic-platypus.ngrok-free.app/api/get/family/${userData.id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "true",
+          Accept: "application/json",
+        },
+      });
+
+      if (!res.ok) throw new Error("Failed to fetch family data");
+
+      const data = await res.json();
+      console.log("Family data response:", data);
+
+      if (data && Array.isArray(data.data)) {
+        setFamilyData(data.data);
+      } else if (data && Array.isArray(data)) {
+        setFamilyData(data);
+      } else {
+        console.error("Unexpected family data format:", data);
+        setFamilyData([]);
+      }
+    } catch (err) {
+      console.error("Error fetching family:", err);
+      setFamilyData([]);
+    }
   };
 
   useEffect(() => {
@@ -197,22 +246,28 @@ export default function ProfilePage() {
     fetchUserData();
   }, []);
 
+  useEffect(() => {
+    if (userData?.id) {
+      fetchFamily();
+    }
+  }, [userData]);
+
   // Request camera permissions explicitly
   const requestCameraPermission = async () => {
     try {
       // Check if the Permissions API is supported
       if (navigator.permissions && navigator.permissions.query) {
-        const permissionResult = await navigator.permissions.query({ name: 'camera' as PermissionName });
-        
-        if (permissionResult.state === 'denied') {
+        const permissionResult = await navigator.permissions.query({ name: "camera" as PermissionName });
+
+        if (permissionResult.state === "denied") {
           setCameraError("Akses kamera ditolak. Mohon izinkan kamera di pengaturan browser Anda.");
           return false;
         }
-        
+
         // If permission is already granted or prompt will be shown
         return true;
       }
-      
+
       // If Permissions API is not supported, proceed with direct access
       console.log("Permission API not supported, will try direct access");
       return true;
@@ -225,18 +280,18 @@ export default function ProfilePage() {
   const startCamera = async () => {
     setCameraError(null);
     setIsProcessing(true); // Show loading state while initializing camera
-    
+
     // First check/request permission
     const permissionGranted = await requestCameraPermission();
     if (!permissionGranted) {
       setIsProcessing(false);
       return;
     }
-    
+
     try {
       // Close any existing stream first
       stopCamera();
-      
+
       // Try to get the camera stream with high resolution
       let stream = null;
       try {
@@ -256,7 +311,7 @@ export default function ProfilePage() {
           audio: false,
         });
       }
-      
+
       if (videoRef.current && stream) {
         videoRef.current.srcObject = stream;
         streamRef.current = stream;
@@ -264,20 +319,20 @@ export default function ProfilePage() {
       }
     } catch (err) {
       console.error("Error accessing camera:", err);
-      
+
       // Provide more specific error messages
       if (err instanceof DOMException) {
-        if (err.name === 'NotFoundError' || err.name === 'DevicesNotFoundError') {
+        if (err.name === "NotFoundError" || err.name === "DevicesNotFoundError") {
           setCameraError("Kamera tidak ditemukan. Periksa apakah perangkat Anda memiliki kamera.");
-        } else if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+        } else if (err.name === "NotAllowedError" || err.name === "PermissionDeniedError") {
           setCameraError(
             "Akses kamera ditolak. Pastikan Anda mengizinkan akses kamera ketika diminta.\n\n" +
-            "Cara memperbaiki:\n" +
-            "1. Buka Pengaturan > [Nama Browser] > Izinkan Kamera\n" +
-            "2. Ketuk ikon Kunci di URL, lalu izinkan akses kamera\n" +
-            "3. Hapus data situs web dan muat ulang halaman"
+              "Cara memperbaiki:\n" +
+              "1. Buka Pengaturan > [Nama Browser] > Izinkan Kamera\n" +
+              "2. Ketuk ikon Kunci di URL, lalu izinkan akses kamera\n" +
+              "3. Hapus data situs web dan muat ulang halaman"
           );
-        } else if (err.name === 'NotReadableError' || err.name === 'TrackStartError') {
+        } else if (err.name === "NotReadableError" || err.name === "TrackStartError") {
           setCameraError("Kamera sedang digunakan oleh aplikasi lain. Tutup aplikasi lain dan coba lagi.");
         } else {
           setCameraError(`Gagal mengakses kamera: ${err.message}`);
@@ -292,8 +347,8 @@ export default function ProfilePage() {
 
   // Toggle between front and rear camera
   const switchCamera = async () => {
-    setFacingMode(prevMode => prevMode === 'user' ? 'environment' : 'user');
-    
+    setFacingMode((prevMode) => (prevMode === "user" ? "environment" : "user"));
+
     // If camera is active, restart it with the new facing mode
     if (isCameraActive) {
       await startCamera();
@@ -306,11 +361,11 @@ export default function ProfilePage() {
       streamRef.current.getTracks().forEach((track) => track.stop());
       streamRef.current = null;
     }
-    
+
     if (videoRef.current) {
       videoRef.current.srcObject = null;
     }
-    
+
     setIsCameraActive(false);
     setCameraError(null);
   };
@@ -332,7 +387,6 @@ export default function ProfilePage() {
     // Draw the current video frame to the canvas
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    // Convert canvas to Blob (image file)
     canvas.toBlob(async (blob) => {
       if (!blob) return;
 
@@ -351,21 +405,79 @@ export default function ProfilePage() {
 
         if (!res.ok) throw new Error("Upload gagal");
 
-        const data = await res.json();
+        const responseJson = await res.json();
+        console.log("API OCR Response:", responseJson);
+
+        // Check if the response has a data property (as shown in your screenshot)
+        const data = responseJson.data || responseJson;
 
         // Save OCR results to state
         if (selectedOCR === "ktp") {
-          setKtpData(data);
+          // Extract only name, nik, and gender from the response
+          const simplifiedData = {
+            nama: data.name || data.nama || "Nama tidak tersedia",
+            nik: data.nik || data.NIK || "NIK tidak tersedia",
+            jenisKelamin: data.gender || data.jenisKelamin || "Jenis kelamin tidak tersedia"
+          };
+          console.log("Processed KTP data:", simplifiedData);
+          setKtpData(simplifiedData);
         } else {
           setKkData(data);
         }
       } catch (err) {
-        console.error(err);
+        console.error("Error processing document:", err);
         alert("Gagal memproses dokumen");
       } finally {
         setIsProcessing(false);
       }
     }, "image/jpeg");
+  };
+
+  // Update editedKtpData when ktpData changes
+  useEffect(() => {
+    if (ktpData) {
+      setEditedKtpData({ ...ktpData });
+    }
+  }, [ktpData]);
+
+  const handleEditToggle = () => {
+    setIsEditing(!isEditing);
+    // Reset edited data to original if canceling edit
+    if (isEditing) {
+      setEditedKtpData({ ...ktpData });
+    }
+  };
+
+  const handleSaveData = () => {
+    // Update the main KTP data with edited values
+    setKtpData({ ...editedKtpData });
+    setIsEditing(false);
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirmData = () => {
+    setDataConfirmed(true);
+    setShowConfirmModal(false);
+  };
+
+  const handleInputChange = (field: string, value: string) => {
+    interface EditedKtpData {
+      nik?: string;
+      nama?: string;
+      jenisKelamin?: string;
+    }
+
+    const handleInputChange = (field: keyof EditedKtpData, value: string) => {
+      setEditedKtpData((prev: EditedKtpData | null) => ({
+        ...prev,
+        [field]: value
+      }));
+    };
+  };
+
+  const handleAddFamilyMember = () => {
+    // TODO: Implement functionality to add family member
+    alert("Tambah anggota keluarga akan diimplementasikan");
   };
 
   if (loading) {
@@ -385,7 +497,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <main className="mx-auto max-w-6xl p-4 md:p-6 space-y-4 md:space-y-6">
+    <main className="mx-auto min-h-screen max-w-6xl p-4 md:p-6 space-y-4 md:space-y-6">
       <img src="/images/user-profile-reference.png" alt="Reference design for staff profile" className="sr-only" />
 
       <Tabs defaultValue="profile" className="w-full">
@@ -396,27 +508,38 @@ export default function ProfilePage() {
             <TabsTrigger value="history">Riwayat Pemesanan</TabsTrigger>
           </TabsList>
         </div>
-
         <TabsContent value="profile" className="space-y-4 md:space-y-6">
           <ProfileSummary userData={userData} />
-          <InfoCard
-            title="Personal information"
-            items={[
-              { label: "Name", value: userData.name },
-              { label: "Email", value: userData.email },
-              { label: "Nomor Telephone", value: userData.phone },
-            ]}
-          />
+          <Card className="rounded-2xl shadow-md border border-gray-200 bg-white">
+            <CardHeader>
+              <CardTitle className="text-lg font-semibold text-gray-800 flex items-center gap-2">👪 Daftar Keluarga</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {familyData.length > 0 ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {familyData.map((fam, idx) => (
+                    <div key={idx} className="flex flex-col p-4 rounded-xl border bg-gray-50 hover:bg-gray-100 transition">
+                      <span className="font-medium text-gray-700 flex items-center gap-2">
+                        <User className="w-4 h-4 text-gray-500" />
+                        {fam.name}
+                      </span>
+                      <span className="text-sm text-gray-500 mt-1">
+                        {fam.nik || "No NIK"} • {fam.gender || "-"}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="p-3 text-gray-500 text-sm italic text-center">No family data available</div>
+              )}
+            </CardContent>
+          </Card>
         </TabsContent>
-
         <TabsContent value="familyData" className="space-y-6">
           {!ktpData && !kkData ? (
-            <Card className="border-2 border-dashed">
+            <Card className="border-2">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Scan className="h-5 w-5" />
-                  Pilih Jenis Dokumen
-                </CardTitle>
+                <CardTitle className="flex items-center gap-2">📄 Pilih Jenis Dokumen</CardTitle>
                 <CardDescription>Pilih jenis dokumen yang ingin Anda scan dengan OCR</CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -435,7 +558,7 @@ export default function ProfilePage() {
                       </div>
                     </Label>
                   </div>
-
+                  <hr />
                   <div className="flex items-center space-x-2 p-4 rounded-lg border hover:bg-accent transition-colors cursor-pointer">
                     <RadioGroupItem value="kk" id="kk" />
                     <Label htmlFor="kk" className="flex-1 cursor-pointer">
@@ -445,7 +568,7 @@ export default function ProfilePage() {
                         </div>
                         <div>
                           <div className="font-semibold">KK (Kartu Keluarga)</div>
-                          <div className="text-sm text-muted-foreground">Scan data keluarga lengkap</div>
+                          <div className="text-sm text-muted-foreground">Scan data seluruh keluarga lengkap</div>
                         </div>
                       </div>
                     </Label>
@@ -455,31 +578,25 @@ export default function ProfilePage() {
                 {selectedOCR && (
                   <div className="space-y-4">
                     <Separator />
-                    <div className="flex flex-col items-center justify-center p-4 sm:p-8 border-2 border-dashed rounded-lg bg-muted/50">
-                      {!isCameraActive ? (
-                        <Camera className="h-12 w-12 text-muted-foreground mb-4" />
-                      ) : (
-                        <CameraOff className="h-12 w-12 text-muted-foreground mb-4" />
-                      )}
-                      
+                    <div className="flex flex-col items-center justify-center p-4 sm:p-8 border-2 rounded-lg bg-muted/50">
+                      {!isCameraActive ? <Camera className="h-12 w-12 text-muted-foreground mb-4" /> : <CameraOff className="h-12 w-12 text-muted-foreground mb-4" />}
+
                       {cameraError && (
                         <Alert variant="destructive" className="mb-4 max-w-md mx-auto">
-                          <AlertDescription>
-                            {cameraError}
-                          </AlertDescription>
+                          <AlertDescription>{cameraError}</AlertDescription>
                         </Alert>
                       )}
-                      
+
                       {isProcessing && !isCameraActive && (
                         <div className="absolute inset-0 flex items-center justify-center bg-muted/50 rounded-lg">
                           <RefreshCw className="h-8 w-8 animate-spin text-muted-foreground" />
                         </div>
                       )}
-                      
+
                       <div className="relative w-full max-w-md aspect-[4/3]">
-                        <video ref={videoRef} autoPlay playsInline className={`w-full h-full object-cover rounded-lg ${!isCameraActive ? 'hidden' : ''}`} />
+                        <video ref={videoRef} autoPlay playsInline className={`w-full h-full object-cover rounded-lg ${!isCameraActive ? "hidden" : ""}`} />
                         <canvas ref={canvasRef} className="hidden" />
-                        
+
                         {!isCameraActive && !isProcessing && (
                           <div className="absolute inset-0 flex items-center justify-center bg-muted/20 rounded-lg">
                             <Button variant="outline" onClick={startCamera} className="gap-2">
@@ -489,7 +606,7 @@ export default function ProfilePage() {
                           </div>
                         )}
                       </div>
-                      
+
                       <div className="flex flex-wrap gap-3 mt-4 justify-center">
                         {isCameraActive && (
                           <>
@@ -512,11 +629,11 @@ export default function ProfilePage() {
                             </Button>
                             <Button variant="secondary" onClick={switchCamera} className="gap-2">
                               <RefreshCw className="h-4 w-4" />
-                              Ganti Kamera {facingMode === 'user' ? 'Belakang' : 'Depan'}
+                              Ganti Kamera {facingMode === "user" ? "Belakang" : "Depan"}
                             </Button>
                           </>
                         )}
-                        
+
                         {!isCameraActive && cameraError && (
                           <Button onClick={startCamera} className="gap-2">
                             <RefreshCw className="h-4 w-4" />
@@ -524,19 +641,15 @@ export default function ProfilePage() {
                           </Button>
                         )}
                       </div>
-                      
-                      <p className="text-sm text-muted-foreground mt-2 text-center">
-                        {isCameraActive 
-                          ? "Posisikan dokumen dengan jelas dalam bingkai kamera" 
-                          : "Izinkan akses kamera untuk memindai dokumen"}
-                      </p>
+
+                      <p className="text-sm text-muted-foreground mt-2 text-center">{isCameraActive ? "Posisikan dokumen dengan jelas dalam bingkai kamera" : "Izinkan akses kamera untuk memindai dokumen"}</p>
                     </div>
                   </div>
                 )}
               </CardContent>
             </Card>
           ) : (
-            <div className="space-y-6">
+            <div className="space-y-6 mt-5">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="h-5 w-5 text-green-600" />
@@ -555,67 +668,125 @@ export default function ProfilePage() {
                         <FileText className="h-5 w-5" />
                         Data KTP
                       </CardTitle>
-                      <Badge variant="secondary">KTP</Badge>
+                      <div className="flex items-center gap-2">
+                        <Badge variant="secondary">KTP</Badge>
+                        {!dataConfirmed && (
+                          <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            onClick={isEditing ? handleSaveData : handleEditToggle}
+                            className="h-8 gap-1"
+                          >
+                            {isEditing ? (
+                              <>
+                                <Save className="h-4 w-4" />
+                                Simpan
+                              </>
+                            ) : (
+                              <>
+                                <Pencil className="h-4 w-4" />
+                                Edit
+                              </>
+                            )}
+                          </Button>
+                        )}
+                      </div>
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
                       <div className="space-y-1">
                         <Label className="text-muted-foreground">NIK</Label>
-                        <p className="font-semibold">{ktpData.nik}</p>
+                        {isEditing && !dataConfirmed ? (
+                          <Input 
+                            value={editedKtpData?.nik || ''}
+                            onChange={(e) => handleInputChange('nik', e.target.value)}
+                            className="mt-1"
+                          />
+                        ) : (
+                          <p className="font-semibold">{ktpData.nik}</p>
+                        )}
                       </div>
                       <div className="space-y-1">
                         <Label className="text-muted-foreground">Nama</Label>
-                        <p className="font-semibold">{ktpData.nama}</p>
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-muted-foreground">Tempat Lahir</Label>
-                        <p className="font-semibold">{ktpData.tempatLahir}</p>
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-muted-foreground">Tanggal Lahir</Label>
-                        <p className="font-semibold">{ktpData.tanggalLahir}</p>
+                        {isEditing && !dataConfirmed ? (
+                          <Input 
+                            value={editedKtpData?.nama || ''}
+                            onChange={(e) => handleInputChange('nama', e.target.value)}
+                            className="mt-1"
+                          />
+                        ) : (
+                          <p className="font-semibold">{ktpData.nama}</p>
+                        )}
                       </div>
                       <div className="space-y-1">
                         <Label className="text-muted-foreground">Jenis Kelamin</Label>
-                        <p className="font-semibold">{ktpData.jenisKelamin}</p>
+                        {isEditing && !dataConfirmed ? (
+                          <Select 
+                            value={editedKtpData?.jenisKelamin || ''}
+                            onValueChange={(value) => handleInputChange('jenisKelamin', value)}
+                          >
+                            <SelectTrigger className="mt-1">
+                              <SelectValue placeholder="Pilih jenis kelamin" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="LAKI-LAKI">Laki-laki</SelectItem>
+                              <SelectItem value="PEREMPUAN">Perempuan</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        ) : (
+                          <p className="font-semibold">{ktpData.jenisKelamin}</p>
+                        )}
                       </div>
-                      <div className="space-y-1">
-                        <Label className="text-muted-foreground">Agama</Label>
-                        <p className="font-semibold">{ktpData.agama}</p>
-                      </div>
-                      <div className="space-y-1 md:col-span-2">
-                        <Label className="text-muted-foreground">Alamat</Label>
-                        <p className="font-semibold">{ktpData.alamat}</p>
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-muted-foreground">RT/RW</Label>
-                        <p className="font-semibold">{ktpData.rtRw}</p>
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-muted-foreground">Kel/Desa</Label>
-                        <p className="font-semibold">{ktpData.kelDesa}</p>
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-muted-foreground">Kecamatan</Label>
-                        <p className="font-semibold">{ktpData.kecamatan}</p>
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-muted-foreground">Status Perkawinan</Label>
-                        <p className="font-semibold">{ktpData.statusPerkawinan}</p>
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-muted-foreground">Pekerjaan</Label>
-                        <p className="font-semibold">{ktpData.pekerjaan}</p>
-                      </div>
-                      <div className="space-y-1">
-                        <Label className="text-muted-foreground">Kewarganegaraan</Label>
-                        <p className="font-semibold">{ktpData.kewarganegaraan}</p>
-                      </div>
+                      
+                      {/* Button Tambah Anggota Keluarga always visible */}
+                      <Button 
+                        onClick={handleAddFamilyMember}
+                        className="mt-4 w-full md:w-auto"
+                      >
+                        <Plus className="h-4 w-4 mr-2" />
+                        Tambah Anggota Keluarga
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>
               )}
+
+              {/* Confirmation Modal */}
+              <Dialog open={showConfirmModal} onOpenChange={setShowConfirmModal}>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Konfirmasi Data</DialogTitle>
+                    <DialogDescription>
+                      Apakah data yang Anda masukkan sudah benar?
+                    </DialogDescription>
+                  </DialogHeader>
+                  
+                  <div className="grid gap-4 py-4">
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label className="text-right">NIK</Label>
+                      <div className="col-span-3">{editedKtpData?.nik}</div>
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label className="text-right">Nama</Label>
+                      <div className="col-span-3">{editedKtpData?.nama}</div>
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                      <Label className="text-right">Jenis Kelamin</Label>
+                      <div className="col-span-3">{editedKtpData?.jenisKelamin}</div>
+                    </div>
+                  </div>
+                  
+                  <DialogFooter>
+                    <Button variant="outline" onClick={() => setShowConfirmModal(false)}>
+                      Edit Kembali
+                    </Button>
+                    <Button onClick={handleConfirmData}>
+                      Data Sudah Benar
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
 
               {kkData && (
                 <div className="space-y-4">
@@ -755,3 +926,4 @@ export default function ProfilePage() {
 function Placeholder({ title }: { title: string }) {
   return <div className="rounded-lg border bg-card p-6 text-sm text-muted-foreground">{title} content goes here.</div>;
 }
+
