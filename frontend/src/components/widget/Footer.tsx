@@ -1,123 +1,119 @@
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Globe, Mail, Phone, MapPin, ArrowRight, Zap } from "lucide-react";
+import { motion } from "framer-motion";
 import Logo from "../../../public/KAI-Logo.png"
-import Image from "next/image"
-import { Instagram, Send, MessageCircle, Youtube, Music } from "lucide-react"
+import Image from "next/image";
 
 export default function Footer() {
+  const partners = [
+    { name: "KAI Commuter", logo: "/placeholder.svg?height=40&width=120" },
+    { name: "PT KAI Logistik", logo: "/placeholder.svg?height=40&width=120" },
+    { name: "Ministry of Transportation", logo: "/placeholder.svg?height=40&width=120" },
+  ];
+
   return (
-    <footer className="bg-slate-900 text-white">
-      <div className="container mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand Section */}
-          <div className="md:col-span-1">
-            <Image src={Logo} alt="Logo" className="h-12 w-26 mb-4" />
-            <p className="text-gray-300 text-sm leading-relaxed">
-              We Aim To Provide Modern Explorers With Innovative, Functional, And Stylish Bags That Enhance Every
-              Journey.
-            </p>
-          </div>
+    <footer className="py-16 sm:py-20 bg-white text-gray-900 relative overflow-hidden">
+      {/* Background decorations */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-[#003d7934] rounded-full blur-3xl -translate-x-48 -translate-y-48"></div>
+      <div className="absolute bottom-0 right-0 w-80 h-80 bg-[#003d7934] rounded-full blur-3xl translate-x-40 translate-y-40"></div>
 
-          {/* About Section */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">About</h3>
-            <ul className="space-y-3">
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
-                  Blog
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
-                  Career
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
-                  KAI Articles
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Support Section */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Support</h3>
-            <ul className="space-y-3">
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
-                  FAQs
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
-                  Manage Your Trips
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
-                  Contact Customer Service
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-gray-300 hover:text-white transition-colors text-sm">
-                  Safety resource Center
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Get Updates Section */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Get Updates</h3>
-            <div className="flex gap-2 mb-6">
-              <Input
-                type="email"
-                placeholder="Enter Your Email"
-                className="bg-slate-800 border-slate-700 text-white placeholder:text-gray-400 flex-1"
-              />
-              <Button className="bg-white text-slate-900 hover:bg-gray-100 px-6">Subscribe</Button>
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 relative z-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 mb-16">
+          {/* Brand */}
+          <div className="lg:col-span-1">
+            <div className="flex items-center space-x-1 mb-6">
+              <Image className="w-24 h-12 text-[#F15A22] flex items-center justify-center mr-3" src={Logo} alt="KAI Logo"/>
             </div>
+            <p className="text-gray-400 mb-6 leading-relaxed text-lg">
+              Menyediakan layanan perjalanan kereta api yang aman, nyaman, dan tepat waktu untuk seluruh masyarakat Indonesia.
+            </p>
+            <div className="flex space-x-4">
+              {/* Social media icons */}
+              <div className="w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-300 cursor-pointer">
+                <Globe className="w-5 h-5" />
+              </div>
+              <div className="w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-300 cursor-pointer">
+                <Mail className="w-5 h-5" />
+              </div>
+              <div className="w-10 h-10 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors duration-300 cursor-pointer">
+                <Phone className="w-5 h-5" />
+              </div>
+            </div>
+          </div>
 
-            {/* Social Media Icons */}
-            <div className="flex gap-4">
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                <Instagram size={20} />
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                <Send size={20} />
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                <MessageCircle size={20} />
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                <Youtube size={20} />
-              </a>
-              <a href="#" className="text-gray-300 hover:text-white transition-colors">
-                <Music size={20} />
-              </a>
+          {/* Quick Links */}
+          <div>
+            <h3 className="text-xl font-bold mb-6 text-[#F15A22]">Tautan Cepat</h3>
+            <ul className="space-y-4">
+              {[
+                { name: "Tentang KAI", href: "/about" },
+                { name: "Jadwal Kereta", href: "/schedule" },
+                { name: "Tiket & Pemesanan", href: "/tickets" },
+                { name: "Kontak Kami", href: "/contact" },
+                { name: "Blog", href: "/blog" },
+              ].map((link, index) => (
+                <li key={index}>
+                  <Link href={link.href} className="text-gray-400 hover:text-[#F15A22] transition-colors duration-300 flex items-center group">
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Resources */}
+          <div>
+            <h3 className="text-xl font-bold mb-6 text-[#F15A22]">Sumber Daya</h3>
+            <ul className="space-y-4">
+              {[
+                { name: "Kebijakan Privasi", href: "/privacy" },
+                { name: "Syarat & Ketentuan", href: "/terms" },
+                { name: "FAQ", href: "/faq" },
+                { name: "Panduan Penumpang", href: "/guide" },
+                { name: "API Dokumentasi", href: "/api" },
+              ].map((link, index) => (
+                <li key={index}>
+                  <Link href={link.href} className="text-gray-400 hover:text-[#F15A22] transition-colors duration-300 flex items-center group">
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact Info */}
+          <div>
+            <h3 className="text-xl font-bold mb-6 text-[#F15A22]">Hubungi Kami</h3>
+            <div className="space-y-4">
+              <div className="flex items-center">
+                <Mail className="w-5 h-5 text-[#F15A22] mr-3" />
+                <a href="mailto:contact@kai.id" className="text-gray-400 hover:text-[#F15A22] transition-colors">
+                  contact@kai.id
+                </a>
+              </div>
+              <div className="flex items-center">
+                <Phone className="w-5 h-5 text-[#F15A22] mr-3" />
+                <span className="text-gray-400">+62 21 1234 5678</span>
+              </div>
+              <div className="bg-gray-50 border-2 border-gray-200 rounded-2xl p-4 mt-6">
+                <p className="text-sm text-gray-400 mb-2">Versi :</p>
+                <p className="text-[#F15A22] font-semibold">v1.0.0</p>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Bottom Section */}
-        <div className="border-t border-slate-700 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-400 text-sm">©2024 KAI, All rights reserved.</p>
-          <div className="flex gap-6">
-            <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">
-              Privacy Policy
-            </a>
-            <a href="#" className="text-gray-400 hover:text-white transition-colors text-sm">
-              Terms of Service
-            </a>
+        {/* Bottom section */}
+        <div className="border-t border-gray-200 pt-8">
+          <div className="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
+            <div className="text-center lg:text-left">
+              <p className="text-gray-400 text-lg">&copy; 2025 PT Kereta Api Indonesia (Persero). Semua hak dilindungi.</p>
+              <p className="text-gray-300 text-sm mt-1">Platform ini mendukung perjalanan nyaman dan aman bagi seluruh penumpang KAI.</p>
+            </div>
           </div>
         </div>
       </div>
     </footer>
-  )
+  );
 }

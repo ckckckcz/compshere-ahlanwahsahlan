@@ -170,9 +170,6 @@ export default function Navbar() {
                 <Link href="/rute" className="text-gray-600 hover:text-black">
                     Rute Rel
                 </Link>
-                <Link href="#" className="text-gray-600 hover:text-black">
-                    Pre-Order
-                </Link>
             </nav>
 
             <div className="flex items-center space-x-4">

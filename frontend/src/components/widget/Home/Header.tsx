@@ -18,6 +18,7 @@ import kereta4 from "../../../../public/images/kereta/kereta_4.jpg";
 import layanan1 from "../../../../public/images/layanan/angkutan_penumpang.jpg";
 import layanan2 from "../../../../public/images/layanan/angkutan_barang.jpg";
 import layanan3 from "../../../../public/images/layanan/pengusahaan_aset.jpg";
+import Banner from "@/components/widget/animate-banner";
 
 export default function KAIMain() {
   const [selectedTab, setSelectedTab] = useState("booking");
@@ -189,11 +190,7 @@ export default function KAIMain() {
                     <span className="hidden sm:inline">Pemesanan Tiket</span>
                     <span className="sm:hidden">Pesan</span>
                   </TabsTrigger>
-                  <TabsTrigger
-                    value="check"
-                    className="flex items-center gap-2 text-xs sm:text-sm"
-                    disabled={!isLoggedIn}
-                  >
+                  <TabsTrigger value="check" className="flex items-center gap-2 text-xs sm:text-sm" disabled={!isLoggedIn}>
                     <Search className="w-4 h-4" />
                     <span className="hidden sm:inline">Cek Kode Booking</span>
                     <span className="sm:hidden">Cek</span>
@@ -392,10 +389,14 @@ export default function KAIMain() {
                     </CardHeader>
                     <CardContent className="space-y-6">
                       {!isLoggedIn && (
-                        <Alert variant="warning" className="bg-yellow-50 border-yellow-200">
+                        <Alert className="bg-yellow-50 border-yellow-200">
                           <CircleAlert className="h-4 w-4 text-yellow-600" />
                           <AlertDescription>
-                            Anda harus login untuk memeriksa kode booking. <a href="/login" className="underline text-blue-600">Login di sini</a>.
+                            Anda harus login untuk memeriksa kode booking.{" "}
+                            <a href="/login" className="underline text-blue-600">
+                              Login di sini
+                            </a>
+                            .
                           </AlertDescription>
                         </Alert>
                       )}
@@ -419,13 +420,7 @@ export default function KAIMain() {
                             <Ticket className="w-4 h-4 mr-2" />
                             Kode Booking
                           </Label>
-                          <Input
-                            placeholder="Masukkan kode booking"
-                            className="border-gray-200"
-                            value={bookingForm.bookingCode}
-                            onChange={(e) => handleBookingInputChange("bookingCode", e.target.value)}
-                            disabled={!isLoggedIn}
-                          />
+                          <Input placeholder="Masukkan kode booking" className="border-gray-200" value={bookingForm.bookingCode} onChange={(e) => handleBookingInputChange("bookingCode", e.target.value)} disabled={!isLoggedIn} />
                         </div>
 
                         {/* NIK */}
@@ -434,23 +429,13 @@ export default function KAIMain() {
                             <Users className="w-4 h-4 mr-2" />
                             NIK
                           </Label>
-                          <Input
-                            placeholder="Masukkan NIK"
-                            className="border-gray-200"
-                            value={bookingForm.nik}
-                            onChange={(e) => handleBookingInputChange("nik", e.target.value)}
-                            disabled={!isLoggedIn}
-                          />
+                          <Input placeholder="Masukkan NIK" className="border-gray-200" value={bookingForm.nik} onChange={(e) => handleBookingInputChange("nik", e.target.value)} disabled={!isLoggedIn} />
                         </div>
                       </div>
 
                       {/* Check Button */}
                       <div className="flex justify-center pt-2">
-                        <Button
-                          onClick={handleCheckBooking}
-                          className="w-full h-10 bg-[#003D79] hover:bg-[#0050A0] text-white px-8"
-                          disabled={!isLoggedIn}
-                        >
+                        <Button onClick={handleCheckBooking} className="w-full h-10 bg-[#003D79] hover:bg-[#0050A0] text-white px-8" disabled={!isLoggedIn}>
                           <Search className="w-4 h-4 mr-2" />
                           Cek Booking
                         </Button>
@@ -485,7 +470,7 @@ export default function KAIMain() {
           </div>
         </div>
       </section>
-
+      <Banner />
       {/* Explore Section */}
       <section className="px-6 py-16 bg-gray-50 mt-10">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
@@ -505,7 +490,6 @@ export default function KAIMain() {
               </div>
             </div>
           </div>
-
           {/* Right Content */}
           <div className="space-y-8">
             <div className="space-y-1">
@@ -515,7 +499,7 @@ export default function KAIMain() {
             </div>
 
             {/* Filter Options */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-7xl">
               <div className="bg-white rounded-lg p-4 sm:p-6 border border-gray-200 flex-1">
                 <div className="font-medium text-gray-900 flex justify-between items-center">
                   Angkutan Penumpang
