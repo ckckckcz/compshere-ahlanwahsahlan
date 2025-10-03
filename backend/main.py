@@ -4,6 +4,7 @@ import os
 from dotenv import load_dotenv
 from flask_cors import CORS
 
+load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY_FLASK")

@@ -1,12 +1,12 @@
 from flask import request, url_for, session, jsonify, make_response
 from flask_cors import CORS
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from main_controller import MainController
 import os
 
 class Api:
     def __init__(self, app_instance):
-        load_dotenv()
+        # load_dotenv()
         self._app = app_instance
         self.__controller = MainController(app_instance)
         
@@ -131,7 +131,9 @@ class Api:
         return jsonify({'status': 'User updated successfully', 'data': data}), 200
     
     def _login_google(self):
-        redirect_uri = url_for('authorize', _external=True)
+        # redirect_uri = url_for('authorize', _external=True)
+        base_url = request.host_url.rstrip("/")
+        redirect_uri = f"{base_url}/api/authorize"
         return self.__controller.login_google(redirect_uri)
     
     def _authorize(self):
@@ -166,20 +168,18 @@ class Api:
         return jsonify({"status": "Data received", "data": data}), 200
 
     def _get_user_profile(self):
-        try:
-            # Get session from cookie
+        # try:
             session_id = request.cookies.get("session_id")
             if not session_id or not session_id.startswith("user_"):
                 return jsonify({"error": "No valid session"}), 401
             
             user_id = session_id.replace("user_", "")
             
-            # Get user data using existing controller method
             data = self.__controller.get_user_by_id(user_id)
             if not data:
                 return jsonify({"error": "User not found"}), 404
             
-        except Exception as e:
+        # except Exception as e:
             return jsonify({"error": "Server error occurred"}), 500
 
     def run(self):
