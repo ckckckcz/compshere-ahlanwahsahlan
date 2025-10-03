@@ -41,6 +41,8 @@ class Api:
 
         self._app.add_url_rule('/api/get/seat/<id_order>', view_func=self._get_seat_by_id_order, methods=['GET'])
 
+        self._app.add_url_rule('/api/get/order/<id_user>', view_func=self._get_order_by_id_user, methods=['GET'])
+
     def _get_user(self):
         data = self.__controller.get_user()
         return jsonify({"status": "Data received", "data": data}), 200
@@ -200,11 +202,16 @@ class Api:
     
     def _add_family(self, id_user):
         data = request.json
+        print(data)
         data = self.__controller.add_family(id_user, data)
         return jsonify({"status": "Data received", "data": data}), 200
 
     def _get_seat_by_id_order(self, id_order):
         data = self.__controller.get_seat_by_id_order(id_order)
+        return jsonify({"status": "Data received", "data": data}), 200
+    
+    def _get_order_by_id_user(self, id_user):
+        data = self.__controller.get_order_by_id_user(id_user)
         return jsonify({"status": "Data received", "data": data}), 200
 
 

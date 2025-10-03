@@ -7,6 +7,10 @@ class OrderController:
         self.__snap = snap
         self.__core_api = core_api
 
+    def get_order_by_id_user(self, id_user):
+        data = self.__model.get_order_by_id_user(id_user)
+        return data
+
     def get_status_payment(self, id_order):
         return self.__core_api.transactions.status(id_order)
     
