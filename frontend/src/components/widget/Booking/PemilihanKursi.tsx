@@ -17,11 +17,12 @@ type Seat = {
   type: SeatType;
   isAvailable: boolean;
   isSelected: boolean;
+  gender?: "female";
 };
 
 type CoachClass = "eksekutif" | "ekonomi";
 
-type Layout = "2-2" | "2-1";
+type Layout = "2-2" 
 
 type CoachConfig = {
   coachClass: CoachClass;
@@ -62,6 +63,13 @@ function deterministicAvailable(row: number, gridCol: number) {
   return v !== 0;
 }
 
+// Function to determine if a seat should be female-only
+function isFemaleOnlySeat(row: number, gridCol: number) {
+  // Make ~25% of available seats as female-only
+  const v = (row * 13 + gridCol * 11) % 4;
+  return v === 0;
+}
+
 function normalize01(value: number, min: number, max: number) {
   if (max === min) return 0;
   return Math.max(0, Math.min(1, (value - min) / (max - min)));
@@ -77,16 +85,93 @@ function buildCoach(config: CoachConfig): { seats: Seat[]; gridCols: number; let
   for (let row = 1; row <= config.rows; row++) {
     if (is22) {
       seats.push(
-        { id: `${row}A`, row, col: 0, gridCol: 0, letter: "A", side: "left", type: "window", isAvailable: deterministicAvailable(row, 0), isSelected: false },
-        { id: `${row}B`, row, col: 1, gridCol: 1, letter: "B", side: "left", type: "middle", isAvailable: deterministicAvailable(row, 1), isSelected: false },
-        { id: `${row}C`, row, col: 2, gridCol: 3, letter: "C", side: "right", type: "middle", isAvailable: deterministicAvailable(row, 3), isSelected: false },
-        { id: `${row}D`, row, col: 3, gridCol: 4, letter: "D", side: "right", type: "window", isAvailable: deterministicAvailable(row, 4), isSelected: false }
+        { 
+          id: `${row}A`, 
+          row, 
+          col: 0, 
+          gridCol: 0, 
+          letter: "A", 
+          side: "left", 
+          type: "window", 
+          isAvailable: deterministicAvailable(row, 0), 
+          isSelected: false,
+          gender: isFemaleOnlySeat(row, 0) ? "female" : undefined
+        },
+        { 
+          id: `${row}B`, 
+          row, 
+          col: 1, 
+          gridCol: 1, 
+          letter: "B", 
+          side: "left", 
+          type: "middle", 
+          isAvailable: deterministicAvailable(row, 1), 
+          isSelected: false,
+          gender: isFemaleOnlySeat(row, 1) ? "female" : undefined
+        },
+        { 
+          id: `${row}C`, 
+          row, 
+          col: 2, 
+          gridCol: 3, 
+          letter: "C", 
+          side: "right", 
+          type: "middle", 
+          isAvailable: deterministicAvailable(row, 3), 
+          isSelected: false,
+          gender: isFemaleOnlySeat(row, 3) ? "female" : undefined
+        },
+        { 
+          id: `${row}D`, 
+          row, 
+          col: 3, 
+          gridCol: 4, 
+          letter: "D", 
+          side: "right", 
+          type: "window", 
+          isAvailable: deterministicAvailable(row, 4), 
+          isSelected: false,
+          gender: isFemaleOnlySeat(row, 4) ? "female" : undefined
+        }
       );
     } else {
       seats.push(
-        { id: `${row}A`, row, col: 0, gridCol: 0, letter: "A", side: "left", type: "window", isAvailable: deterministicAvailable(row, 0), isSelected: false },
-        { id: `${row}B`, row, col: 1, gridCol: 1, letter: "B", side: "left", type: "middle", isAvailable: deterministicAvailable(row, 1), isSelected: false },
-        { id: `${row}C`, row, col: 2, gridCol: 3, letter: "C", side: "right", type: "window", isAvailable: deterministicAvailable(row, 3), isSelected: false }
+        { 
+          id: `${row}A`, 
+          row, 
+          col: 0, 
+          gridCol: 0, 
+          letter: "A", 
+          side: "left", 
+          type: "window", 
+          isAvailable: deterministicAvailable(row, 0), 
+          isSelected: false,
+          gender: isFemaleOnlySeat(row, 0) ? "female" : undefined
+        },
+        { 
+          id: `${row}B`, 
+          row, 
+          col: 1, 
+          gridCol: 1, 
+          letter: "B", 
+          side: "left", 
+          type: "middle", 
+          isAvailable: deterministicAvailable(row, 1), 
+          isSelected: false,
+          gender: isFemaleOnlySeat(row, 1) ? "female" : undefined
+        },
+        { 
+          id: `${row}C`, 
+          row, 
+          col: 2, 
+          gridCol: 3, 
+          letter: "C", 
+          side: "right", 
+          type: "window", 
+          isAvailable: deterministicAvailable(row, 3), 
+          isSelected: false,
+          gender: isFemaleOnlySeat(row, 3) ? "female" : undefined
+        }
       );
     }
   }
@@ -169,17 +254,22 @@ const Panel: React.FC<{ title: string; children: React.ReactNode; className?: st
 
 function SeatBadge({ seat, highlight = false, onSelect }: { seat: Seat; highlight?: boolean; onSelect?: (seat: Seat) => void }) {
   const base = seat.isAvailable ? "cursor-pointer" : "opacity-40 cursor-not-allowed";
+  
+  // Updated coloring logic to include female-only seats in pink
   const bg = seat.isSelected
     ? "bg-green-600 text-white"
     : highlight
     ? "bg-indigo-600 text-white"
+    : seat.gender === "female"
+    ? "bg-pink-300 text-pink-800" 
     : seat.isAvailable
     ? "bg-sky-100 text-sky-900"
     : "bg-zinc-200 text-zinc-500";
+    
   return (
     <div
       className={cn("flex h-7 w-7 items-center justify-center rounded-md text-[10px] font-medium", bg, base)}
-      title={`${seat.id} • ${seat.type} ${seat.isSelected ? "(Dipilih)" : ""}`}
+      title={`${seat.id} • ${seat.type} ${seat.gender === "female" ? "• Khusus Perempuan" : ""} ${seat.isSelected ? "(Dipilih)" : ""}`}
       onClick={() => seat.isAvailable && onSelect && onSelect(seat)}
     />
   );
@@ -269,6 +359,13 @@ export default function PemilihanKursi({ onSeatsSelected, maxSeats = 5 }: Pemili
       alert(`Maksimal pemilihan kursi adalah ${maxSeats} kursi`);
       return;
     }
+    
+    // Optional: You could add gender validation here if you're tracking passenger gender
+    // For example:
+    // if (seat.gender === "female" && currentPassengerGender !== "female") {
+    //   alert("Kursi ini hanya tersedia untuk penumpang perempuan");
+    //   return;
+    // }
     
     if (selectedSeats.includes(seat.id)) {
       setSelectedSeats(selectedSeats.filter(id => id !== seat.id));
@@ -418,8 +515,8 @@ export default function PemilihanKursi({ onSeatsSelected, maxSeats = 5 }: Pemili
                 <span className="inline-flex items-center gap-1"><span className="h-3 w-3 rounded-sm bg-zinc-300"></span> Terisi</span>
                 <span className="inline-flex items-center gap-1"><span className="h-3 w-3 rounded-sm bg-indigo-600"></span> Rekomendasi top</span>
                 <span className="inline-flex items-center gap-1"><span className="h-3 w-3 rounded-sm bg-green-600"></span> Dipilih</span>
+                <span className="inline-flex items-center gap-1"><span className="h-3 w-3 rounded-sm bg-pink-300"></span> Khusus Perempuan</span>
               </div>
-              <div>Layout {coach.layout} • Baris: {coach.rows} • Aisle di tengah</div>
             </div>
 
             <div className="mb-2" style={{ display: "grid", gridTemplateColumns: `auto repeat(${coach.layout === "2-2" ? 5 : 4}, minmax(0,1fr)) auto`, gap: "0.5rem" }}>

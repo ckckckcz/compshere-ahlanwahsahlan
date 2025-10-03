@@ -13,15 +13,11 @@ export default function FlightTicketCard({ tickets, searchRoute }: CardProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const userId = searchParams.get("user_id")
-
-  // Sort tickets: available first, then unavailable
   const sortedTickets = [...tickets].sort((a, b) => {
     if (a.available && !b.available) return -1
     if (!a.available && b.available) return 1
     return 0
   })
-
-  // Handle booking - navigate to detail-booking with ticket data
   const handleBookTicket = (ticket: TrainTicket) => {
     const [origin, destination] = ticket.route.split(" > ")
 
@@ -48,11 +44,14 @@ export default function FlightTicketCard({ tickets, searchRoute }: CardProps) {
     router.push(`/detail-booking?${bookingParams.toString()}`)
   }
   const handleViewRoute = (ticket: TrainTicket) => {
-    const [origin, destination] = ticket.route.split(" > ")
+    // Parse origin and destination from the route string
+    const routeParts = ticket.route.split(" > ")
+    const origin = routeParts[0].trim()
+    const destination = routeParts[1].trim()
 
     const routeParams = new URLSearchParams({
-      from: origin.trim(),
-      to: destination.trim(),
+      from: origin,
+      to: destination,
       trainName: ticket.trainName,
       trainNumber: ticket.trainNumber,
       autoSearch: "true",
@@ -329,7 +328,7 @@ export default function FlightTicketCard({ tickets, searchRoute }: CardProps) {
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="mt-3 space-y-2 w-full sm:w-auto">
+                    <div className="mt-3 w-full sm:w-auto">
                       <Button
                         onClick={() => handleBookTicket(ticket)}
                         className={`w-full sm:w-auto px-6 py-2 rounded-lg mr-2 ${
@@ -340,18 +339,6 @@ export default function FlightTicketCard({ tickets, searchRoute }: CardProps) {
                         disabled={!ticket.available}
                       >
                         {ticket.available ? "Pesan Tiket" : "Habis"}
-                      </Button>
-
-                      <Button
-                        onClick={() => handleViewRoute(ticket)}
-                        variant="outline"
-                        className={`w-full sm:w-auto px-6 py-2 rounded-lg border-2 ${
-                          ticket.available
-                            ? "border-white text-dark bg-white hover:bg-white/90"
-                            : "bg-gray-300 hover:bg-gray-300 hover:text-gray-400 text-gray-400 cursor-not-allowed"
-                        }`}
-                      >
-                        Lihat Rute
                       </Button>
                     </div>
                   </div>

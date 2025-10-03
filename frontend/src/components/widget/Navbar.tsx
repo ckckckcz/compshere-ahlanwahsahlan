@@ -157,7 +157,7 @@ export default function Navbar() {
     };
 
     return (
-        <header className="flex items-center justify-between px-1 py-4 border-b border-gray-100 max-w-7xl mx-auto">
+        <header className="flex items-center justify-between px-1 py-4 max-w-7xl mx-auto">
             <Image className="h-full w-14" src={Logo} alt="" />
 
             <nav className="hidden md:flex items-center space-x-8">

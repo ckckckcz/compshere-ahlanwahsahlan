@@ -18,6 +18,7 @@ import kereta4 from "../../../../public/images/kereta/kereta_4.jpg";
 import layanan1 from "../../../../public/images/layanan/angkutan_penumpang.jpg";
 import layanan2 from "../../../../public/images/layanan/angkutan_barang.jpg";
 import layanan3 from "../../../../public/images/layanan/pengusahaan_aset.jpg";
+import Link from "next/link";
 import Banner from "@/components/widget/animate-banner";
 
 export default function KAIMain() {
@@ -181,270 +182,9 @@ export default function KAIMain() {
 
               <p className="text-lg text-gray-600 leading-relaxed -mt-5">Nikmati petualangan penuh makna, dengan kereta api yang menghubungkan Anda ke destinasi terbaik dan cerita indah di setiap perhentian 😄</p>
             </div>
-
-            <div className="rounded-2xl">
-              <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-                <TabsList className="grid w-full grid-cols-2 mb-2">
-                  <TabsTrigger value="booking" className="flex items-center gap-2 text-xs sm:text-sm">
-                    <Ticket className="w-4 h-4" />
-                    <span className="hidden sm:inline">Pemesanan Tiket</span>
-                    <span className="sm:hidden">Pesan</span>
-                  </TabsTrigger>
-                  <TabsTrigger value="check" className="flex items-center gap-2 text-xs sm:text-sm" disabled={!isLoggedIn}>
-                    <Search className="w-4 h-4" />
-                    <span className="hidden sm:inline">Cek Kode Booking</span>
-                    <span className="sm:hidden">Cek</span>
-                  </TabsTrigger>
-                </TabsList>
-
-                <TabsContent value="booking">
-                  <Card className="border-0">
-                    <CardHeader className="space-y-1 pb-6">
-                      <CardTitle className="text-2xl">Cari Tiket Kereta</CardTitle>
-                      <CardDescription className="text-base">Isi detail perjalanan Anda untuk mencari tiket yang tersedia</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                      {errors.length > 0 && (
-                        <Alert variant="destructive" className="bg-red-50 border-red-200">
-                          <CircleAlert className="h-4 w-4" />
-                          <AlertDescription>
-                            <ul className="list-disc list-inside space-y-1">
-                              {errors.map((error, index) => (
-                                <li key={index}>{error}</li>
-                              ))}
-                            </ul>
-                          </AlertDescription>
-                        </Alert>
-                      )}
-
-                      {/* Station Selection with Swap Button */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="origin" className="text-sm font-medium flex items-center gap-2">
-                            <MapPin className="w-4 h-4 text-orange-600" />
-                            Stasiun Asal
-                          </Label>
-                          <Select value={searchForm.origin} onValueChange={(value) => handleInputChange("origin", value)}>
-                            <SelectTrigger id="origin" className="h-11 w-full border-gray-300 focus:border-orange-500 focus:ring-orange-500">
-                              <SelectValue placeholder="Pilih stasiun asal" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {stations.map((station) => (
-                                <SelectItem key={station} value={station}>
-                                  {station}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-
-                        <div className="space-y-2">
-                          <Label htmlFor="destination" className="text-sm font-medium flex items-center gap-2">
-                            <MapPin className="w-4 h-4 text-orange-600" />
-                            Stasiun Tujuan
-                          </Label>
-                          <Select value={searchForm.destination} onValueChange={(value) => handleInputChange("destination", value)}>
-                            <SelectTrigger id="destination" className="h-11 w-full border-gray-300 focus:border-orange-500 focus:ring-orange-500">
-                              <SelectValue placeholder="Pilih stasiun tujuan" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {stations.map((station) => (
-                                <SelectItem key={station} value={station}>
-                                  {station}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-                      </div>
-
-                      {/* Mobile Swap Button */}
-                      <Button
-                        type="button"
-                        variant="outline"
-                        size="sm"
-                        onClick={swapStations}
-                        className="sm:hidden w-full border-2 border-gray-300 hover:border-orange-500 hover:bg-orange-50 bg-transparent"
-                        disabled={!searchForm.origin && !searchForm.destination}
-                      >
-                        <ArrowLeftRight className="h-4 w-4 mr-2" />
-                        Tukar Stasiun
-                      </Button>
-
-                      {/* Date Selection */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="departureDate" className="text-sm font-medium flex items-center gap-2">
-                            <Calendar className="w-4 h-4 text-orange-600" />
-                            Tanggal Berangkat
-                          </Label>
-                          <Input
-                            id="departureDate"
-                            type="date"
-                            min={today}
-                            className="h-11 border-gray-300 focus:border-orange-500 focus:ring-orange-500"
-                            value={searchForm.departureDate}
-                            onChange={(e) => handleInputChange("departureDate", e.target.value)}
-                          />
-                        </div>
-
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-between mb-2">
-                            <Label htmlFor="returnDate" className="text-sm font-medium flex items-center gap-2">
-                              <Calendar className="w-4 h-4 text-orange-600" />
-                              Tanggal Pulang
-                            </Label>
-                            <div className="flex items-center gap-2">
-                              <Switch
-                                id="return-trip"
-                                checked={isReturnTrip}
-                                onCheckedChange={(checked) => {
-                                  setIsReturnTrip(checked);
-                                  if (!checked) {
-                                    handleInputChange("returnDate", "");
-                                  }
-                                }}
-                              />
-                              <Label htmlFor="return-trip" className="text-sm text-gray-600 cursor-pointer">
-                                {isReturnTrip ? "Aktif" : "Nonaktif"}
-                              </Label>
-                            </div>
-                          </div>
-                          <Input
-                            id="returnDate"
-                            type="date"
-                            min={searchForm.departureDate || today}
-                            disabled={!isReturnTrip}
-                            className="h-11 border-gray-300 focus:border-orange-500 focus:ring-orange-500 disabled:bg-gray-50 disabled:cursor-not-allowed"
-                            value={searchForm.returnDate}
-                            onChange={(e) => handleInputChange("returnDate", e.target.value)}
-                          />
-                        </div>
-                      </div>
-
-                      {/* Passenger Selection */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="adults" className="text-sm font-medium flex items-center gap-2">
-                            <Users className="w-4 h-4 text-orange-600" />
-                            Jumlah Dewasa
-                          </Label>
-                          <Select value={searchForm.adults} onValueChange={(value) => handleInputChange("adults", value)}>
-                            <SelectTrigger id="adults" className="h-11 w-full border-gray-300 focus:border-orange-500 focus:ring-orange-500">
-                              <SelectValue placeholder="Pilih jumlah" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {Array.from({ length: 10 }, (_, i) => i + 1).map((num) => (
-                                <SelectItem key={num} value={num.toString()}>
-                                  {num} {num === 1 ? "Dewasa" : "Dewasa"}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-
-                        <div className="space-y-2">
-                          <Label htmlFor="children" className="text-sm font-medium flex items-center gap-2">
-                            <Baby className="w-4 h-4 text-orange-600" />
-                            Jumlah Anak
-                          </Label>
-                          <Select value={searchForm.children} onValueChange={(value) => handleInputChange("children", value)}>
-                            <SelectTrigger id="children" className="h-11 w-full border-gray-300 focus:border-orange-500 focus:ring-orange-500">
-                              <SelectValue placeholder="Pilih jumlah" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectItem value="0">Tidak ada anak</SelectItem>
-                              {Array.from({ length: 10 }, (_, i) => i + 1).map((num) => (
-                                <SelectItem key={num} value={num.toString()}>
-                                  {num} Anak (3+ tahun)
-                                </SelectItem>
-                              ))}
-                              {Array.from({ length: 10 }, (_, i) => i + 1).map((num) => (
-                                <SelectItem key={`baby-${num}`} value={`baby-${num}`}>
-                                  {num} Bayi {"(<"} 3 tahun)
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-                      </div>
-
-                      {/* Search Button */}
-                      <Button onClick={handleSearch} className="w-full h-12 bg-orange-600 hover:bg-orange-700 rounded-xl text-white text-base font-semibold shadow-lg hover:shadow-xl transition-all">
-                        <Search className="w-5 h-5 mr-2" />
-                        Cari Tiket Kereta
-                      </Button>
-
-                      {/* Helper Text */}
-                      <p className="text-sm text-gray-500 text-center text-pretty">Harga tiket sudah termasuk biaya administrasi dan asuransi perjalanan</p>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-
-                <TabsContent value="check" className="space-y-4">
-                  <Card className="border-0">
-                    <CardHeader className="space-y-1 pb-6">
-                      <CardTitle className="text-2xl">Cek Kode Booking</CardTitle>
-                      <CardDescription className="text-base">Masukkan kode booking dan NIK untuk memeriksa status pemesanan Anda</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                      {!isLoggedIn && (
-                        <Alert className="bg-yellow-50 border-yellow-200">
-                          <CircleAlert className="h-4 w-4 text-yellow-600" />
-                          <AlertDescription>
-                            Anda harus login untuk memeriksa kode booking.{" "}
-                            <a href="/login" className="underline text-blue-600">
-                              Login di sini
-                            </a>
-                            .
-                          </AlertDescription>
-                        </Alert>
-                      )}
-                      {errors.length > 0 && (
-                        <Alert variant="destructive" className="bg-red-50 border-red-200">
-                          <CircleAlert className="h-4 w-4" />
-                          <AlertDescription>
-                            <ul className="list-disc list-inside space-y-1">
-                              {errors.map((error, index) => (
-                                <li key={index}>{error}</li>
-                              ))}
-                            </ul>
-                          </AlertDescription>
-                        </Alert>
-                      )}
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {/* Booking Code */}
-                        <div className="space-y-2">
-                          <Label className="text-sm font-medium text-gray-700 flex items-center">
-                            <Ticket className="w-4 h-4 mr-2" />
-                            Kode Booking
-                          </Label>
-                          <Input placeholder="Masukkan kode booking" className="border-gray-200" value={bookingForm.bookingCode} onChange={(e) => handleBookingInputChange("bookingCode", e.target.value)} disabled={!isLoggedIn} />
-                        </div>
-
-                        {/* NIK */}
-                        <div className="space-y-2">
-                          <Label className="text-sm font-medium text-gray-700 flex items-center">
-                            <Users className="w-4 h-4 mr-2" />
-                            NIK
-                          </Label>
-                          <Input placeholder="Masukkan NIK" className="border-gray-200" value={bookingForm.nik} onChange={(e) => handleBookingInputChange("nik", e.target.value)} disabled={!isLoggedIn} />
-                        </div>
-                      </div>
-
-                      {/* Check Button */}
-                      <div className="flex justify-center pt-2">
-                        <Button onClick={handleCheckBooking} className="w-full h-10 bg-[#003D79] hover:bg-[#0050A0] text-white px-8" disabled={!isLoggedIn}>
-                          <Search className="w-4 h-4 mr-2" />
-                          Cek Booking
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-              </Tabs>
-            </div>
+            <Link href="/rute" >
+              <Button className="w-full h-12 rounded-xl bg-[#003D79] hover:bg-[#002147] cursor-pointer text-white text-base font-semibold shadow-lg hover:shadow-xl transition-all">Penasaran Rute Yang Bakalan Kamu Lewati? Cek Aja Sekarang 👀</Button>
+            </Link>
           </div>
 
           {/* Right Images Grid */}
@@ -470,6 +210,283 @@ export default function KAIMain() {
           </div>
         </div>
       </section>
+      <div className="rounded-2xl max-w-7xl mx-auto lg:mt-44 mb-20">
+        <div className="w-full border-b border-gray-200 mb-4">
+          <div className="grid grid-cols-2 w-full">
+            <button 
+              onClick={() => setSelectedTab("booking")}
+              className={`flex items-center justify-center gap-2 py-3 text-sm font-medium ${
+                selectedTab === "booking" 
+                  ? "text-[#F15A22] border-b-2 border-[#F15A22]" 
+                  : "text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              <Ticket className="w-4 h-4" />
+              <span className="hidden sm:inline">Pemesanan Tiket</span>
+              <span className="sm:hidden">Pesan</span>
+            </button>
+            <button 
+              onClick={() => setSelectedTab("check")}
+              className={`flex items-center justify-center gap-2 py-3 text-sm font-medium ${
+                selectedTab === "check" 
+                  ? "text-[#F15A22] border-b-2 border-[#F15A22]" 
+                  : "text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              <Search className="w-4 h-4" />
+              <span className="hidden sm:inline">Cek Kode Booking</span>
+              <span className="sm:hidden">Cek</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Content for selected tab */}
+        {selectedTab === "booking" && (
+          <Card className="border-0">
+            <CardHeader className="space-y-1 pb-6">
+              <CardTitle className="text-2xl">Cari Tiket Kereta</CardTitle>
+              <CardDescription className="text-base">Isi detail perjalanan Anda untuk mencari tiket yang tersedia</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {errors.length > 0 && (
+                <Alert variant="destructive" className="bg-red-50 border-red-200">
+                  <CircleAlert className="h-4 w-4" />
+                  <AlertDescription>
+                    <ul className="list-disc list-inside space-y-1">
+                      {errors.map((error, index) => (
+                        <li key={index}>{error}</li>
+                      ))}
+                    </ul>
+                  </AlertDescription>
+                </Alert>
+              )}
+
+              {/* Station Selection with Swap Button */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="origin" className="text-sm font-medium flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-orange-600" />
+                    Stasiun Asal
+                  </Label>
+                  <Select value={searchForm.origin} onValueChange={(value) => handleInputChange("origin", value)}>
+                    <SelectTrigger id="origin" className="h-11 w-full border-gray-300 focus:border-orange-500 focus:ring-orange-500">
+                      <SelectValue placeholder="Pilih stasiun asal" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {stations.map((station) => (
+                        <SelectItem key={station} value={station}>
+                          {station}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="destination" className="text-sm font-medium flex items-center gap-2">
+                    <MapPin className="w-4 h-4 text-orange-600" />
+                    Stasiun Tujuan
+                  </Label>
+                  <Select value={searchForm.destination} onValueChange={(value) => handleInputChange("destination", value)}>
+                    <SelectTrigger id="destination" className="h-11 w-full border-gray-300 focus:border-orange-500 focus:ring-orange-500">
+                      <SelectValue placeholder="Pilih stasiun tujuan" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {stations.map((station) => (
+                        <SelectItem key={station} value={station}>
+                          {station}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              {/* Mobile Swap Button */}
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={swapStations}
+                className="sm:hidden w-full border-2 border-gray-300 hover:border-orange-500 hover:bg-orange-50 bg-transparent"
+                disabled={!searchForm.origin && !searchForm.destination}
+              >
+                <ArrowLeftRight className="h-4 w-4 mr-2" />
+                Tukar Stasiun
+              </Button>
+
+              {/* Date Selection */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="departureDate" className="text-sm font-medium flex items-center gap-2">
+                    <Calendar className="w-4 h-4 text-orange-600" />
+                    Tanggal Berangkat
+                  </Label>
+                  <Input
+                    id="departureDate"
+                    type="date"
+                    min={today}
+                    className="h-11 border-gray-300 focus:border-orange-500 focus:ring-orange-500"
+                    value={searchForm.departureDate}
+                    onChange={(e) => handleInputChange("departureDate", e.target.value)}
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between mb-2">
+                    <Label htmlFor="returnDate" className="text-sm font-medium flex items-center gap-2">
+                      <Calendar className="w-4 h-4 text-orange-600" />
+                      Tanggal Pulang
+                    </Label>
+                    <div className="flex items-center gap-2">
+                      <Switch
+                        id="return-trip"
+                        checked={isReturnTrip}
+                        onCheckedChange={(checked) => {
+                          setIsReturnTrip(checked);
+                          if (!checked) {
+                            handleInputChange("returnDate", "");
+                          }
+                        }}
+                      />
+                      <Label htmlFor="return-trip" className="text-sm text-gray-600 cursor-pointer">
+                        {isReturnTrip ? "Aktif" : "Nonaktif"}
+                      </Label>
+                    </div>
+                  </div>
+                  <Input
+                    id="returnDate"
+                    type="date"
+                    min={searchForm.departureDate || today}
+                    disabled={!isReturnTrip}
+                    className="h-11 border-gray-300 focus:border-orange-500 focus:ring-orange-500 disabled:bg-gray-50 disabled:cursor-not-allowed"
+                    value={searchForm.returnDate}
+                    onChange={(e) => handleInputChange("returnDate", e.target.value)}
+                  />
+                </div>
+              </div>
+
+              {/* Passenger Selection */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="adults" className="text-sm font-medium flex items-center gap-2">
+                    <Users className="w-4 h-4 text-orange-600" />
+                    Jumlah Dewasa
+                  </Label>
+                  <Select value={searchForm.adults} onValueChange={(value) => handleInputChange("adults", value)}>
+                    <SelectTrigger id="adults" className="h-11 w-full border-gray-300 focus:border-orange-500 focus:ring-orange-500">
+                      <SelectValue placeholder="Pilih jumlah" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Array.from({ length: 10 }, (_, i) => i + 1).map((num) => (
+                        <SelectItem key={num} value={num.toString()}>
+                          {num} {num === 1 ? "Dewasa" : "Dewasa"}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="children" className="text-sm font-medium flex items-center gap-2">
+                    <Baby className="w-4 h-4 text-orange-600" />
+                    Jumlah Anak
+                  </Label>
+                  <Select value={searchForm.children} onValueChange={(value) => handleInputChange("children", value)}>
+                    <SelectTrigger id="children" className="h-11 w-full border-gray-300 focus:border-orange-500 focus:ring-orange-500">
+                      <SelectValue placeholder="Pilih jumlah" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="0">Tidak ada anak</SelectItem>
+                      {Array.from({ length: 10 }, (_, i) => i + 1).map((num) => (
+                        <SelectItem key={num} value={num.toString()}>
+                          {num} Anak (3+ tahun)
+                        </SelectItem>
+                      ))}
+                      {Array.from({ length: 10 }, (_, i) => i + 1).map((num) => (
+                        <SelectItem key={`baby-${num}`} value={`baby-${num}`}>
+                          {num} Bayi {"(<"} 3 tahun)
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              {/* Search Button */}
+              <Button onClick={handleSearch} className="w-full h-12 bg-orange-600 hover:bg-orange-700 rounded-xl text-white text-base font-semibold shadow-lg hover:shadow-xl transition-all">
+                <Search className="w-5 h-5 mr-2" />
+                Cari Tiket Kereta
+              </Button>
+
+              {/* Helper Text */}
+              <p className="text-sm text-gray-500 text-center text-pretty">Harga tiket sudah termasuk biaya administrasi dan asuransi perjalanan</p>
+            </CardContent>
+          </Card>
+        )}
+
+        {selectedTab === "check" && (
+          <Card className="border-0">
+            <CardHeader className="space-y-1 pb-6">
+              <CardTitle className="text-2xl">Cek Kode Booking</CardTitle>
+              <CardDescription className="text-base">Masukkan kode booking dan NIK untuk memeriksa status pemesanan Anda</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              {!isLoggedIn && (
+                <Alert className="bg-yellow-50 border-yellow-200">
+                  <CircleAlert className="h-4 w-4 text-yellow-600" />
+                  <AlertDescription>
+                    Anda harus login untuk memeriksa kode booking.{" "}
+                    <a href="/login" className="underline text-blue-600 font-semibold">
+                      Login di sini
+                    </a>
+                  </AlertDescription>
+                </Alert>
+              )}
+              {errors.length > 0 && (
+                <Alert variant="destructive" className="bg-red-50 border-red-200">
+                  <CircleAlert className="h-4 w-4" />
+                  <AlertDescription>
+                    <ul className="list-disc list-inside space-y-1">
+                      {errors.map((error, index) => (
+                        <li key={index}>{error}</li>
+                      ))}
+                    </ul>
+                  </AlertDescription>
+                </Alert>
+              )}
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {/* Booking Code */}
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-gray-700 flex items-center">
+                    <Ticket className="w-4 h-4 mr-2" />
+                    Kode Booking
+                  </Label>
+                  <Input placeholder="Masukkan kode booking" className="border-gray-200" value={bookingForm.bookingCode} onChange={(e) => handleBookingInputChange("bookingCode", e.target.value)} disabled={!isLoggedIn} />
+                </div>
+
+                {/* NIK */}
+                <div className="space-y-2">
+                  <Label className="text-sm font-medium text-gray-700 flex items-center">
+                    <Users className="w-4 h-4 mr-2" />
+                    NIK
+                  </Label>
+                  <Input placeholder="Masukkan NIK" className="border-gray-200" value={bookingForm.nik} onChange={(e) => handleBookingInputChange("nik", e.target.value)} disabled={!isLoggedIn} />
+                </div>
+              </div>
+
+              {/* Check Button */}
+              <div className="flex justify-center pt-2">
+                <Button onClick={handleCheckBooking} className="w-full h-10 bg-[#003D79] hover:bg-[#0050A0] text-white px-8" disabled={!isLoggedIn}>
+                  <Search className="w-4 h-4 mr-2" />
+                  Cek Booking
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+      </div>
       <Banner />
       {/* Explore Section */}
       <section className="px-6 py-16 bg-gray-50 mt-10">
@@ -562,6 +579,7 @@ export default function KAIMain() {
           </div>
         </div>
       </section>
+      <div className="bg-gradient-to-b from-blue-100 to-transparent dark:from-red-900 w-full h-full absolute top-0 left-0 -z-99"></div>
     </div>
   );
 }
