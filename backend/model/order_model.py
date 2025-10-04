@@ -4,6 +4,10 @@ class OrderModel:
         self.__bucket = 'KAI-bucket'
         self.__folder = 'QRCode'
 
+    def get_order_by_id_order(self, id_order):
+        response = self.__database.table('order').select('*').eq('id', id_order).eq('status', 'success').execute()
+        return response.data
+
     def get_order_by_id_user(self, id_user):
         response = self.__database.table('order').select('*').eq('id_user', id_user).eq('status', 'success').execute()
         return response.data

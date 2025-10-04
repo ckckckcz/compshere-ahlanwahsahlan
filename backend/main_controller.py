@@ -114,6 +114,10 @@ class MainController:
         data = self.__family_controller.get_family_by_id_user_and_name(id_user, name)
         return data
     
+    def get_order_by_id_order(self, id_order):
+        data = self.__order_controller.get_order_by_id_order(id_order)
+        return data
+    
     def get_order_by_id_user(self, id_user):
         data = self.__order_controller.get_order_by_id_user(id_user)
         return data
